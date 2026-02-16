@@ -35,6 +35,7 @@ export type ContentType = 'text' | 'markdown' | 'card'
 export interface ChatSession {
   id: number
   session_key: string
+  access_token?: string
   visitor_name: string
   visitor_email: string
   visitor_metadata: Record<string, string>

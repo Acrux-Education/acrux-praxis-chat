@@ -5,7 +5,7 @@ import { WS_PATH, TIMEOUTS } from '../constants'
 import { generateUUID } from '../utils/uuid'
 import type { WSIncomingMessage, ChatMessage } from '../types'
 
-export function useChatWebSocket(sessionKey: string | null) {
+export function useChatWebSocket(sessionKey: string | null, accessToken?: string | null) {
   const { state, dispatch, config } = useChatContext()
   const wsRef = useRef<ChatWebSocket | null>(null)
   const ackTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map())
@@ -15,7 +15,10 @@ export function useChatWebSocket(sessionKey: string | null) {
 
     const wsProtocol = config.apiUrl.startsWith('https') ? 'wss' : 'ws'
     const wsHost = config.apiUrl.replace(/^https?:\/\//, '')
-    const wsUrl = `${wsProtocol}://${wsHost}${WS_PATH(sessionKey)}`
+    let wsUrl = `${wsProtocol}://${wsHost}${WS_PATH(sessionKey)}`
+    if (accessToken) {
+      wsUrl += `?access_token=${encodeURIComponent(accessToken)}`
+    }
 
     const ws = new ChatWebSocket({
       url: wsUrl,
@@ -84,7 +87,7 @@ export function useChatWebSocket(sessionKey: string | null) {
       timers.forEach((timer) => clearTimeout(timer))
       timers.clear()
     }
-  }, [sessionKey, config.apiUrl]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sessionKey, accessToken, config.apiUrl]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const sendMessage = useCallback((text: string) => {
     if (!wsRef.current) return

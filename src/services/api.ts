@@ -9,6 +9,7 @@ interface ApiClientConfig {
 export class ApiClient {
   private baseUrl: string
   private token?: string
+  private chatToken?: string
 
   constructor(config: ApiClientConfig) {
     this.baseUrl = config.baseUrl.replace(/\/$/, '')
@@ -19,6 +20,14 @@ export class ApiClient {
     this.token = token
   }
 
+  setChatToken(chatToken: string) {
+    this.chatToken = chatToken
+  }
+
+  getChatToken(): string | undefined {
+    return this.chatToken
+  }
+
   private async request<T>(path: string, options: RequestInit = {}): Promise<T> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -27,6 +36,10 @@ export class ApiClient {
 
     if (this.token) {
       headers['Authorization'] = `Bearer ${this.token}`
+    }
+
+    if (this.chatToken) {
+      headers['X-Chat-Token'] = this.chatToken
     }
 
     const response = await fetch(`${this.baseUrl}${path}`, {

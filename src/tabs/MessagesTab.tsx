@@ -10,8 +10,8 @@ import { LeadCaptureForm } from '../components/LeadCaptureForm'
 
 export function MessagesTab() {
   const { state, dispatch, config } = useChatContext()
-  const { session, sessionKey, createSession, updateVisitorInfo } = useChatSession()
-  const { sendMessage, sendTyping, isConnected } = useChatWebSocket(sessionKey)
+  const { session, sessionKey, accessToken, createSession, updateVisitorInfo } = useChatSession()
+  const { sendMessage, sendTyping, isConnected } = useChatWebSocket(sessionKey, accessToken)
   const { isOnline, offlineMessage, responseTime } = useOperatingHours()
   const [showLeadCapture, setShowLeadCapture] = useState(false)
   const pendingMessageRef = useRef<string | null>(null)

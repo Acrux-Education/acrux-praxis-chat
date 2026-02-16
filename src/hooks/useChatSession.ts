@@ -8,10 +8,15 @@ import { extractVisitorMetadata } from '../utils/url'
 export function useChatSession() {
   const { state, dispatch, config } = useChatContext()
   const [storedSessionKey, setStoredSessionKey] = useLocalStorage<string | null>('session_key', null)
+  const [storedAccessToken, setStoredAccessToken] = useLocalStorage<string | null>('chat_access_token', null)
   const apiRef = useRef<ApiClient>()
 
   if (!apiRef.current) {
     apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
+    // Restore chat token from localStorage if available
+    if (storedAccessToken) {
+      apiRef.current.setChatToken(storedAccessToken)
+    }
   }
 
   const api = apiRef.current
@@ -30,6 +35,12 @@ export function useChatSession() {
         visitor_metadata: metadata,
       })
 
+      // Store the chat access token for subsequent requests
+      if (session.access_token) {
+        api.setChatToken(session.access_token)
+        setStoredAccessToken(session.access_token)
+      }
+
       dispatch({ type: 'SET_SESSION', payload: session })
       setStoredSessionKey(session.session_key)
       config.onSessionCreated?.(session.session_key)
@@ -40,7 +51,7 @@ export function useChatSession() {
       dispatch({ type: 'SET_LOADING', payload: false })
       throw err
     }
-  }, [api, config, dispatch, setStoredSessionKey])
+  }, [api, config, dispatch, setStoredSessionKey, setStoredAccessToken])
 
   const restoreSession = useCallback(async (sessionKey: string) => {
     try {
@@ -54,10 +65,12 @@ export function useChatSession() {
     } catch {
       // Session expired or invalid — clear it
       setStoredSessionKey(null)
+      setStoredAccessToken(null)
+      api.setChatToken('')
       dispatch({ type: 'SET_LOADING', payload: false })
       return null
     }
-  }, [api, dispatch, setStoredSessionKey])
+  }, [api, dispatch, setStoredSessionKey, setStoredAccessToken])
 
   const updateVisitorInfo = useCallback(async (name?: string, email?: string) => {
     if (!state.session) return
@@ -84,6 +97,7 @@ export function useChatSession() {
   return {
     session: state.session,
     sessionKey: state.session?.session_key ?? storedSessionKey,
+    accessToken: api.getChatToken() ?? storedAccessToken,
     createSession,
     restoreSession,
     updateVisitorInfo,
