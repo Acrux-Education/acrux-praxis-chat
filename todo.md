@@ -2,4 +2,6 @@
 
 ## Distribution
 
-- [ ] **Move to npm registry publishing** — Currently using `prepare` script to auto-build on `npm install` from GitHub. Once the widget stabilises, set up GitHub Action to build and publish to npm registry (`@acrux/chat-widget`) for faster installs and proper semver versioning. Remove `prepare` script at that point.
+- [x] **npm registry publishing** — Publishing as `@acrux-education/chat-widget` (private) via GitHub Action on push to main.
+- [ ] **npm token rotation** — Token expires every 90 days. Set a calendar reminder to rotate it in GitHub secrets (`NPM_TOKEN`).
+- [ ] **Version bump automation** — Currently need to manually bump version in `package.json` before each publish. Consider adding auto-versioning.
