@@ -17,6 +17,7 @@
     "dist"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "dev": "vite",
     "build": "npm run build:esm && npm run build:iife",
     "build:esm": "vite build",
