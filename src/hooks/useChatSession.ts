@@ -1,0 +1,92 @@
+import { useEffect, useCallback, useRef } from 'react'
+import { useChatContext } from '../context/ChatContext'
+import { useLocalStorage } from './useLocalStorage'
+import { ApiClient } from '../services/api'
+import { generateUUID } from '../utils/uuid'
+import { extractVisitorMetadata } from '../utils/url'
+
+export function useChatSession() {
+  const { state, dispatch, config } = useChatContext()
+  const [storedSessionKey, setStoredSessionKey] = useLocalStorage<string | null>('session_key', null)
+  const apiRef = useRef<ApiClient>()
+
+  if (!apiRef.current) {
+    apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
+  }
+
+  const api = apiRef.current
+
+  const createSession = useCallback(async () => {
+    const sessionKey = generateUUID()
+    const metadata = config.mode === 'lead' ? extractVisitorMetadata() : undefined
+
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true })
+      const session = await api.createSession({
+        source: config.mode === 'lead' ? 'lead_bot' : 'user_bot',
+        session_key: sessionKey,
+        visitor_name: config.userName,
+        visitor_email: config.userEmail,
+        visitor_metadata: metadata,
+      })
+
+      dispatch({ type: 'SET_SESSION', payload: session })
+      setStoredSessionKey(session.session_key)
+      config.onSessionCreated?.(session.session_key)
+      dispatch({ type: 'SET_LOADING', payload: false })
+      return session
+    } catch (err) {
+      dispatch({ type: 'SET_ERROR', payload: 'Failed to create chat session' })
+      dispatch({ type: 'SET_LOADING', payload: false })
+      throw err
+    }
+  }, [api, config, dispatch, setStoredSessionKey])
+
+  const restoreSession = useCallback(async (sessionKey: string) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true })
+      const data = await api.getSession(sessionKey)
+      const { messages, ...session } = data
+      dispatch({ type: 'SET_SESSION', payload: session })
+      dispatch({ type: 'SET_MESSAGES', payload: messages })
+      dispatch({ type: 'SET_LOADING', payload: false })
+      return session
+    } catch {
+      // Session expired or invalid — clear it
+      setStoredSessionKey(null)
+      dispatch({ type: 'SET_LOADING', payload: false })
+      return null
+    }
+  }, [api, dispatch, setStoredSessionKey])
+
+  const updateVisitorInfo = useCallback(async (name?: string, email?: string) => {
+    if (!state.session) return
+
+    dispatch({ type: 'SET_VISITOR_INFO', payload: { name, email } })
+
+    try {
+      await api.updateVisitor(state.session.session_key, {
+        visitor_name: name,
+        visitor_email: email,
+      })
+    } catch {
+      // Non-critical failure
+    }
+  }, [api, state.session, dispatch])
+
+  // Restore session on mount if stored key exists
+  useEffect(() => {
+    if (storedSessionKey && !state.session) {
+      restoreSession(storedSessionKey)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  return {
+    session: state.session,
+    sessionKey: state.session?.session_key ?? storedSessionKey,
+    createSession,
+    restoreSession,
+    updateVisitorInfo,
+    api,
+  }
+}

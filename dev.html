@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acrux Chat Widget — Dev</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+    }
+    h1 { margin-bottom: 8px; }
+    p { color: #6b7280; margin-bottom: 24px; }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 600px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    pre {
+      background: #f3f4f6;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Acrux Chat Widget — IIFE Test Page</h1>
+  <p>The chat widget should appear as a floating button in the bottom-right corner.</p>
+
+  <div class="card">
+    <h3>Embed Code</h3>
+    <pre><code>&lt;script src="dist/acrux-chat.iife.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  AcruxChat.init({
+    mode: 'lead',
+    apiUrl: 'http://localhost:8000',
+  });
+&lt;/script&gt;</code></pre>
+  </div>
+
+  <script src="dist/acrux-chat.iife.js"></script>
+  <script>
+    AcruxChat.init({
+      mode: 'lead',
+      apiUrl: 'http://localhost:8000',
+    });
+  </script>
+</body>
+</html>
