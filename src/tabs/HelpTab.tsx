@@ -6,8 +6,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from '../icons'
 import type { KBTopic, KBArticle } from '../types'
 
 export function HelpTab() {
-  const { config } = useChatContext()
-  const [topics, setTopics] = useState<KBTopic[]>([])
+  const { state, dispatch, config } = useChatContext()
+  const topics = state.kbTopics
   const [selectedTopic, setSelectedTopic] = useState<KBTopic | null>(null)
   const [articles, setArticles] = useState<KBArticle[]>([])
   const [loading, setLoading] = useState(false)
@@ -18,10 +18,11 @@ export function HelpTab() {
   }
 
   useEffect(() => {
+    if (state.kbTopics.length > 0) return
     apiRef.current!.getKBTopics()
-      .then(setTopics)
+      .then((fetched) => dispatch({ type: 'SET_KB_TOPICS', payload: fetched }))
       .catch(() => {})
-  }, [])
+  }, [state.kbTopics.length, dispatch])
 
   const handleTopicClick = useCallback(async (topic: KBTopic) => {
     setSelectedTopic(topic)

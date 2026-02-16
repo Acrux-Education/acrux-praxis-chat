@@ -1,9 +1,10 @@
-import { createContext, useContext, useReducer, useMemo } from 'react'
+import { createContext, useContext, useReducer, useMemo, useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import type { ChatWidgetProps } from '../types'
 import type { ChatAction } from './chatActions'
 import { chatReducer, initialState } from './chatReducer'
 import type { ChatState } from './chatReducer'
+import { ApiClient } from '../services/api'
 
 interface ChatContextValue {
   state: ChatState
@@ -31,9 +32,40 @@ export function ChatProvider({ children, ...config }: ChatProviderProps) {
 
   return (
     <ChatContext.Provider value={value}>
+      <ContentFetcher />
       {children}
     </ChatContext.Provider>
   )
+}
+
+function ContentFetcher() {
+  const { dispatch, config } = useChatContext()
+  const fetchedRef = useRef(false)
+
+  useEffect(() => {
+    if (fetchedRef.current) return
+    fetchedRef.current = true
+
+    const api = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
+
+    api.getAnnouncements()
+      .then((data) => dispatch({ type: 'SET_ANNOUNCEMENTS', payload: data }))
+      .catch(() => {})
+
+    api.getRoadmapItems()
+      .then((data) => dispatch({ type: 'SET_ROADMAP_ITEMS', payload: data }))
+      .catch(() => {})
+
+    api.getKBTopics()
+      .then((data) => dispatch({ type: 'SET_KB_TOPICS', payload: data }))
+      .catch(() => {})
+
+    api.getOperatingHoursStatus()
+      .then((data) => dispatch({ type: 'SET_OPERATING_HOURS', payload: data }))
+      .catch(() => {})
+  }, [config.apiUrl, config.token, dispatch])
+
+  return null
 }
 
 export function useChatContext(): ChatContextValue {

@@ -8,7 +8,7 @@ interface TabBarProps {
   onTabChange: (tab: TabId) => void
 }
 
-const tabs: { id: TabId; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
+const allTabs: { id: TabId; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
   { id: 'home', label: 'Home', Icon: HomeIcon },
   { id: 'messages', label: 'Messages', Icon: ChatBubbleIcon },
   { id: 'news', label: 'News', Icon: MegaphoneIcon },
@@ -19,9 +19,23 @@ const tabs: { id: TabId; label: string; Icon: React.ComponentType<{ className?: 
 export function TabBar({ activeTab, onTabChange }: TabBarProps) {
   const { state } = useChatContext()
 
+  const visibleTabs = allTabs.filter(({ id }) => {
+    switch (id) {
+      case 'home': return true
+      case 'messages': return true
+      case 'news': return state.announcements.length > 0
+      case 'roadmap': return state.roadmapItems.length > 0
+      case 'help': return state.kbTopics.length > 0
+      default: return false
+    }
+  })
+
+  // Don't render tab bar if only Home is available
+  if (visibleTabs.length <= 1) return null
+
   return (
     <nav className="acx-flex acx-border-t acx-border-gray-200 acx-bg-white" role="tablist">
-      {tabs.map(({ id, label, Icon }) => (
+      {visibleTabs.map(({ id, label, Icon }) => (
         <button
           key={id}
           role="tab"

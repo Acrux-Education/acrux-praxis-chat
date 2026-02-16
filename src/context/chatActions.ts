@@ -1,4 +1,4 @@
-import type { ChatMessage, ChatSession, AgentInfo, Announcement, RoadmapItem, KBArticle, TabId, OperatingHoursStatus } from '../types'
+import type { ChatMessage, ChatSession, AgentInfo, Announcement, RoadmapItem, KBArticle, KBTopic, TabId, OperatingHoursStatus } from '../types'
 
 export type ChatAction =
   | { type: 'SET_SESSION'; payload: ChatSession }
@@ -15,6 +15,7 @@ export type ChatAction =
   | { type: 'RESET_UNREAD' }
   | { type: 'SET_ANNOUNCEMENTS'; payload: Announcement[] }
   | { type: 'SET_ROADMAP_ITEMS'; payload: RoadmapItem[] }
+  | { type: 'SET_KB_TOPICS'; payload: KBTopic[] }
   | { type: 'SET_KB_RESULTS'; payload: KBArticle[] }
   | { type: 'SET_KB_LOADING'; payload: boolean }
   | { type: 'SET_OPERATING_HOURS'; payload: OperatingHoursStatus }

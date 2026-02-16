@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { useChatContext } from '../context/ChatContext'
 import { useChatSession } from '../hooks/useChatSession'
 import { useChatWebSocket } from '../hooks/useChatWebSocket'
@@ -11,22 +11,34 @@ import { LeadCaptureForm } from '../components/LeadCaptureForm'
 export function MessagesTab() {
   const { state, dispatch, config } = useChatContext()
   const { session, sessionKey, createSession, updateVisitorInfo } = useChatSession()
-  const { sendMessage, sendTyping } = useChatWebSocket(sessionKey)
+  const { sendMessage, sendTyping, isConnected } = useChatWebSocket(sessionKey)
   const { isOnline, offlineMessage, responseTime } = useOperatingHours()
   const [showLeadCapture, setShowLeadCapture] = useState(false)
+  const pendingMessageRef = useRef<string | null>(null)
+
+  // Send pending message once WebSocket connects after session creation
+  useEffect(() => {
+    if (isConnected && pendingMessageRef.current) {
+      sendMessage(pendingMessageRef.current)
+      pendingMessageRef.current = null
+    }
+  }, [isConnected, sendMessage])
 
   const handleSend = useCallback(async (text: string) => {
     if (!session) {
-      // Need to create session first
       if (config.mode === 'lead' && !state.visitorEmail) {
+        pendingMessageRef.current = text
         setShowLeadCapture(true)
         return
       }
       try {
+        pendingMessageRef.current = text
         await createSession()
+        // Message will be sent by the useEffect once WS connects
       } catch {
-        return
+        pendingMessageRef.current = null
       }
+      return
     }
     sendMessage(text)
   }, [session, config.mode, state.visitorEmail, createSession, sendMessage])
@@ -35,19 +47,22 @@ export function MessagesTab() {
     dispatch({ type: 'SET_VISITOR_INFO', payload: data })
     setShowLeadCapture(false)
     try {
-      await createSession()
-      if (session) {
+      const newSession = await createSession()
+      if (newSession) {
         await updateVisitorInfo(data.name, data.email)
       }
+      // Pending message will be sent by useEffect once WS connects
     } catch {
-      // Error handled in createSession
+      pendingMessageRef.current = null
     }
-  }, [createSession, updateVisitorInfo, session, dispatch])
+  }, [createSession, updateVisitorInfo, dispatch])
 
   // Reset unread when viewing messages tab
-  if (state.unreadCount > 0 && state.activeTab === 'messages') {
-    dispatch({ type: 'RESET_UNREAD' })
-  }
+  useEffect(() => {
+    if (state.unreadCount > 0 && state.activeTab === 'messages') {
+      dispatch({ type: 'RESET_UNREAD' })
+    }
+  }, [state.unreadCount, state.activeTab, dispatch])
 
   if (showLeadCapture && !session) {
     return (
