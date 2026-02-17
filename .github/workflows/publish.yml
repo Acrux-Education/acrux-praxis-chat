@@ -1,4 +1,4 @@
-name: Build and Tag Chat Widget
+name: Build Chat Widget
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-tag:
+  build:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
 
@@ -26,26 +26,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Determine version bump type
-        id: bump
-        run: |
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
-          if echo "$COMMIT_MSG" | grep -qi '\[major\]'; then
-            echo "type=major" >> "$GITHUB_OUTPUT"
-          elif echo "$COMMIT_MSG" | grep -qi '\[minor\]'; then
-            echo "type=minor" >> "$GITHUB_OUTPUT"
-          else
-            echo "type=patch" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Bump version
-        id: version
-        run: |
-          npm version ${{ steps.bump.outputs.type }} --no-git-tag-version
-          NEW_VERSION=$(node -p "require('./package.json').version")
-          echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
-          echo "Bumped to version ${NEW_VERSION} (${{ steps.bump.outputs.type }})"
-
       - name: Install dependencies
         run: npm ci
 
@@ -55,12 +35,15 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Commit built files, version bump, and push tag
+      - name: Commit built files
         run: |
-          git add package.json package-lock.json dist/
-          git commit -m "chore: bump version to v${{ steps.version.outputs.new_version }} [skip ci]"
-          git tag "v${{ steps.version.outputs.new_version }}"
-          git push origin main --follow-tags
+          git add dist/
+          if git diff --cached --quiet; then
+            echo "No changes to dist/, skipping commit"
+          else
+            git commit -m "chore: update dist [skip ci]"
+            git push origin main
+          fi
 
       - name: Trigger consumer update in acrux-praxis-fe
         uses: peter-evans/repository-dispatch@v3
@@ -68,4 +51,3 @@ jobs:
           token: ${{ secrets.DISPATCH_TOKEN }}
           repository: Acrux-Education/acrux-praxis-fe
           event-type: chat-widget-update
-          client-payload: '{"version": "${{ steps.version.outputs.new_version }}"}'
