@@ -23,9 +23,9 @@ export function TabBar({ activeTab, onTabChange }: TabBarProps) {
     switch (id) {
       case 'home': return true
       case 'messages': return true
-      case 'news': return state.announcements.length > 0
-      case 'roadmap': return state.roadmapItems.length > 0
-      case 'help': return state.kbTopics.length > 0
+      case 'news': return (state.announcements?.length ?? 0) > 0
+      case 'roadmap': return (state.roadmapItems?.length ?? 0) > 0
+      case 'help': return (state.kbTopics?.length ?? 0) > 0
       default: return false
     }
   })

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useChatContext } from '../context/ChatContext'
 import { ApiClient } from '../services/api'
+import { toArray } from '../utils/toArray'
 
 export function useRoadmap() {
   const { state, dispatch, config } = useChatContext()
@@ -16,8 +17,8 @@ export function useRoadmap() {
     fetchedRef.current = true
 
     apiRef.current!.getRoadmapItems()
-      .then((items) => {
-        dispatch({ type: 'SET_ROADMAP_ITEMS', payload: items })
+      .then((data) => {
+        dispatch({ type: 'SET_ROADMAP_ITEMS', payload: toArray(data) })
       })
       .catch(() => {
         // Non-critical

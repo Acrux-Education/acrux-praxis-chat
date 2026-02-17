@@ -5,6 +5,7 @@ import type { ChatAction } from './chatActions'
 import { chatReducer, initialState } from './chatReducer'
 import type { ChatState } from './chatReducer'
 import { ApiClient } from '../services/api'
+import { toArray } from '../utils/toArray'
 
 interface ChatContextValue {
   state: ChatState
@@ -49,15 +50,15 @@ function ContentFetcher() {
     const api = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
 
     api.getAnnouncements()
-      .then((data) => dispatch({ type: 'SET_ANNOUNCEMENTS', payload: data }))
+      .then((data) => dispatch({ type: 'SET_ANNOUNCEMENTS', payload: toArray(data) }))
       .catch(() => {})
 
     api.getRoadmapItems()
-      .then((data) => dispatch({ type: 'SET_ROADMAP_ITEMS', payload: data }))
+      .then((data) => dispatch({ type: 'SET_ROADMAP_ITEMS', payload: toArray(data) }))
       .catch(() => {})
 
     api.getKBTopics()
-      .then((data) => dispatch({ type: 'SET_KB_TOPICS', payload: data }))
+      .then((data) => dispatch({ type: 'SET_KB_TOPICS', payload: toArray(data) }))
       .catch(() => {})
 
     api.getOperatingHoursStatus()

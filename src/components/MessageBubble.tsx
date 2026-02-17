@@ -53,7 +53,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           )}
         </div>
 
-        {message.attachments.length > 0 && (
+        {message.attachments?.length > 0 && (
           <div className="acx-mt-1 acx-space-y-1">
             {message.attachments.map((att, i) => (
               <a

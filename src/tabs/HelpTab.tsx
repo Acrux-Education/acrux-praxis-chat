@@ -18,11 +18,11 @@ export function HelpTab() {
   }
 
   useEffect(() => {
-    if (state.kbTopics.length > 0) return
+    if (state.kbTopics?.length > 0) return
     apiRef.current!.getKBTopics()
-      .then((fetched) => dispatch({ type: 'SET_KB_TOPICS', payload: fetched }))
+      .then((fetched) => dispatch({ type: 'SET_KB_TOPICS', payload: Array.isArray(fetched) ? fetched : [] }))
       .catch(() => {})
-  }, [state.kbTopics.length, dispatch])
+  }, [state.kbTopics?.length, dispatch])
 
   const handleTopicClick = useCallback(async (topic: KBTopic) => {
     setSelectedTopic(topic)

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useChatContext } from '../context/ChatContext'
 import { ApiClient } from '../services/api'
+import { toArray } from '../utils/toArray'
 
 export function useAnnouncements() {
   const { state, dispatch, config } = useChatContext()
@@ -16,8 +17,8 @@ export function useAnnouncements() {
     fetchedRef.current = true
 
     apiRef.current!.getAnnouncements()
-      .then((announcements) => {
-        dispatch({ type: 'SET_ANNOUNCEMENTS', payload: announcements })
+      .then((data) => {
+        dispatch({ type: 'SET_ANNOUNCEMENTS', payload: toArray(data) })
       })
       .catch(() => {
         // Non-critical
