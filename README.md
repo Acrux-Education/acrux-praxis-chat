@@ -1,14 +1,12 @@
 # @acrux-education/chat-widget
 
-Embeddable chat widget for Acrux Education. Provides live chat, knowledge base search, announcements, and product roadmap — packaged as both an ESM library (for React apps like Pnyx) and a standalone IIFE bundle (for non-React sites like Webflow).
+Embeddable chat widget for Acrux Education. Provides live chat, knowledge base search, announcements, and product roadmap — packaged as both an ESM library (for React apps) and a standalone IIFE bundle (for non-React sites like Webflow).
 
 ## Installation
 
 ```bash
 npm install @acrux-education/chat-widget
 ```
-
-> This is a **private** npm package. You need an npm token with access to the `@acrux-education` scope.
 
 ## Usage
 
@@ -22,7 +20,7 @@ function App() {
   return (
     <ChatWidget
       mode="user"
-      apiUrl="https://praxis-be-prod-sg.acrux.education"
+      apiUrl={import.meta.env.VITE_PRAXIS_CHAT_URL}
       token="jwt-token"
       userName="Jane Doe"
       userEmail="jane@school.edu"
@@ -42,7 +40,7 @@ Include the built files and initialise:
 <script>
   AcruxChat.init({
     mode: 'lead',
-    apiUrl: 'https://praxis-be-prod-sg.acrux.education',
+    apiUrl: 'https://your-praxis-backend-url',
   })
 </script>
 ```
@@ -52,7 +50,7 @@ Include the built files and initialise:
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
 | `mode` | `'lead' \| 'user'` | Yes | `lead` for anonymous visitors, `user` for authenticated users |
-| `apiUrl` | `string` | Yes | Praxis backend URL |
+| `apiUrl` | `string` | Yes | Backend URL |
 | `token` | `string` | No | JWT auth token (required for `user` mode) |
 | `userName` | `string` | No | Display name for the current user |
 | `userEmail` | `string` | No | Email for the current user |
@@ -86,7 +84,7 @@ npm run test:run   # Run tests
 
 | File | Format | React | Use case |
 |------|--------|-------|----------|
-| `dist/acrux-chat.es.js` | ESM | Externalised (peer dep) | React host apps (Pnyx) |
+| `dist/acrux-chat.es.js` | ESM | Externalised (peer dep) | React host apps |
 | `dist/acrux-chat.iife.js` | IIFE | Bundled | Non-React sites (Webflow) |
 | `dist/style.css` | CSS | — | Styles for both builds |
 
@@ -94,31 +92,9 @@ npm run test:run   # Run tests
 
 All Tailwind classes use the `acx-` prefix to avoid collisions with host site styles.
 
-## Publishing
-
-Pushing to `main` triggers a GitHub Action that automatically publishes to npm. Before pushing, **bump the version** in `package.json` — npm rejects duplicate versions.
-
-```bash
-# Example: bump patch version
-npm version patch
-```
-
-### npm token
-
-The `NPM_TOKEN` GitHub secret is required for publishing. It expires every 90 days and needs periodic rotation.
-
 ## Backend
 
-The widget connects to the Praxis backend:
+The widget connects to the backend via:
 
 - **REST API**: `{apiUrl}/api/chat/sessions/`
 - **WebSocket**: `wss://{apiUrl}/ws/chat/{session_key}/`
-
-## Pnyx Integration
-
-Pnyx (the school-facing frontend) consumes this widget as an npm dependency. Requirements for the Pnyx team:
-
-1. Set `VITE_PRAXIS_CHAT_URL` env var pointing to the Praxis backend URL
-2. Pass it as the `apiUrl` prop to `<ChatWidget>`
-3. Add `COMMON__NPM_TOKEN` to GCP Secret Manager for installing the private package
-4. Update CSP to allow connections to the backend domain (both `https` and `wss`)
