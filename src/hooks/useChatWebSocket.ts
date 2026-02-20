@@ -14,7 +14,7 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
     if (!sessionKey) return
 
     const wsProtocol = config.apiUrl.startsWith('https') ? 'wss' : 'ws'
-    const wsHost = config.apiUrl.replace(/^https?:\/\//, '')
+    const wsHost = config.apiUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
     let wsUrl = `${wsProtocol}://${wsHost}${WS_PATH(sessionKey)}`
     if (accessToken) {
       wsUrl += `?token=${encodeURIComponent(accessToken)}`
