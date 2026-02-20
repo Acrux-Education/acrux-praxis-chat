@@ -45,9 +45,11 @@ jobs:
             git push origin main
           fi
 
-      - name: Trigger consumer update in acrux-praxis-fe
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
-          repository: Acrux-Education/acrux-praxis-fe
-          event-type: chat-widget-update
+      # Disabled: was triggering acrux-praxis-fe with empty version payload
+      # causing it to overwrite package.json ref to just #v
+      # - name: Trigger consumer update in acrux-praxis-fe
+      #   uses: peter-evans/repository-dispatch@v3
+      #   with:
+      #     token: ${{ secrets.DISPATCH_TOKEN }}
+      #     repository: Acrux-Education/acrux-praxis-fe
+      #     event-type: chat-widget-update
