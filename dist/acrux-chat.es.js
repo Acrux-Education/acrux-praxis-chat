@@ -664,7 +664,7 @@ function Ie(e, a) {
   const { state: c, dispatch: n, config: r } = N(), s = g(null), i = g(/* @__PURE__ */ new Map());
   _(() => {
     if (!e) return;
-    const m = r.apiUrl.startsWith("https") ? "wss" : "ws", p = r.apiUrl.replace(/^https?:\/\//, "");
+    const m = r.apiUrl.startsWith("https") ? "wss" : "ws", p = r.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
     let f = `${m}://${p}${ee(e)}`;
     a && (f += `?token=${encodeURIComponent(a)}`);
     const d = new Ae({
