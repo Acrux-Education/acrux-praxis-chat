@@ -1,25 +1,89 @@
-@tailwind base;
+/* NOTE: No @tailwind base — Preflight reset is intentionally excluded.
+   Including it would inject an unscoped global CSS reset that conflicts
+   with the host app's styles (e.g. Pnyx's own Tailwind). The widget's
+   reset is scoped to .acrux-chat-widget below. */
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  .acrux-chat-widget *,
-  .acrux-chat-widget *::before,
-  .acrux-chat-widget *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+/* Scoped reset — only affects elements inside the widget */
+.acrux-chat-widget *,
+.acrux-chat-widget *::before,
+.acrux-chat-widget *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
 
-  .acrux-chat-widget {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #1f2937;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+.acrux-chat-widget {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Preflight-equivalent resets scoped to the widget */
+.acrux-chat-widget img,
+.acrux-chat-widget svg,
+.acrux-chat-widget video {
+  display: block;
+  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
+}
+
+.acrux-chat-widget button,
+.acrux-chat-widget input,
+.acrux-chat-widget textarea,
+.acrux-chat-widget select {
+  font: inherit;
+  color: inherit;
+}
+
+.acrux-chat-widget button,
+.acrux-chat-widget [role="button"] {
+  cursor: pointer;
+}
+
+.acrux-chat-widget a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.acrux-chat-widget textarea {
+  resize: vertical;
+}
+
+.acrux-chat-widget input::placeholder,
+.acrux-chat-widget textarea::placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+.acrux-chat-widget h1,
+.acrux-chat-widget h2,
+.acrux-chat-widget h3,
+.acrux-chat-widget h4,
+.acrux-chat-widget h5,
+.acrux-chat-widget h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.acrux-chat-widget ol,
+.acrux-chat-widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.acrux-chat-widget p {
+  margin: 0;
 }
 
 /* Typing indicator animation */

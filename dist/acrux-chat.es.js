@@ -1,8 +1,8 @@
 var Y = Object.defineProperty;
 var J = (e, a, c) => a in e ? Y(e, a, { enumerable: !0, configurable: !0, writable: !0, value: c }) : e[a] = c;
 var S = (e, a, c) => J(e, typeof a != "symbol" ? a + "" : a, c);
-import { jsxs as o, jsx as t, Fragment as B } from "react/jsx-runtime";
-import { createContext as z, useReducer as Q, useMemo as X, useRef as g, useEffect as _, useContext as Z, useCallback as y, useState as w } from "react";
+import { jsxs as o, jsx as t, Fragment as D } from "react/jsx-runtime";
+import { createContext as z, useReducer as Q, useMemo as X, useRef as m, useEffect as _, useContext as Z, useCallback as y, useState as w } from "react";
 const E = {
   SESSIONS: "/api/chat/sessions/",
   SESSION: (e) => `/api/chat/sessions/${e}/`,
@@ -16,13 +16,14 @@ const E = {
   OPERATING_HOURS: "/api/chat/operating-hours/status/"
 }, ee = (e) => `/ws/chat/${e}/`, ae = {
   POSITION: "bottom-right"
-}, C = {
+}, k = {
   WS_RECONNECT_BASE: 1e3,
   WS_RECONNECT_MAX: 3e4,
   WS_HEARTBEAT_INTERVAL: 3e4,
   MESSAGE_ACK_TIMEOUT: 5e3,
-  SEARCH_DEBOUNCE: 300
-}, R = {
+  SEARCH_DEBOUNCE: 300,
+  TYPING_TIMEOUT: 3e3
+}, A = {
   MAX_MESSAGE_LENGTH: 5e3,
   ALLOWED_FILE_TYPES: [
     "image/png",
@@ -117,7 +118,7 @@ function ce(e, a) {
       return e;
   }
 }
-class k {
+class C {
   constructor(a) {
     S(this, "baseUrl");
     S(this, "token");
@@ -196,10 +197,10 @@ class re extends Error {
     super(`API Error ${a}: ${c}`), this.status = a, this.statusText = c, this.body = n, this.name = "ApiError";
   }
 }
-function A(e) {
+function I(e) {
   return Array.isArray(e) ? e : e && typeof e == "object" && "results" in e ? e.results : [];
 }
-const U = z(null);
+const B = z(null);
 function ne({ children: e, ...a }) {
   const [c, n] = Q(ce, {
     ...te,
@@ -209,31 +210,31 @@ function ne({ children: e, ...a }) {
     () => ({ state: c, dispatch: n, config: a }),
     [c, a]
   );
-  return /* @__PURE__ */ o(U.Provider, { value: r, children: [
+  return /* @__PURE__ */ o(B.Provider, { value: r, children: [
     /* @__PURE__ */ t(se, {}),
     e
   ] });
 }
 function se() {
-  const { dispatch: e, config: a } = N(), c = g(!1);
+  const { dispatch: e, config: a } = N(), c = m(!1);
   return _(() => {
     if (c.current) return;
     c.current = !0;
-    const n = new k({ baseUrl: a.apiUrl, token: a.token });
-    n.getAnnouncements().then((r) => e({ type: "SET_ANNOUNCEMENTS", payload: A(r) })).catch(() => {
-    }), n.getRoadmapItems().then((r) => e({ type: "SET_ROADMAP_ITEMS", payload: A(r) })).catch(() => {
-    }), n.getKBTopics().then((r) => e({ type: "SET_KB_TOPICS", payload: A(r) })).catch(() => {
+    const n = new C({ baseUrl: a.apiUrl, token: a.token });
+    n.getAnnouncements().then((r) => e({ type: "SET_ANNOUNCEMENTS", payload: I(r) })).catch(() => {
+    }), n.getRoadmapItems().then((r) => e({ type: "SET_ROADMAP_ITEMS", payload: I(r) })).catch(() => {
+    }), n.getKBTopics().then((r) => e({ type: "SET_KB_TOPICS", payload: I(r) })).catch(() => {
     }), n.getOperatingHoursStatus().then((r) => e({ type: "SET_OPERATING_HOURS", payload: r })).catch(() => {
     });
   }, [a.apiUrl, a.token, e]), null;
 }
 function N() {
-  const e = Z(U);
+  const e = Z(B);
   if (!e)
     throw new Error("useChatContext must be used within a ChatProvider");
   return e;
 }
-function P({ count: e }) {
+function U({ count: e }) {
   if (e <= 0) return null;
   const a = e > 99 ? "99+" : String(e);
   return /* @__PURE__ */ t("span", { className: "acx-absolute -acx-top-1.5 -acx-right-1.5 acx-min-w-[18px] acx-h-[18px] acx-flex acx-items-center acx-justify-center acx-bg-red-500 acx-text-white acx-text-[10px] acx-font-bold acx-rounded-full acx-px-1 acx-leading-none", children: a });
@@ -244,7 +245,7 @@ function oe({ className: e }) {
     /* @__PURE__ */ t("polyline", { points: "9 22 9 12 15 12 15 22" })
   ] });
 }
-function H({ className: e }) {
+function P({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) });
 }
 function ie({ className: e }) {
@@ -267,13 +268,13 @@ function xe({ className: e }) {
     /* @__PURE__ */ t("line", { x1: "12", y1: "17", x2: "12.01", y2: "17" })
   ] });
 }
-function de({ className: e }) {
+function ue({ className: e }) {
   return /* @__PURE__ */ o("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ t("circle", { cx: "11", cy: "11", r: "8" }),
     /* @__PURE__ */ t("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
   ] });
 }
-function ue({ className: e }) {
+function de({ className: e }) {
   return /* @__PURE__ */ o("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ t("line", { x1: "22", y1: "2", x2: "11", y2: "13" }),
     /* @__PURE__ */ t("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })
@@ -288,7 +289,7 @@ function he({ className: e }) {
 function pe({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" }) });
 }
-function $({ className: e }) {
+function H({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("polyline", { points: "9 18 15 12 9 6" }) });
 }
 function me({ className: e }) {
@@ -302,16 +303,16 @@ function ge({ isOpen: e, onClick: a, position: c }) {
       onClick: a,
       className: "acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-primary-600 acx-text-white acx-shadow-lg hover:acx-bg-primary-700 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
       "aria-label": e ? "Close chat" : "Open chat",
-      children: e ? /* @__PURE__ */ t(he, { className: "acx-w-6 acx-h-6" }) : /* @__PURE__ */ o(B, { children: [
-        /* @__PURE__ */ t(H, { className: "acx-w-7 acx-h-7" }),
-        n.unreadCount > 0 && /* @__PURE__ */ t(P, { count: n.unreadCount })
+      children: e ? /* @__PURE__ */ t(he, { className: "acx-w-6 acx-h-6" }) : /* @__PURE__ */ o(D, { children: [
+        /* @__PURE__ */ t(P, { className: "acx-w-7 acx-h-7" }),
+        n.unreadCount > 0 && /* @__PURE__ */ t(U, { count: n.unreadCount })
       ] })
     }
   ) });
 }
 const fe = [
   { id: "home", label: "Home", Icon: oe },
-  { id: "messages", label: "Messages", Icon: H },
+  { id: "messages", label: "Messages", Icon: P },
   { id: "news", label: "News", Icon: ie },
   { id: "roadmap", label: "Roadmap", Icon: le },
   { id: "help", label: "Help", Icon: xe }
@@ -344,7 +345,7 @@ function ye({ activeTab: e, onTabChange: a }) {
       children: [
         /* @__PURE__ */ o("div", { className: "acx-relative", children: [
           /* @__PURE__ */ t(i, { className: "acx-w-5 acx-h-5" }),
-          r === "messages" && c.unreadCount > 0 && /* @__PURE__ */ t(P, { count: c.unreadCount })
+          r === "messages" && c.unreadCount > 0 && /* @__PURE__ */ t(U, { count: c.unreadCount })
         ] }),
         /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-font-medium", children: s })
       ]
@@ -353,8 +354,8 @@ function ye({ activeTab: e, onTabChange: a }) {
   )) });
 }
 function be() {
-  const { dispatch: e, config: a } = N(), c = g(), n = g();
-  c.current || (c.current = new k({ baseUrl: a.apiUrl, token: a.token }));
+  const { dispatch: e, config: a } = N(), c = m(), n = m();
+  c.current || (c.current = new C({ baseUrl: a.apiUrl, token: a.token }));
   const r = y((s) => {
     if (n.current && clearTimeout(n.current), !s.trim()) {
       e({ type: "SET_KB_RESULTS", payload: [] });
@@ -367,29 +368,29 @@ function be() {
       } catch {
         e({ type: "SET_KB_RESULTS", payload: [] });
       }
-    }, C.SEARCH_DEBOUNCE);
+    }, k.SEARCH_DEBOUNCE);
   }, [e]);
   return _(() => () => {
     n.current && clearTimeout(n.current);
   }, []), { search: r };
 }
 function G() {
-  const { state: e, dispatch: a, config: c } = N(), n = g(), r = g(!1);
-  return n.current || (n.current = new k({ baseUrl: c.apiUrl, token: c.token })), _(() => {
+  const { state: e, dispatch: a, config: c } = N(), n = m(), r = m(!1);
+  return n.current || (n.current = new C({ baseUrl: c.apiUrl, token: c.token })), _(() => {
     r.current || (r.current = !0, n.current.getAnnouncements().then((s) => {
-      a({ type: "SET_ANNOUNCEMENTS", payload: A(s) });
+      a({ type: "SET_ANNOUNCEMENTS", payload: I(s) });
     }).catch(() => {
     }));
   }, [a]), { announcements: e.announcements };
 }
 function Se({ onSearch: e, placeholder: a = "Search for help..." }) {
-  const [c, n] = w(""), r = g();
+  const [c, n] = w(""), r = m();
   return _(() => (r.current && clearTimeout(r.current), r.current = setTimeout(() => {
     e(c.trim());
-  }, C.SEARCH_DEBOUNCE), () => {
+  }, k.SEARCH_DEBOUNCE), () => {
     r.current && clearTimeout(r.current);
   }), [c, e]), /* @__PURE__ */ o("div", { className: "acx-relative", children: [
-    /* @__PURE__ */ t(de, { className: "acx-absolute acx-left-3 acx-top-1/2 -acx-translate-y-1/2 acx-w-4 acx-h-4 acx-text-gray-400" }),
+    /* @__PURE__ */ t(ue, { className: "acx-absolute acx-left-3 acx-top-1/2 -acx-translate-y-1/2 acx-w-4 acx-h-4 acx-text-gray-400" }),
     /* @__PURE__ */ t(
       "input",
       {
@@ -402,7 +403,7 @@ function Se({ onSearch: e, placeholder: a = "Search for help..." }) {
     )
   ] });
 }
-function j({ article: e, onClick: a }) {
+function $({ article: e, onClick: a }) {
   return /* @__PURE__ */ o(
     "button",
     {
@@ -413,12 +414,12 @@ function j({ article: e, onClick: a }) {
           /* @__PURE__ */ t("h4", { className: "acx-text-sm acx-font-medium acx-text-gray-900 acx-truncate group-hover:acx-text-primary-600 acx-transition-colors", children: e.title }),
           e.summary && /* @__PURE__ */ t("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5 acx-line-clamp-2", children: e.summary })
         ] }),
-        /* @__PURE__ */ t($, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })
+        /* @__PURE__ */ t(H, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })
       ]
     }
   );
 }
-function K(e) {
+function j(e) {
   const a = new Date(e), n = (/* @__PURE__ */ new Date()).getTime() - a.getTime(), r = Math.floor(n / 1e3), s = Math.floor(r / 60), i = Math.floor(s / 60), x = Math.floor(i / 24);
   return r < 60 ? "Just now" : s < 60 ? `${s}m ago` : i < 24 ? `${i}h ago` : x < 7 ? `${x}d ago` : a.toLocaleDateString(void 0, {
     month: "short",
@@ -450,7 +451,7 @@ const Te = {
   maintenance: "Maintenance",
   event: "Event"
 };
-function W({ announcement: e, onClick: a }) {
+function K({ announcement: e, onClick: a }) {
   return /* @__PURE__ */ o(
     "button",
     {
@@ -471,7 +472,7 @@ function W({ announcement: e, onClick: a }) {
             className: "acx-w-full acx-h-32 acx-object-cover acx-rounded-lg acx-mb-2"
           }
         ),
-        /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-gray-400", children: K(e.published_at) })
+        /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-gray-400", children: j(e.published_at) })
       ]
     }
   );
@@ -489,9 +490,9 @@ function we() {
     ] }),
     /* @__PURE__ */ t("div", { className: "acx-px-4 -acx-mt-4", children: /* @__PURE__ */ o("div", { className: "acx-bg-white acx-rounded-xl acx-shadow-lg acx-p-4", children: [
       /* @__PURE__ */ t(Se, { onSearch: n }),
-      /* @__PURE__ */ t("div", { className: "acx-mt-3 acx-space-y-1", children: e.kbLoading ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Searching..." }) : e.kbResults.length > 0 ? e.kbResults.slice(0, 5).map((u) => /* @__PURE__ */ t(j, { article: u, onClick: i }, u.id)) : null })
+      /* @__PURE__ */ t("div", { className: "acx-mt-3 acx-space-y-1", children: e.kbLoading ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Searching..." }) : e.kbResults.length > 0 ? e.kbResults.slice(0, 5).map((u) => /* @__PURE__ */ t($, { article: u, onClick: i }, u.id)) : null })
     ] }) }),
-    s && /* @__PURE__ */ t("div", { className: "acx-px-4 acx-mt-4", children: /* @__PURE__ */ t(W, { announcement: s }) }),
+    s && /* @__PURE__ */ t("div", { className: "acx-px-4 acx-mt-4", children: /* @__PURE__ */ t(K, { announcement: s }) }),
     /* @__PURE__ */ t("div", { className: "acx-mt-auto acx-p-4", children: /* @__PURE__ */ t(
       "button",
       {
@@ -523,7 +524,7 @@ function O(e, a) {
   );
   return [n, s];
 }
-function V() {
+function W() {
   return typeof crypto < "u" && typeof crypto.randomUUID == "function" ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
     const a = Math.random() * 16 | 0;
     return (e === "x" ? a : a & 3 | 8).toString(16);
@@ -540,34 +541,34 @@ function ke() {
   };
 }
 function Ce() {
-  var p;
-  const { state: e, dispatch: a, config: c } = N(), [n, r] = O("session_key", null), [s, i] = O("chat_access_token", null), x = g();
-  x.current || (x.current = new k({ baseUrl: c.apiUrl, token: c.token }), s && x.current.setChatToken(s));
+  var b;
+  const { state: e, dispatch: a, config: c } = N(), [n, r] = O("session_key", null), [s, i] = O("chat_access_token", null), x = m();
+  x.current || (x.current = new C({ baseUrl: c.apiUrl, token: c.token }), s && x.current.setChatToken(s));
   const u = x.current, T = y(async () => {
-    var h;
-    const f = V(), d = c.mode === "lead" ? ke() : void 0;
+    var l;
+    const f = W(), d = c.mode === "lead" ? ke() : void 0;
     try {
       a({ type: "SET_LOADING", payload: !0 });
-      const l = await u.createSession({
+      const h = await u.createSession({
         source: c.mode === "lead" ? "lead_bot" : "user_bot",
         session_key: f,
         visitor_name: c.userName,
         visitor_email: c.userEmail,
         visitor_metadata: d
       });
-      return l.access_token && (u.setChatToken(l.access_token), i(l.access_token)), a({ type: "SET_SESSION", payload: l }), r(l.session_key), (h = c.onSessionCreated) == null || h.call(c, l.session_key), a({ type: "SET_LOADING", payload: !1 }), l;
-    } catch (l) {
-      throw a({ type: "SET_ERROR", payload: "Failed to create chat session" }), a({ type: "SET_LOADING", payload: !1 }), l;
+      return h.access_token && (u.setChatToken(h.access_token), i(h.access_token)), a({ type: "SET_SESSION", payload: h }), r(h.session_key), (l = c.onSessionCreated) == null || l.call(c, h.session_key), a({ type: "SET_LOADING", payload: !1 }), h;
+    } catch (h) {
+      throw a({ type: "SET_ERROR", payload: "Failed to create chat session" }), a({ type: "SET_LOADING", payload: !1 }), h;
     }
-  }, [u, c, a, r, i]), b = y(async (f) => {
+  }, [u, c, a, r, i]), g = y(async (f) => {
     try {
       a({ type: "SET_LOADING", payload: !0 });
-      const d = await u.getSession(f), { messages: h, ...l } = d;
-      return a({ type: "SET_SESSION", payload: l }), a({ type: "SET_MESSAGES", payload: h }), a({ type: "SET_LOADING", payload: !1 }), l;
+      const d = await u.getSession(f), { messages: l, ...h } = d;
+      return a({ type: "SET_SESSION", payload: h }), a({ type: "SET_MESSAGES", payload: l }), a({ type: "SET_LOADING", payload: !1 }), h;
     } catch {
       return r(null), i(null), u.setChatToken(""), a({ type: "SET_LOADING", payload: !1 }), null;
     }
-  }, [u, a, r, i]), m = y(async (f, d) => {
+  }, [u, a, r, i]), p = y(async (f, d) => {
     if (e.session) {
       a({ type: "SET_VISITOR_INFO", payload: { name: f, email: d } });
       try {
@@ -580,18 +581,18 @@ function Ce() {
     }
   }, [u, e.session, a]);
   return _(() => {
-    n && !e.session && b(n);
+    n && !e.session && g(n);
   }, []), {
     session: e.session,
-    sessionKey: ((p = e.session) == null ? void 0 : p.session_key) ?? n,
+    sessionKey: ((b = e.session) == null ? void 0 : b.session_key) ?? n,
     accessToken: u.getChatToken() ?? s,
     createSession: T,
-    restoreSession: b,
-    updateVisitorInfo: m,
+    restoreSession: g,
+    updateVisitorInfo: p,
     api: u
   };
 }
-class Ae {
+class Ie {
   constructor(a) {
     S(this, "ws", null);
     S(this, "url");
@@ -644,8 +645,8 @@ class Ae {
   scheduleReconnect() {
     if (this.reconnectTimer) return;
     const a = Math.min(
-      C.WS_RECONNECT_BASE * Math.pow(2, this.retryCount),
-      C.WS_RECONNECT_MAX
+      k.WS_RECONNECT_BASE * Math.pow(2, this.retryCount),
+      k.WS_RECONNECT_MAX
     );
     this.reconnectTimer = setTimeout(() => {
       this.reconnectTimer = null, this.retryCount++, this.connect();
@@ -654,21 +655,21 @@ class Ae {
   startHeartbeat() {
     this.stopHeartbeat(), this.heartbeatTimer = setInterval(() => {
       this.send({ type: "heartbeat" });
-    }, C.WS_HEARTBEAT_INTERVAL);
+    }, k.WS_HEARTBEAT_INTERVAL);
   }
   stopHeartbeat() {
     this.heartbeatTimer && (clearInterval(this.heartbeatTimer), this.heartbeatTimer = null);
   }
 }
-function Ie(e, a) {
-  const { state: c, dispatch: n, config: r } = N(), s = g(null), i = g(/* @__PURE__ */ new Map());
+function Ae(e, a) {
+  const { state: c, dispatch: n, config: r } = N(), s = m(null), i = m(/* @__PURE__ */ new Map()), x = m(null);
   _(() => {
     if (!e) return;
-    const m = r.apiUrl.startsWith("https") ? "wss" : "ws", p = r.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
-    let f = `${m}://${p}${ee(e)}`;
-    a && (f += `?token=${encodeURIComponent(a)}`);
-    const d = new Ae({
-      url: f,
+    const g = r.apiUrl.startsWith("https") ? "wss" : "ws", p = r.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    let b = `${g}://${p}${ee(e)}`;
+    a && (b += `?token=${encodeURIComponent(a)}`);
+    const f = new Ie({
+      url: b,
       onStatusChange: (l) => {
         n({ type: "SET_CONNECTED", payload: l });
       },
@@ -683,8 +684,8 @@ function Ie(e, a) {
           case "message_ack":
             if (l.temp_id && l.real_id) {
               n({ type: "ACK_MESSAGE", payload: { temp_id: l.temp_id, real_id: l.real_id } });
-              const I = i.current.get(l.temp_id);
-              I && (clearTimeout(I), i.current.delete(l.temp_id));
+              const h = i.current.get(l.temp_id);
+              h && (clearTimeout(h), i.current.delete(l.temp_id));
             }
             break;
           case "agent_joined":
@@ -694,7 +695,9 @@ function Ie(e, a) {
             n({
               type: "SET_AGENT_TYPING",
               payload: { is_typing: l.is_typing ?? !1, agent_name: l.agent_name }
-            });
+            }), x.current && clearTimeout(x.current), l.is_typing && (x.current = setTimeout(() => {
+              n({ type: "SET_AGENT_TYPING", payload: { is_typing: !1 } }), x.current = null;
+            }, k.TYPING_TIMEOUT));
             break;
           case "heartbeat_ack":
             break;
@@ -704,20 +707,20 @@ function Ie(e, a) {
         }
       }
     });
-    d.connect(), s.current = d;
-    const h = i.current;
+    f.connect(), s.current = f;
+    const d = i.current;
     return () => {
-      d.disconnect(), s.current = null, h.forEach((l) => clearTimeout(l)), h.clear();
+      f.disconnect(), s.current = null, d.forEach((l) => clearTimeout(l)), d.clear(), x.current && (clearTimeout(x.current), x.current = null);
     };
   }, [e, a, r.apiUrl]);
-  const x = y((m) => {
+  const u = y((g) => {
     if (!s.current) return;
-    const p = V(), f = {
+    const p = W(), b = {
       id: p,
       session: 0,
       sender_type: r.mode === "lead" ? "visitor" : "user",
       sender_name: c.visitorName || "You",
-      content: m,
+      content: g,
       content_type: "text",
       attachments: [],
       is_read: !0,
@@ -725,37 +728,29 @@ function Ie(e, a) {
       temp_id: p,
       status: "sending"
     };
-    n({ type: "ADD_MESSAGE", payload: f }), s.current.send({
+    n({ type: "ADD_MESSAGE", payload: b }), s.current.send({
       type: "message",
-      text: m,
+      text: g,
       temp_id: p
     });
-    const d = setTimeout(() => {
+    const f = setTimeout(() => {
       n({ type: "FAIL_MESSAGE", payload: { temp_id: p } }), i.current.delete(p);
-    }, C.MESSAGE_ACK_TIMEOUT);
-    i.current.set(p, d);
-  }, [r.mode, c.visitorName, n]), u = y((m) => {
+    }, k.MESSAGE_ACK_TIMEOUT);
+    i.current.set(p, f);
+  }, [r.mode, c.visitorName, n]), T = y((g) => {
     var p;
-    (p = s.current) == null || p.send({ type: "typing", is_typing: m });
-  }, []), T = y(() => {
-    var m;
-    (m = s.current) == null || m.send({ type: "request_agent" });
-  }, []), b = y((m) => {
-    var p;
-    (p = s.current) == null || p.send({ type: "read", message_id: m });
+    (p = s.current) == null || p.send({ type: "typing", is_typing: g });
   }, []);
   return {
     isConnected: c.isConnected,
-    sendMessage: x,
-    sendTyping: u,
-    requestAgent: T,
-    markRead: b
+    sendMessage: u,
+    sendTyping: T
   };
 }
-function Re() {
+function Oe() {
   var s, i, x;
-  const { state: e, dispatch: a, config: c } = N(), n = g(), r = g(!1);
-  return n.current || (n.current = new k({ baseUrl: c.apiUrl, token: c.token })), _(() => {
+  const { state: e, dispatch: a, config: c } = N(), n = m(), r = m(!1);
+  return n.current || (n.current = new C({ baseUrl: c.apiUrl, token: c.token })), _(() => {
     r.current || (r.current = !0, n.current.getOperatingHoursStatus().then((u) => {
       a({ type: "SET_OPERATING_HOURS", payload: u });
     }).catch(() => {
@@ -766,10 +761,10 @@ function Re() {
     responseTime: (x = e.operatingHours) == null ? void 0 : x.response_time
   };
 }
-function Oe(e) {
+function Re(e) {
   return e.split(" ").slice(0, 2).map((a) => a[0] ?? "").join("").toUpperCase();
 }
-const M = [
+const R = [
   "acx-bg-blue-500",
   "acx-bg-green-500",
   "acx-bg-purple-500",
@@ -781,9 +776,9 @@ function Me(e) {
   let a = 0;
   for (let c = 0; c < e.length; c++)
     a = e.charCodeAt(c) + ((a << 5) - a);
-  return M[Math.abs(a) % M.length];
+  return R[Math.abs(a) % R.length];
 }
-function q({ name: e, avatarUrl: a }) {
+function V({ name: e, avatarUrl: a }) {
   return a ? /* @__PURE__ */ t(
     "img",
     {
@@ -795,7 +790,7 @@ function q({ name: e, avatarUrl: a }) {
     "div",
     {
       className: `acx-w-8 acx-h-8 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-text-white acx-text-xs acx-font-semibold acx-flex-shrink-0 ${Me(e)}`,
-      children: Oe(e)
+      children: Re(e)
     }
   );
 }
@@ -820,7 +815,7 @@ function Be({ message: e }) {
   var n;
   const a = e.sender_type === "visitor" || e.sender_type === "user";
   return e.sender_type === "system" ? /* @__PURE__ */ t("div", { className: "acx-flex acx-justify-center acx-py-2", children: /* @__PURE__ */ t("span", { className: "acx-text-xs acx-text-gray-400 acx-italic", children: e.content }) }) : /* @__PURE__ */ o("div", { className: `acx-flex acx-gap-2 acx-mb-3 ${a ? "acx-justify-end" : "acx-justify-start"}`, children: [
-    !a && /* @__PURE__ */ t(q, { name: e.sender_name }),
+    !a && /* @__PURE__ */ t(V, { name: e.sender_name }),
     /* @__PURE__ */ o("div", { className: `acx-max-w-[75%] ${a ? "acx-order-1" : ""}`, children: [
       !a && e.sender_name && /* @__PURE__ */ t("span", { className: "acx-text-xs acx-text-gray-500 acx-ml-1 acx-mb-0.5 acx-block", children: e.sender_name }),
       /* @__PURE__ */ t(
@@ -848,7 +843,7 @@ function Be({ message: e }) {
         s
       )) }),
       /* @__PURE__ */ o("div", { className: `acx-flex acx-items-center acx-gap-1 acx-mt-0.5 ${a ? "acx-justify-end" : ""}`, children: [
-        /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-gray-400", children: K(e.created_at) }),
+        /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-gray-400", children: j(e.created_at) }),
         a && e.status === "sending" && /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-gray-400", children: "Sending..." }),
         a && e.status === "failed" && /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-red-500", children: "Failed" })
       ] })
@@ -857,7 +852,7 @@ function Be({ message: e }) {
 }
 function Ue({ agentName: e }) {
   return /* @__PURE__ */ o("div", { className: "acx-flex acx-items-center acx-gap-2 acx-mb-3", children: [
-    /* @__PURE__ */ t(q, { name: e ?? "Agent" }),
+    /* @__PURE__ */ t(V, { name: e ?? "Agent" }),
     /* @__PURE__ */ t("div", { className: "acx-bg-gray-100 acx-rounded-2xl acx-rounded-bl-md acx-px-4 acx-py-3", children: /* @__PURE__ */ o("div", { className: "acx-flex acx-gap-1", children: [
       /* @__PURE__ */ t("span", { className: "acx-w-1.5 acx-h-1.5 acx-bg-gray-400 acx-rounded-full acx-typing-dot" }),
       /* @__PURE__ */ t("span", { className: "acx-w-1.5 acx-h-1.5 acx-bg-gray-400 acx-rounded-full acx-typing-dot" }),
@@ -866,7 +861,7 @@ function Ue({ agentName: e }) {
   ] });
 }
 function Pe({ messages: e, agentTyping: a }) {
-  const c = g(null), n = g(null);
+  const c = m(null), n = m(null);
   return _(() => {
     var r;
     (r = c.current) == null || r.scrollIntoView({ behavior: "smooth" });
@@ -890,26 +885,26 @@ function Pe({ messages: e, agentTyping: a }) {
   );
 }
 function He({ onSend: e, onTyping: a, onFileUpload: c, mode: n, disabled: r }) {
-  const [s, i] = w(""), x = g(null), u = g(), T = y(() => {
+  const [s, i] = w(""), x = m(null), u = m(), T = y(() => {
     const d = s.trim();
     !d || r || (e(d), i(""), a == null || a(!1));
-  }, [s, r, e, a]), b = (d) => {
+  }, [s, r, e, a]), g = (d) => {
     d.key === "Enter" && !d.shiftKey && (d.preventDefault(), T());
-  }, m = (d) => {
-    const h = d.target.value;
-    h.length > R.MAX_MESSAGE_LENGTH || (i(h), a == null || a(!0), u.current && clearTimeout(u.current), u.current = setTimeout(() => a == null ? void 0 : a(!1), 2e3));
-  }, p = () => {
+  }, p = (d) => {
+    const l = d.target.value;
+    l.length > A.MAX_MESSAGE_LENGTH || (i(l), a == null || a(!0), u.current && clearTimeout(u.current), u.current = setTimeout(() => a == null ? void 0 : a(!1), 2e3));
+  }, b = () => {
     var d;
     (d = x.current) == null || d.click();
   }, f = (d) => {
     d.target.files && d.target.files.length > 0 && (c == null || c(d.target.files), d.target.value = "");
   };
   return /* @__PURE__ */ t("div", { className: "acx-border-t acx-border-gray-200 acx-bg-white acx-px-3 acx-py-2", children: /* @__PURE__ */ o("div", { className: "acx-flex acx-items-end acx-gap-2", children: [
-    n === "user" && c && /* @__PURE__ */ o(B, { children: [
+    n === "user" && c && /* @__PURE__ */ o(D, { children: [
       /* @__PURE__ */ t(
         "button",
         {
-          onClick: p,
+          onClick: b,
           className: "acx-p-1.5 acx-text-gray-400 hover:acx-text-gray-600 acx-transition-colors acx-flex-shrink-0",
           "aria-label": "Attach file",
           type: "button",
@@ -922,7 +917,7 @@ function He({ onSend: e, onTyping: a, onFileUpload: c, mode: n, disabled: r }) {
           ref: x,
           type: "file",
           className: "acx-hidden",
-          accept: R.ALLOWED_FILE_TYPES.join(","),
+          accept: A.ALLOWED_FILE_TYPES.join(","),
           multiple: !0,
           onChange: f
         }
@@ -932,8 +927,8 @@ function He({ onSend: e, onTyping: a, onFileUpload: c, mode: n, disabled: r }) {
       "textarea",
       {
         value: s,
-        onChange: m,
-        onKeyDown: b,
+        onChange: p,
+        onKeyDown: g,
         placeholder: "Type a message...",
         disabled: r,
         rows: 1,
@@ -949,12 +944,12 @@ function He({ onSend: e, onTyping: a, onFileUpload: c, mode: n, disabled: r }) {
         className: "acx-p-1.5 acx-text-primary-600 hover:acx-text-primary-700 disabled:acx-text-gray-300 acx-transition-colors acx-flex-shrink-0",
         "aria-label": "Send message",
         type: "button",
-        children: /* @__PURE__ */ t(ue, { className: "acx-w-5 acx-h-5" })
+        children: /* @__PURE__ */ t(de, { className: "acx-w-5 acx-h-5" })
       }
     )
   ] }) });
 }
-function L({ isOnline: e, offlineMessage: a, responseTime: c }) {
+function M({ isOnline: e, offlineMessage: a, responseTime: c }) {
   return e ? null : /* @__PURE__ */ t("div", { className: "acx-bg-amber-50 acx-border-b acx-border-amber-200 acx-px-4 acx-py-2.5", children: /* @__PURE__ */ o("div", { className: "acx-flex acx-items-center acx-gap-2", children: [
     /* @__PURE__ */ t("div", { className: "acx-w-2 acx-h-2 acx-rounded-full acx-bg-amber-400 acx-flex-shrink-0" }),
     /* @__PURE__ */ o("p", { className: "acx-text-xs acx-text-amber-800", children: [
@@ -967,7 +962,7 @@ function L({ isOnline: e, offlineMessage: a, responseTime: c }) {
     ] })
   ] }) });
 }
-function $e({ onSubmit: e, loading: a }) {
+function Ge({ onSubmit: e, loading: a }) {
   const [c, n] = w(""), [r, s] = w("");
   return /* @__PURE__ */ o("form", { onSubmit: (x) => {
     x.preventDefault(), r.trim() && e({ name: c.trim(), email: r.trim() });
@@ -1005,40 +1000,40 @@ function $e({ onSubmit: e, loading: a }) {
     )
   ] });
 }
-function Ge() {
-  const { state: e, dispatch: a, config: c } = N(), { session: n, sessionKey: r, accessToken: s, createSession: i, updateVisitorInfo: x } = Ce(), { sendMessage: u, sendTyping: T, isConnected: b } = Ie(r, s), { isOnline: m, offlineMessage: p, responseTime: f } = Re(), [d, h] = w(!1), l = g(null);
+function $e() {
+  const { state: e, dispatch: a, config: c } = N(), { session: n, sessionKey: r, accessToken: s, createSession: i, updateVisitorInfo: x } = Ce(), { sendMessage: u, sendTyping: T, isConnected: g } = Ae(r, s), { isOnline: p, offlineMessage: b, responseTime: f } = Oe(), [d, l] = w(!1), h = m(null);
   _(() => {
-    b && l.current && (u(l.current), l.current = null);
-  }, [b, u]);
-  const I = y(async (v) => {
+    g && h.current && (u(h.current), h.current = null);
+  }, [g, u]);
+  const F = y(async (v) => {
     if (!n) {
       if (c.mode === "lead" && !e.visitorEmail) {
-        l.current = v, h(!0);
+        h.current = v, l(!0);
         return;
       }
       try {
-        l.current = v, await i();
+        h.current = v, await i();
       } catch {
-        l.current = null;
+        h.current = null;
       }
       return;
     }
     u(v);
-  }, [n, c.mode, e.visitorEmail, i, u]), F = y(async (v) => {
-    a({ type: "SET_VISITOR_INFO", payload: v }), h(!1);
+  }, [n, c.mode, e.visitorEmail, i, u]), q = y(async (v) => {
+    a({ type: "SET_VISITOR_INFO", payload: v }), l(!1);
     try {
       await i() && await x(v.name, v.email);
     } catch {
-      l.current = null;
+      h.current = null;
     }
   }, [i, x, a]);
   return _(() => {
     e.unreadCount > 0 && e.activeTab === "messages" && a({ type: "RESET_UNREAD" });
   }, [e.unreadCount, e.activeTab, a]), d && !n ? /* @__PURE__ */ o("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
-    /* @__PURE__ */ t(L, { isOnline: m, offlineMessage: p, responseTime: f }),
-    /* @__PURE__ */ t($e, { onSubmit: F, loading: e.loading })
+    /* @__PURE__ */ t(M, { isOnline: p, offlineMessage: b, responseTime: f }),
+    /* @__PURE__ */ t(Ge, { onSubmit: q, loading: e.loading })
   ] }) : /* @__PURE__ */ o("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
-    /* @__PURE__ */ t(L, { isOnline: m, offlineMessage: p, responseTime: f }),
+    /* @__PURE__ */ t(M, { isOnline: p, offlineMessage: b, responseTime: f }),
     e.messages.length === 0 && !n ? /* @__PURE__ */ o("div", { className: "acx-flex-1 acx-flex acx-flex-col acx-items-center acx-justify-center acx-px-6 acx-text-center", children: [
       /* @__PURE__ */ t("div", { className: "acx-w-12 acx-h-12 acx-bg-primary-100 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-mb-3", children: /* @__PURE__ */ t("svg", { className: "acx-w-6 acx-h-6 acx-text-primary-600", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) }) }),
       /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-600 acx-font-medium", children: "No messages yet" }),
@@ -1047,7 +1042,7 @@ function Ge() {
     /* @__PURE__ */ t(
       He,
       {
-        onSend: I,
+        onSend: F,
         onTyping: T,
         mode: c.mode,
         disabled: e.loading
@@ -1062,19 +1057,19 @@ function je() {
       /* @__PURE__ */ t("h2", { className: "acx-text-base acx-font-semibold acx-text-gray-900", children: "News & Updates" }),
       /* @__PURE__ */ t("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5", children: "Latest from the team" })
     ] }),
-    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-3", children: e.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No announcements yet" }) }) : e.map((a) => /* @__PURE__ */ t(W, { announcement: a }, a.id)) })
+    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-3", children: e.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No announcements yet" }) }) : e.map((a) => /* @__PURE__ */ t(K, { announcement: a }, a.id)) })
   ] });
 }
 function Ke() {
-  const { state: e, dispatch: a, config: c } = N(), n = g(), r = g(!1);
-  return n.current || (n.current = new k({ baseUrl: c.apiUrl, token: c.token })), _(() => {
+  const { state: e, dispatch: a, config: c } = N(), n = m(), r = m(!1);
+  return n.current || (n.current = new C({ baseUrl: c.apiUrl, token: c.token })), _(() => {
     r.current || (r.current = !0, n.current.getRoadmapItems().then((s) => {
-      a({ type: "SET_ROADMAP_ITEMS", payload: A(s) });
+      a({ type: "SET_ROADMAP_ITEMS", payload: I(s) });
     }).catch(() => {
     }));
   }, [a]), { roadmapItems: e.roadmapItems };
 }
-const D = {
+const L = {
   planned: { bg: "acx-bg-gray-100", text: "acx-text-gray-600", label: "Planned" },
   in_progress: { bg: "acx-bg-blue-100", text: "acx-text-blue-700", label: "In Progress" },
   beta: { bg: "acx-bg-amber-100", text: "acx-text-amber-700", label: "Beta" },
@@ -1087,7 +1082,7 @@ const D = {
   platform: "Platform"
 };
 function Ve({ item: e }) {
-  const a = D[e.status] ?? D.planned;
+  const a = L[e.status] ?? L.planned;
   return /* @__PURE__ */ o("div", { className: "acx-p-4 acx-border acx-border-gray-200 acx-rounded-xl", children: [
     /* @__PURE__ */ o("div", { className: "acx-flex acx-items-center acx-justify-between acx-mb-2", children: [
       /* @__PURE__ */ t("span", { className: `acx-text-[10px] acx-font-semibold acx-px-2 acx-py-0.5 acx-rounded-full ${a.bg} ${a.text}`, children: a.label }),
@@ -1098,9 +1093,9 @@ function Ve({ item: e }) {
     /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-gray-400", children: We[e.category] ?? e.category })
   ] });
 }
-const qe = ["in_progress", "beta", "planned", "released"];
-function Fe() {
-  const { roadmapItems: e } = Ke(), a = qe.reduce((n, r) => {
+const Fe = ["in_progress", "beta", "planned", "released"];
+function qe() {
+  const { roadmapItems: e } = Ke(), a = Fe.reduce((n, r) => {
     const s = e.filter((i) => i.status === r);
     return s.length > 0 && n.push({ status: r, items: s }), n;
   }, []), c = {
@@ -1122,24 +1117,24 @@ function Fe() {
 }
 function Ye() {
   var d;
-  const { state: e, dispatch: a, config: c } = N(), n = e.kbTopics, [r, s] = w(null), [i, x] = w([]), [u, T] = w(!1), b = g();
-  b.current || (b.current = new k({ baseUrl: c.apiUrl, token: c.token })), _(() => {
-    var h;
-    ((h = e.kbTopics) == null ? void 0 : h.length) > 0 || b.current.getKBTopics().then((l) => a({ type: "SET_KB_TOPICS", payload: Array.isArray(l) ? l : [] })).catch(() => {
+  const { state: e, dispatch: a, config: c } = N(), n = e.kbTopics, [r, s] = w(null), [i, x] = w([]), [u, T] = w(!1), g = m();
+  g.current || (g.current = new C({ baseUrl: c.apiUrl, token: c.token })), _(() => {
+    var l;
+    ((l = e.kbTopics) == null ? void 0 : l.length) > 0 || g.current.getKBTopics().then((h) => a({ type: "SET_KB_TOPICS", payload: Array.isArray(h) ? h : [] })).catch(() => {
     });
   }, [(d = e.kbTopics) == null ? void 0 : d.length, a]);
-  const m = y(async (h) => {
-    s(h), T(!0);
+  const p = y(async (l) => {
+    s(l), T(!0);
     try {
-      const l = await b.current.getKBTopicArticles(h.slug);
-      x(l);
+      const h = await g.current.getKBTopicArticles(l.slug);
+      x(h);
     } catch {
       x([]);
     } finally {
       T(!1);
     }
-  }, []), p = y((h) => {
-    h.url && window.open(h.url, "_blank", "noopener,noreferrer");
+  }, []), b = y((l) => {
+    l.url && window.open(l.url, "_blank", "noopener,noreferrer");
   }, []), f = y(() => {
     s(null), x([]);
   }, []);
@@ -1163,30 +1158,30 @@ function Ye() {
         r.article_count !== 1 ? "s" : ""
       ] })
     ] }),
-    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: u ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Loading..." }) : i.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "No articles found" }) : i.map((h) => /* @__PURE__ */ t(j, { article: h, onClick: p }, h.id)) })
+    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: u ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Loading..." }) : i.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "No articles found" }) : i.map((l) => /* @__PURE__ */ t($, { article: l, onClick: b }, l.id)) })
   ] }) : /* @__PURE__ */ o("div", { className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto", children: [
     /* @__PURE__ */ o("div", { className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100", children: [
       /* @__PURE__ */ t("h2", { className: "acx-text-base acx-font-semibold acx-text-gray-900", children: "Help Centre" }),
       /* @__PURE__ */ t("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5", children: "Browse help topics" })
     ] }),
-    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: n.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No help topics available" }) }) : n.map((h) => /* @__PURE__ */ o(
+    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: n.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No help topics available" }) }) : n.map((l) => /* @__PURE__ */ o(
       "button",
       {
-        onClick: () => m(h),
+        onClick: () => p(l),
         className: "acx-w-full acx-flex acx-items-center acx-justify-between acx-p-3 acx-rounded-lg acx-text-left hover:acx-bg-gray-50 acx-transition-colors",
         children: [
           /* @__PURE__ */ o("div", { children: [
-            /* @__PURE__ */ t("h4", { className: "acx-text-sm acx-font-medium acx-text-gray-900", children: h.name }),
+            /* @__PURE__ */ t("h4", { className: "acx-text-sm acx-font-medium acx-text-gray-900", children: l.name }),
             /* @__PURE__ */ o("p", { className: "acx-text-xs acx-text-gray-500", children: [
-              h.article_count,
+              l.article_count,
               " article",
-              h.article_count !== 1 ? "s" : ""
+              l.article_count !== 1 ? "s" : ""
             ] })
           ] }),
-          /* @__PURE__ */ t($, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })
+          /* @__PURE__ */ t(H, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })
         ]
       },
-      h.id
+      l.id
     )) })
   ] });
 }
@@ -1217,9 +1212,9 @@ function Je({ position: e }) {
           ] }),
           /* @__PURE__ */ o("div", { className: "acx-flex-1 acx-overflow-hidden", children: [
             a.activeTab === "home" && /* @__PURE__ */ t(we, {}),
-            a.activeTab === "messages" && /* @__PURE__ */ t(Ge, {}),
+            a.activeTab === "messages" && /* @__PURE__ */ t($e, {}),
             a.activeTab === "news" && /* @__PURE__ */ t(je, {}),
-            a.activeTab === "roadmap" && /* @__PURE__ */ t(Fe, {}),
+            a.activeTab === "roadmap" && /* @__PURE__ */ t(qe, {}),
             a.activeTab === "help" && /* @__PURE__ */ t(Ye, {})
           ] }),
           /* @__PURE__ */ t(
