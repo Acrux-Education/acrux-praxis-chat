@@ -9,6 +9,7 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
   const { state, dispatch, config } = useChatContext()
   const wsRef = useRef<ChatWebSocket | null>(null)
   const ackTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map())
+  const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (!sessionKey) return
@@ -65,6 +66,14 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
               type: 'SET_AGENT_TYPING',
               payload: { is_typing: data.is_typing ?? false, agent_name: data.agent_name },
             })
+            // Auto-clear typing indicator after timeout if no follow-up
+            if (typingTimerRef.current) clearTimeout(typingTimerRef.current)
+            if (data.is_typing) {
+              typingTimerRef.current = setTimeout(() => {
+                dispatch({ type: 'SET_AGENT_TYPING', payload: { is_typing: false } })
+                typingTimerRef.current = null
+              }, TIMEOUTS.TYPING_TIMEOUT)
+            }
             break
 
           case 'heartbeat_ack':
@@ -86,6 +95,10 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
       wsRef.current = null
       timers.forEach((timer) => clearTimeout(timer))
       timers.clear()
+      if (typingTimerRef.current) {
+        clearTimeout(typingTimerRef.current)
+        typingTimerRef.current = null
+      }
     }
   }, [sessionKey, accessToken, config.apiUrl]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -128,19 +141,9 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
     wsRef.current?.send({ type: 'typing', is_typing: isTyping })
   }, [])
 
-  const requestAgent = useCallback(() => {
-    wsRef.current?.send({ type: 'request_agent' })
-  }, [])
-
-  const markRead = useCallback((messageId: number) => {
-    wsRef.current?.send({ type: 'read', message_id: messageId })
-  }, [])
-
   return {
     isConnected: state.isConnected,
     sendMessage,
     sendTyping,
-    requestAgent,
-    markRead,
   }
 }
