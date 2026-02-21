@@ -48,8 +48,17 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
     case 'SET_SESSION':
       return { ...state, session: action.payload }
 
-    case 'SET_MESSAGES':
-      return { ...state, messages: action.payload }
+    case 'SET_MESSAGES': {
+      // Preserve any optimistic (unsent/sending) messages that aren't in the
+      // server history yet — prevents the history event from wiping messages
+      // added via ADD_MESSAGE before the history arrives.
+      const optimistic = state.messages.filter(
+        (m) => m.temp_id && m.status !== 'sent'
+      )
+      const serverIds = new Set(action.payload.map((m: ChatMessage) => m.id))
+      const keep = optimistic.filter((m) => !serverIds.has(m.id))
+      return { ...state, messages: [...action.payload, ...keep] }
+    }
 
     case 'ADD_MESSAGE':
       return {
