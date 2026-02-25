@@ -10,6 +10,9 @@ export function useChatSession() {
   const [storedSessionKey, setStoredSessionKey] = useLocalStorage<string | null>('session_key', null)
   const [storedAccessToken, setStoredAccessToken] = useLocalStorage<string | null>('chat_access_token', null)
   const apiRef = useRef<ApiClient>()
+  // Track the active session key to prevent stale restoreSession from
+  // overwriting a newer session created while the restore was in-flight.
+  const activeSessionKeyRef = useRef<string | null>(null)
 
   if (!apiRef.current) {
     apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
@@ -41,6 +44,7 @@ export function useChatSession() {
         setStoredAccessToken(session.access_token)
       }
 
+      activeSessionKeyRef.current = session.session_key
       dispatch({ type: 'SET_SESSION', payload: session })
       setStoredSessionKey(session.session_key)
       config.onSessionCreated?.(session.session_key)
@@ -57,7 +61,17 @@ export function useChatSession() {
     try {
       dispatch({ type: 'SET_LOADING', payload: true })
       const data = await api.getSession(sessionKey)
+
+      // Guard: if a new session was created while this restore was in-flight,
+      // discard the stale restore result to avoid overwriting the new session
+      // and wiping its messages.
+      if (activeSessionKeyRef.current && activeSessionKeyRef.current !== sessionKey) {
+        dispatch({ type: 'SET_LOADING', payload: false })
+        return null
+      }
+
       const { messages, ...session } = data
+      activeSessionKeyRef.current = session.session_key
       dispatch({ type: 'SET_SESSION', payload: session })
       dispatch({ type: 'SET_MESSAGES', payload: messages })
       dispatch({ type: 'SET_LOADING', payload: false })

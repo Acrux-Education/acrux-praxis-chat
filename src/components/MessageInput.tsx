@@ -9,9 +9,10 @@ interface MessageInputProps {
   onFileUpload?: (files: FileList) => void
   mode: WidgetMode
   disabled?: boolean
+  placeholder?: string
 }
 
-export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled }: MessageInputProps) {
+export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, placeholder }: MessageInputProps) {
   const [text, setText] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
@@ -80,7 +81,7 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled }:
           value={text}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          placeholder="Type a message..."
+          placeholder={placeholder ?? 'Type a message...'}
           disabled={disabled}
           rows={1}
           className="acx-flex-1 acx-resize-none acx-border-0 acx-outline-none acx-text-sm acx-py-2 acx-max-h-24 acx-bg-transparent placeholder:acx-text-gray-400"

@@ -11,6 +11,28 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const isVisitor = message.sender_type === 'visitor' || message.sender_type === 'user'
   const isSystem = message.sender_type === 'system'
 
+  // Auto-responses (e.g. offline acknowledgment) render like agent messages
+  if (isSystem && message.content_type === 'auto_response') {
+    return (
+      <div className="acx-flex acx-gap-2 acx-mb-3 acx-justify-start">
+        <AgentAvatar name={message.sender_name} />
+        <div className="acx-max-w-[75%]">
+          {message.sender_name && (
+            <span className="acx-text-xs acx-text-gray-500 acx-ml-1 acx-mb-0.5 acx-block">
+              {message.sender_name}
+            </span>
+          )}
+          <div className="acx-px-3.5 acx-py-2.5 acx-rounded-2xl acx-text-sm acx-leading-relaxed acx-bg-amber-50 acx-text-gray-800 acx-rounded-bl-md acx-border acx-border-amber-200">
+            <p className="acx-whitespace-pre-wrap">{message.content}</p>
+          </div>
+          <span className="acx-text-[10px] acx-text-gray-400 acx-mt-0.5 acx-block">
+            {formatRelativeTime(message.created_at)}
+          </span>
+        </div>
+      </div>
+    )
+  }
+
   if (isSystem) {
     return (
       <div className="acx-flex acx-justify-center acx-py-2">
