@@ -70,6 +70,15 @@ Tabs are **dynamic** — they only appear when the backend returns content for t
 - **Roadmap** — product roadmap items
 - **Help** — knowledge base articles
 
+## Deployment — updating consumers
+
+After pushing changes to this repo, you must update **all three consumers**
+so they pick up the new version:
+
+1. **Pnyx** (`platform-regional/pnyx`) — `npm install @acrux-education/chat-widget@github:Acrux-Education/acrux-praxis-chat#main`, commit lockfile, push to `develop`
+2. **Praxis-FE** (`praxis/praxis-fe`) — same `npm install`, commit lockfile, push to `main` (triggers Railway deploy)
+3. **Webflow** — upload the updated `dist/acrux-chat.iife.js` and `dist/style.css` to the Webflow site
+
 ## Development
 
 ```bash
