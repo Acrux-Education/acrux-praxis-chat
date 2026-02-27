@@ -2,10 +2,13 @@
    Including it would inject an unscoped global CSS reset that conflicts
    with the host app's styles (e.g. Pnyx's own Tailwind). The widget's
    reset is scoped to .acrux-chat-widget below. */
-@tailwind components;
-@tailwind utilities;
 
-/* Scoped reset — only affects elements inside the widget */
+/* ── Scoped reset ──────────────────────────────────────────────────────
+   MUST come before @tailwind so that utility classes (same specificity)
+   win by source order.  e.g.  .acx-mt-auto { margin-top:auto }  will
+   override  .acrux-chat-widget * { margin:0 }  because it appears later
+   in the compiled stylesheet. */
+
 .acrux-chat-widget *,
 .acrux-chat-widget *::before,
 .acrux-chat-widget *::after {
@@ -86,7 +89,11 @@
   margin: 0;
 }
 
-/* Typing indicator animation */
+/* ── Tailwind layers ─────────────────────────────────────────────────── */
+@tailwind components;
+@tailwind utilities;
+
+/* ── Animations (safe after utilities — no property conflicts) ──────── */
 @keyframes typing-dot {
   0%, 60%, 100% {
     opacity: 0.3;
