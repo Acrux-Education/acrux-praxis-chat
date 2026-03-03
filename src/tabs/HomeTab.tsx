@@ -62,7 +62,7 @@ export function HomeTab() {
       <div className="acx-mt-auto acx-p-4">
         <button
           onClick={handleStartChat}
-          className="acx-w-full acx-bg-primary-600 acx-text-white acx-py-3 acx-rounded-xl acx-font-medium acx-text-sm hover:acx-bg-primary-700 acx-transition-colors"
+          className="acx-w-full acx-bg-white acx-text-primary-700 acx-py-3 acx-rounded-xl acx-font-semibold acx-text-base acx-shadow-md acx-border acx-border-primary-200 hover:acx-bg-primary-50 acx-transition-colors"
         >
           Start a conversation
         </button>
