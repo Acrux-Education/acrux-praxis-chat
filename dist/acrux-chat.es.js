@@ -2,7 +2,7 @@ var Y = Object.defineProperty;
 var z = (e, a, c) => a in e ? Y(e, a, { enumerable: !0, configurable: !0, writable: !0, value: c }) : e[a] = c;
 var _ = (e, a, c) => z(e, typeof a != "symbol" ? a + "" : a, c);
 import { jsxs as i, jsx as t, Fragment as O } from "react/jsx-runtime";
-import { createContext as J, useReducer as Q, useMemo as X, useRef as m, useEffect as v, useContext as Z, useCallback as S, useState as E } from "react";
+import { createContext as J, useReducer as Q, useMemo as X, useRef as m, useEffect as T, useContext as Z, useCallback as S, useState as E } from "react";
 const w = {
   SESSIONS: "/api/chat/sessions/",
   SESSION: (e) => `/api/chat/sessions/${e}/`,
@@ -220,8 +220,8 @@ function ne({ children: e, ...a }) {
   ] });
 }
 function se() {
-  const { dispatch: e, config: a } = T(), c = m(!1);
-  return v(() => {
+  const { dispatch: e, config: a } = v(), c = m(!1);
+  return T(() => {
     if (c.current) return;
     c.current = !0;
     const n = new I({ baseUrl: a.apiUrl, token: a.token });
@@ -232,7 +232,7 @@ function se() {
     });
   }, [a.apiUrl, a.token, e]), null;
 }
-function T() {
+function v() {
   const e = Z(H);
   if (!e)
     throw new Error("useChatContext must be used within a ChatProvider");
@@ -250,7 +250,7 @@ function oe({ className: e }) {
   ] });
 }
 function $({ className: e }) {
-  return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) });
+  return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) });
 }
 function ie({ className: e }) {
   return /* @__PURE__ */ i("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -300,12 +300,12 @@ function me({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("polyline", { points: "15 18 9 12 15 6" }) });
 }
 function ge({ isOpen: e, onClick: a, position: c }) {
-  const { state: n } = T();
+  const { state: n } = v();
   return /* @__PURE__ */ t("div", { className: `acx-fixed acx-bottom-4 sm:acx-bottom-6 ${c === "bottom-right" ? "acx-right-4 sm:acx-right-6" : "acx-left-4 sm:acx-left-6"} acx-z-[9999]`, children: /* @__PURE__ */ t(
     "button",
     {
       onClick: a,
-      className: "acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-white acx-text-primary-700 acx-shadow-lg acx-border acx-border-gray-200 hover:acx-bg-gray-50 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
+      className: "acx-group acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-white acx-text-primary-600 acx-shadow-lg acx-border acx-border-gray-200 hover:acx-bg-primary-600 hover:acx-text-white hover:acx-border-primary-600 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
       "aria-label": e ? "Close chat" : "Open chat",
       children: e ? /* @__PURE__ */ t(he, { className: "acx-w-6 acx-h-6" }) : /* @__PURE__ */ i(O, { children: [
         /* @__PURE__ */ t($, { className: "acx-w-7 acx-h-7" }),
@@ -322,7 +322,7 @@ const fe = [
   { id: "help", label: "Help", Icon: xe }
 ];
 function ye({ activeTab: e, onTabChange: a }) {
-  const { state: c } = T(), n = fe.filter(({ id: r }) => {
+  const { state: c } = v(), n = fe.filter(({ id: r }) => {
     var s, l, x;
     switch (r) {
       case "home":
@@ -345,7 +345,7 @@ function ye({ activeTab: e, onTabChange: a }) {
       role: "tab",
       "aria-selected": e === r,
       onClick: () => a(r),
-      className: `acx-flex-1 acx-flex acx-flex-col acx-items-center acx-py-2 acx-gap-0.5 acx-relative acx-transition-colors ${e === r ? "acx-text-primary-600" : "acx-text-gray-400 hover:acx-text-gray-600"}`,
+      className: `acx-flex-1 acx-flex acx-flex-col acx-items-center acx-py-2 acx-gap-0.5 acx-relative acx-transition-colors ${e === r ? "acx-text-primary-600" : "acx-text-gray-400 hover:acx-text-primary-600"}`,
       children: [
         /* @__PURE__ */ i("div", { className: "acx-relative", children: [
           /* @__PURE__ */ t(l, { className: "acx-w-5 acx-h-5" }),
@@ -358,7 +358,7 @@ function ye({ activeTab: e, onTabChange: a }) {
   )) });
 }
 function be() {
-  const { dispatch: e, config: a } = T(), c = m(), n = m();
+  const { dispatch: e, config: a } = v(), c = m(), n = m();
   c.current || (c.current = new I({ baseUrl: a.apiUrl, token: a.token }));
   const r = S((s) => {
     if (n.current && clearTimeout(n.current), !s.trim()) {
@@ -374,13 +374,13 @@ function be() {
       }
     }, C.SEARCH_DEBOUNCE);
   }, [e]);
-  return v(() => () => {
+  return T(() => () => {
     n.current && clearTimeout(n.current);
   }, []), { search: r };
 }
 function K() {
-  const { state: e, dispatch: a, config: c } = T(), n = m(), r = m(!1);
-  return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
+  const { state: e, dispatch: a, config: c } = v(), n = m(), r = m(!1);
+  return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), T(() => {
     r.current || (r.current = !0, n.current.getAnnouncements().then((s) => {
       a({ type: "SET_ANNOUNCEMENTS", payload: A(s) });
     }).catch(() => {
@@ -389,7 +389,7 @@ function K() {
 }
 function Se({ onSearch: e, placeholder: a = "Search for help..." }) {
   const [c, n] = E(""), r = m();
-  return v(() => (r.current && clearTimeout(r.current), r.current = setTimeout(() => {
+  return T(() => (r.current && clearTimeout(r.current), r.current = setTimeout(() => {
     e(c.trim());
   }, C.SEARCH_DEBOUNCE), () => {
     r.current && clearTimeout(r.current);
@@ -442,13 +442,13 @@ function _e(e, a) {
   const c = new Date(e), n = new Date(a);
   return c.getFullYear() === n.getFullYear() && c.getMonth() === n.getMonth() && c.getDate() === n.getDate();
 }
-const Te = {
+const ve = {
   feature: "acx-bg-green-100 acx-text-green-700",
   improvement: "acx-bg-blue-100 acx-text-blue-700",
   update: "acx-bg-purple-100 acx-text-purple-700",
   maintenance: "acx-bg-orange-100 acx-text-orange-700",
   event: "acx-bg-pink-100 acx-text-pink-700"
-}, ve = {
+}, Te = {
   feature: "New Feature",
   improvement: "Improvement",
   update: "Update",
@@ -463,7 +463,7 @@ function V({ announcement: e, onClick: a }) {
       className: "acx-w-full acx-text-left acx-p-4 acx-border acx-border-gray-200 acx-rounded-xl hover:acx-border-primary-200 hover:acx-bg-primary-50/50 acx-transition-all",
       children: [
         /* @__PURE__ */ i("div", { className: "acx-flex acx-items-center acx-gap-2 acx-mb-2", children: [
-          /* @__PURE__ */ t("span", { className: `acx-text-[10px] acx-font-semibold acx-px-2 acx-py-0.5 acx-rounded-full ${Te[e.category] ?? "acx-bg-gray-100 acx-text-gray-700"}`, children: ve[e.category] ?? e.category }),
+          /* @__PURE__ */ t("span", { className: `acx-text-[10px] acx-font-semibold acx-px-2 acx-py-0.5 acx-rounded-full ${ve[e.category] ?? "acx-bg-gray-100 acx-text-gray-700"}`, children: Te[e.category] ?? e.category }),
           e.is_pinned && /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-text-amber-600 acx-font-medium", children: "Pinned" })
         ] }),
         /* @__PURE__ */ t("h4", { className: "acx-text-sm acx-font-semibold acx-text-gray-900 acx-mb-1", children: e.title }),
@@ -482,7 +482,7 @@ function V({ announcement: e, onClick: a }) {
   );
 }
 function we() {
-  const { state: e, dispatch: a, config: c } = T(), { search: n } = be(), { announcements: r } = K(), s = r.find((d) => d.is_pinned), l = S((d) => {
+  const { state: e, dispatch: a, config: c } = v(), { search: n } = be(), { announcements: r } = K(), s = r.find((d) => d.is_pinned), l = S((d) => {
     d.url && window.open(d.url, "_blank", "noopener,noreferrer");
   }, []), x = S(() => {
     a({ type: "SET_TAB", payload: "messages" });
@@ -501,7 +501,7 @@ function we() {
       "button",
       {
         onClick: x,
-        className: "acx-w-full acx-bg-white acx-text-primary-700 acx-py-3 acx-rounded-xl acx-font-semibold acx-text-base acx-shadow-md acx-border acx-border-primary-200 hover:acx-bg-primary-50 acx-transition-colors",
+        className: "acx-w-full acx-bg-white acx-text-primary-600 acx-py-3 acx-rounded-xl acx-font-semibold acx-text-base acx-shadow-md acx-border acx-border-primary-200 hover:acx-bg-primary-600 hover:acx-text-white hover:acx-border-primary-600 acx-transition-colors",
         children: "Start a conversation"
       }
     ) })
@@ -546,7 +546,7 @@ function ke() {
 }
 function Ce() {
   var f;
-  const { state: e, dispatch: a, config: c } = T(), [n, r] = D("session_key", null), [s, l] = D("chat_access_token", null), x = m(), d = m(null);
+  const { state: e, dispatch: a, config: c } = v(), [n, r] = D("session_key", null), [s, l] = D("chat_access_token", null), x = m(), d = m(null);
   x.current || (x.current = new I({ baseUrl: c.apiUrl, token: c.token }), s && x.current.setChatToken(s));
   const p = x.current, g = S(async () => {
     var h;
@@ -587,7 +587,7 @@ function Ce() {
       }
     }
   }, [p, e.session, a]);
-  return v(() => {
+  return T(() => {
     n && !e.session && u(n);
   }, []), {
     session: e.session,
@@ -669,8 +669,8 @@ class Ie {
   }
 }
 function Ae(e, a) {
-  const { state: c, dispatch: n, config: r } = T(), s = m(null), l = m(/* @__PURE__ */ new Map()), x = m(null);
-  v(() => {
+  const { state: c, dispatch: n, config: r } = v(), s = m(null), l = m(/* @__PURE__ */ new Map()), x = m(null);
+  T(() => {
     if (!e) return;
     const g = r.apiUrl.startsWith("https") ? "wss" : "ws", u = r.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
     let N = `${g}://${u}${ee(e)}`;
@@ -756,8 +756,8 @@ function Ae(e, a) {
 }
 function Oe() {
   var s, l, x;
-  const { state: e, dispatch: a, config: c } = T(), n = m(), r = m(!1);
-  return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
+  const { state: e, dispatch: a, config: c } = v(), n = m(), r = m(!1);
+  return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), T(() => {
     r.current || (r.current = !0, n.current.getOperatingHoursStatus().then((d) => {
       a({ type: "SET_OPERATING_HOURS", payload: d });
     }).catch(() => {
@@ -876,7 +876,7 @@ function Ue({ agentName: e }) {
 }
 function Pe({ messages: e, agentTyping: a }) {
   const c = m(null), n = m(null);
-  return v(() => {
+  return T(() => {
     var r;
     (r = c.current) == null || r.scrollIntoView({ behavior: "smooth" });
   }, [e.length, a.is_typing]), /* @__PURE__ */ i(
@@ -1015,8 +1015,8 @@ function Ge({ onSubmit: e, loading: a }) {
   ] });
 }
 function $e() {
-  const { state: e, dispatch: a, config: c } = T(), { session: n, sessionKey: r, accessToken: s, createSession: l, updateVisitorInfo: x } = Ce(), { sendMessage: d, sendTyping: p, isConnected: g } = Ae(r, s), { isOnline: u, offlineMessage: N, responseTime: f } = Oe(), [y, o] = E(!1), h = m(null);
-  v(() => {
+  const { state: e, dispatch: a, config: c } = v(), { session: n, sessionKey: r, accessToken: s, createSession: l, updateVisitorInfo: x } = Ce(), { sendMessage: d, sendTyping: p, isConnected: g } = Ae(r, s), { isOnline: u, offlineMessage: N, responseTime: f } = Oe(), [y, o] = E(!1), h = m(null);
+  T(() => {
     g && h.current && (d(h.current), h.current = null);
   }, [g, d]);
   const b = S(async (k) => {
@@ -1041,7 +1041,7 @@ function $e() {
       h.current = null;
     }
   }, [l, x, a]);
-  return v(() => {
+  return T(() => {
     e.unreadCount > 0 && e.activeTab === "messages" && a({ type: "RESET_UNREAD" });
   }, [e.unreadCount, e.activeTab, a]), y && !n ? /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
     /* @__PURE__ */ t(U, { isOnline: u, offlineMessage: N, responseTime: f }),
@@ -1088,8 +1088,8 @@ function je() {
   ] });
 }
 function Ke() {
-  const { state: e, dispatch: a, config: c } = T(), n = m(), r = m(!1);
-  return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
+  const { state: e, dispatch: a, config: c } = v(), n = m(), r = m(!1);
+  return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), T(() => {
     r.current || (r.current = !0, n.current.getRoadmapItems().then((s) => {
       a({ type: "SET_ROADMAP_ITEMS", payload: A(s) });
     }).catch(() => {
@@ -1144,8 +1144,8 @@ function qe() {
 }
 function Ye() {
   var y;
-  const { state: e, dispatch: a, config: c } = T(), n = e.kbTopics, [r, s] = E(null), [l, x] = E([]), [d, p] = E(!1), g = m();
-  g.current || (g.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
+  const { state: e, dispatch: a, config: c } = v(), n = e.kbTopics, [r, s] = E(null), [l, x] = E([]), [d, p] = E(!1), g = m();
+  g.current || (g.current = new I({ baseUrl: c.apiUrl, token: c.token })), T(() => {
     var o;
     ((o = e.kbTopics) == null ? void 0 : o.length) > 0 || g.current.getKBTopics().then((h) => a({ type: "SET_KB_TOPICS", payload: Array.isArray(h) ? h : [] })).catch(() => {
     });
@@ -1216,7 +1216,7 @@ function ea(e) {
   return /* @__PURE__ */ t(ne, { ...e, children: /* @__PURE__ */ t(ze, { position: e.position ?? ae.POSITION }) });
 }
 function ze({ position: e }) {
-  const { state: a, dispatch: c } = T(), [n, r] = E(!1);
+  const { state: a, dispatch: c } = v(), [n, r] = E(!1);
   return /* @__PURE__ */ i("div", { className: "acrux-chat-widget", children: [
     n && /* @__PURE__ */ i(
       "div",
