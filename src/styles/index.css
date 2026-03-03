@@ -117,6 +117,27 @@
   animation-delay: 0.4s;
 }
 
+/* ── Launcher button — hardcoded #006383 to resist host-app overrides ── */
+.acrux-chat-widget .acx-launcher-btn {
+  color: #006383 !important;
+}
+
+.acrux-chat-widget .acx-launcher-btn:hover {
+  background-color: #006383 !important;
+  border-color: #006383 !important;
+  color: #ffffff !important;
+}
+
+.acrux-chat-widget .acx-launcher-btn svg {
+  color: inherit !important;
+  fill: currentColor;
+}
+
+.acrux-chat-widget .acx-launcher-btn .acx-launcher-icon-stroke svg {
+  fill: none;
+  stroke: currentColor;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .acrux-chat-widget * {
     animation-duration: 0.01ms !important;
