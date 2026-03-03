@@ -44,7 +44,7 @@ export function TabBar({ activeTab, onTabChange }: TabBarProps) {
           className={`acx-flex-1 acx-flex acx-flex-col acx-items-center acx-py-2 acx-gap-0.5 acx-relative acx-transition-colors ${
             activeTab === id
               ? 'acx-text-primary-600'
-              : 'acx-text-gray-400 hover:acx-text-gray-600'
+              : 'acx-text-gray-400 hover:acx-text-primary-600'
           }`}
         >
           <div className="acx-relative">
