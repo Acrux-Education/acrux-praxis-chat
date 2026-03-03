@@ -305,7 +305,7 @@ function ge({ isOpen: e, onClick: a, position: c }) {
     "button",
     {
       onClick: a,
-      className: "acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-primary-600 acx-text-white acx-shadow-lg hover:acx-bg-primary-700 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
+      className: "acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-white acx-text-primary-700 acx-shadow-lg acx-border acx-border-gray-200 hover:acx-bg-gray-50 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
       "aria-label": e ? "Close chat" : "Open chat",
       children: e ? /* @__PURE__ */ t(he, { className: "acx-w-6 acx-h-6" }) : /* @__PURE__ */ i(O, { children: [
         /* @__PURE__ */ t($, { className: "acx-w-7 acx-h-7" }),
@@ -501,7 +501,7 @@ function we() {
       "button",
       {
         onClick: x,
-        className: "acx-w-full acx-bg-primary-600 acx-text-white acx-py-3 acx-rounded-xl acx-font-medium acx-text-sm hover:acx-bg-primary-700 acx-transition-colors",
+        className: "acx-w-full acx-bg-white acx-text-primary-700 acx-py-3 acx-rounded-xl acx-font-semibold acx-text-base acx-shadow-md acx-border acx-border-primary-200 hover:acx-bg-primary-50 acx-transition-colors",
         children: "Start a conversation"
       }
     ) })
