@@ -1,8 +1,8 @@
-var q = Object.defineProperty;
-var Y = (e, a, c) => a in e ? q(e, a, { enumerable: !0, configurable: !0, writable: !0, value: c }) : e[a] = c;
-var _ = (e, a, c) => Y(e, typeof a != "symbol" ? a + "" : a, c);
+var Y = Object.defineProperty;
+var z = (e, a, c) => a in e ? Y(e, a, { enumerable: !0, configurable: !0, writable: !0, value: c }) : e[a] = c;
+var _ = (e, a, c) => z(e, typeof a != "symbol" ? a + "" : a, c);
 import { jsxs as i, jsx as t, Fragment as O } from "react/jsx-runtime";
-import { createContext as z, useReducer as J, useMemo as Q, useRef as m, useEffect as v, useContext as X, useCallback as S, useState as E } from "react";
+import { createContext as J, useReducer as Q, useMemo as X, useRef as m, useEffect as v, useContext as Z, useCallback as S, useState as E } from "react";
 const w = {
   SESSIONS: "/api/chat/sessions/",
   SESSION: (e) => `/api/chat/sessions/${e}/`,
@@ -14,7 +14,7 @@ const w = {
   KB_TOPICS: "/api/kb/topics/",
   KB_TOPIC_ARTICLES: (e) => `/api/kb/topics/${e}/articles/`,
   OPERATING_HOURS: "/api/chat/operating-hours/status/"
-}, Z = (e) => `/ws/chat/${e}/`, ee = {
+}, ee = (e) => `/ws/chat/${e}/`, ae = {
   POSITION: "bottom-right"
 }, C = {
   WS_RECONNECT_BASE: 1e3,
@@ -33,7 +33,7 @@ const w = {
     "image/webp",
     "application/pdf"
   ]
-}, ae = {
+}, D = {
   session: null,
   messages: [],
   isConnected: !1,
@@ -204,17 +204,18 @@ class ce extends Error {
 function A(e) {
   return Array.isArray(e) ? e : e && typeof e == "object" && "results" in e ? e.results : [];
 }
-const H = z(null);
+const G = J(null);
 function re({ children: e, ...a }) {
-  const [c, n] = J(te, {
-    ...ae,
+  const [c, n] = Q(te, {
+    ...D,
+    activeTab: a.defaultTab ?? D.activeTab,
     visitorName: a.userName ?? "",
     visitorEmail: a.userEmail ?? ""
-  }), r = Q(
+  }), r = X(
     () => ({ state: c, dispatch: n, config: a }),
     [c, a]
   );
-  return /* @__PURE__ */ i(H.Provider, { value: r, children: [
+  return /* @__PURE__ */ i(G.Provider, { value: r, children: [
     /* @__PURE__ */ t(ne, {}),
     e
   ] });
@@ -233,12 +234,12 @@ function ne() {
   }, [a.apiUrl, a.token, e]), null;
 }
 function T() {
-  const e = X(H);
+  const e = Z(G);
   if (!e)
     throw new Error("useChatContext must be used within a ChatProvider");
   return e;
 }
-function G({ count: e }) {
+function $({ count: e }) {
   if (e <= 0) return null;
   const a = e > 99 ? "99+" : String(e);
   return /* @__PURE__ */ t("span", { className: "acx-absolute -acx-top-1.5 -acx-right-1.5 acx-min-w-[18px] acx-h-[18px] acx-flex acx-items-center acx-justify-center acx-bg-red-500 acx-text-white acx-text-[10px] acx-font-bold acx-rounded-full acx-px-1 acx-leading-none", children: a });
@@ -296,7 +297,7 @@ function pe({ className: e }) {
 function me({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" }) });
 }
-function $({ className: e }) {
+function j({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("polyline", { points: "9 18 15 12 9 6" }) });
 }
 function ge({ className: e }) {
@@ -308,11 +309,11 @@ function fe({ isOpen: e, onClick: a, position: c }) {
     "button",
     {
       onClick: a,
-      className: "acx-launcher-btn acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-white acx-shadow-lg acx-border acx-border-gray-200 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
+      className: "acx-launcher-btn acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-shadow-lg acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
       "aria-label": e ? "Close chat" : "Open chat",
       children: e ? /* @__PURE__ */ t("span", { className: "acx-launcher-icon-stroke", children: /* @__PURE__ */ t(pe, { className: "acx-w-6 acx-h-6" }) }) : /* @__PURE__ */ i(O, { children: [
         /* @__PURE__ */ t(ie, { className: "acx-w-7 acx-h-7" }),
-        n.unreadCount > 0 && /* @__PURE__ */ t(G, { count: n.unreadCount })
+        n.unreadCount > 0 && /* @__PURE__ */ t($, { count: n.unreadCount })
       ] })
     }
   ) });
@@ -352,7 +353,7 @@ function be({ activeTab: e, onTabChange: a }) {
       children: [
         /* @__PURE__ */ i("div", { className: "acx-relative", children: [
           /* @__PURE__ */ t(l, { className: "acx-w-5 acx-h-5" }),
-          r === "messages" && c.unreadCount > 0 && /* @__PURE__ */ t(G, { count: c.unreadCount })
+          r === "messages" && c.unreadCount > 0 && /* @__PURE__ */ t($, { count: c.unreadCount })
         ] }),
         /* @__PURE__ */ t("span", { className: "acx-text-[10px] acx-font-medium", children: s })
       ]
@@ -381,7 +382,7 @@ function Se() {
     n.current && clearTimeout(n.current);
   }, []), { search: r };
 }
-function j() {
+function K() {
   const { state: e, dispatch: a, config: c } = T(), n = m(), r = m(!1);
   return n.current || (n.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
     r.current || (r.current = !0, n.current.getAnnouncements().then((s) => {
@@ -410,7 +411,7 @@ function Ne({ onSearch: e, placeholder: a = "Search for help..." }) {
     )
   ] });
 }
-function K({ article: e, onClick: a }) {
+function W({ article: e, onClick: a }) {
   return /* @__PURE__ */ i(
     "button",
     {
@@ -421,7 +422,7 @@ function K({ article: e, onClick: a }) {
           /* @__PURE__ */ t("h4", { className: "acx-text-sm acx-font-medium acx-text-gray-900 acx-truncate group-hover:acx-text-primary-600 acx-transition-colors", children: e.title }),
           e.summary && /* @__PURE__ */ t("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5 acx-line-clamp-2", children: e.summary })
         ] }),
-        /* @__PURE__ */ t($, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })
+        /* @__PURE__ */ t(j, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })
       ]
     }
   );
@@ -458,7 +459,7 @@ const ve = {
   maintenance: "Maintenance",
   event: "Event"
 };
-function W({ announcement: e, onClick: a }) {
+function V({ announcement: e, onClick: a }) {
   return /* @__PURE__ */ i(
     "button",
     {
@@ -485,7 +486,7 @@ function W({ announcement: e, onClick: a }) {
   );
 }
 function Ee() {
-  const { state: e, dispatch: a, config: c } = T(), { search: n } = Se(), { announcements: r } = j(), s = r.find((d) => d.is_pinned), l = S((d) => {
+  const { state: e, dispatch: a, config: c } = T(), { search: n } = Se(), { announcements: r } = K(), s = r.find((d) => d.is_pinned), l = S((d) => {
     d.url && window.open(d.url, "_blank", "noopener,noreferrer");
   }, []), x = S(() => {
     a({ type: "SET_TAB", payload: "messages" });
@@ -497,9 +498,9 @@ function Ee() {
     ] }),
     /* @__PURE__ */ t("div", { className: "acx-px-4 -acx-mt-4", children: /* @__PURE__ */ i("div", { className: "acx-bg-white acx-rounded-xl acx-shadow-lg acx-p-4", children: [
       /* @__PURE__ */ t(Ne, { onSearch: n }),
-      /* @__PURE__ */ t("div", { className: "acx-mt-3 acx-space-y-1", children: e.kbLoading ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Searching..." }) : e.kbResults.length > 0 ? e.kbResults.slice(0, 5).map((d) => /* @__PURE__ */ t(K, { article: d, onClick: l }, d.id)) : null })
+      /* @__PURE__ */ t("div", { className: "acx-mt-3 acx-space-y-1", children: e.kbLoading ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Searching..." }) : e.kbResults.length > 0 ? e.kbResults.slice(0, 5).map((d) => /* @__PURE__ */ t(W, { article: d, onClick: l }, d.id)) : null })
     ] }) }),
-    s && /* @__PURE__ */ t("div", { className: "acx-px-4 acx-mt-4", children: /* @__PURE__ */ t(W, { announcement: s }) }),
+    s && /* @__PURE__ */ t("div", { className: "acx-px-4 acx-mt-4", children: /* @__PURE__ */ t(V, { announcement: s }) }),
     /* @__PURE__ */ t("div", { className: "acx-mt-auto acx-p-4", children: /* @__PURE__ */ t(
       "button",
       {
@@ -511,7 +512,7 @@ function Ee() {
   ] });
 }
 const ke = "acrux_chat_";
-function D(e, a) {
+function B(e, a) {
   const c = `${ke}${e}`, [n, r] = E(() => {
     try {
       const l = window.localStorage.getItem(c);
@@ -531,7 +532,7 @@ function D(e, a) {
   );
   return [n, s];
 }
-function V() {
+function F() {
   return typeof crypto < "u" && typeof crypto.randomUUID == "function" ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
     const a = Math.random() * 16 | 0;
     return (e === "x" ? a : a & 3 | 8).toString(16);
@@ -549,11 +550,11 @@ function Ce() {
 }
 function Ie() {
   var f;
-  const { state: e, dispatch: a, config: c } = T(), [n, r] = D("session_key", null), [s, l] = D("chat_access_token", null), x = m(), d = m(null);
+  const { state: e, dispatch: a, config: c } = T(), [n, r] = B("session_key", null), [s, l] = B("chat_access_token", null), x = m(), d = m(null);
   x.current || (x.current = new I({ baseUrl: c.apiUrl, token: c.token }), s && x.current.setChatToken(s));
   const p = x.current, g = S(async () => {
     var h;
-    const y = V(), o = c.mode === "lead" ? Ce() : void 0;
+    const y = F(), o = c.mode === "lead" ? Ce() : void 0;
     try {
       a({ type: "SET_LOADING", payload: !0 });
       const b = await p.createSession({
@@ -676,7 +677,7 @@ function Oe(e, a) {
   v(() => {
     if (!e) return;
     const g = r.apiUrl.startsWith("https") ? "wss" : "ws", u = r.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
-    let N = `${g}://${u}${Z(e)}`;
+    let N = `${g}://${u}${ee(e)}`;
     a && (N += `?token=${encodeURIComponent(a)}`);
     const f = new Ae({
       url: N,
@@ -725,7 +726,7 @@ function Oe(e, a) {
   }, [e, a, r.apiUrl]);
   const d = S((g) => {
     if (!s.current) return;
-    const u = V(), N = {
+    const u = F(), N = {
       id: u,
       session: 0,
       sender_type: r.mode === "lead" ? "visitor" : "user",
@@ -774,7 +775,7 @@ function Re() {
 function Le(e) {
   return e.split(" ").slice(0, 2).map((a) => a[0] ?? "").join("").toUpperCase();
 }
-const B = [
+const U = [
   "acx-bg-blue-500",
   "acx-bg-green-500",
   "acx-bg-purple-500",
@@ -786,7 +787,7 @@ function Me(e) {
   let a = 0;
   for (let c = 0; c < e.length; c++)
     a = e.charCodeAt(c) + ((a << 5) - a);
-  return B[Math.abs(a) % B.length];
+  return U[Math.abs(a) % U.length];
 }
 function L({ name: e, avatarUrl: a }) {
   return a ? /* @__PURE__ */ t(
@@ -966,7 +967,7 @@ function Ge({ onSend: e, onTyping: a, onFileUpload: c, mode: n, disabled: r, pla
     )
   ] }) });
 }
-function U({ isOnline: e, offlineMessage: a, responseTime: c }) {
+function P({ isOnline: e, offlineMessage: a, responseTime: c }) {
   return e ? null : /* @__PURE__ */ t("div", { className: "acx-bg-amber-50 acx-border-b acx-border-amber-200 acx-px-4 acx-py-2.5", children: /* @__PURE__ */ i("div", { className: "acx-flex acx-items-center acx-gap-2", children: [
     /* @__PURE__ */ t("div", { className: "acx-w-2 acx-h-2 acx-rounded-full acx-bg-amber-400 acx-flex-shrink-0" }),
     /* @__PURE__ */ i("p", { className: "acx-text-xs acx-text-amber-800", children: [
@@ -1036,7 +1037,7 @@ function je() {
       return;
     }
     d(k);
-  }, [n, c.mode, e.visitorEmail, l, d]), F = S(async (k) => {
+  }, [n, c.mode, e.visitorEmail, l, d]), q = S(async (k) => {
     a({ type: "SET_VISITOR_INFO", payload: k }), o(!1);
     try {
       await l() && await x(k.name, k.email);
@@ -1047,10 +1048,10 @@ function je() {
   return v(() => {
     e.unreadCount > 0 && e.activeTab === "messages" && a({ type: "RESET_UNREAD" });
   }, [e.unreadCount, e.activeTab, a]), y && !n ? /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
-    /* @__PURE__ */ t(U, { isOnline: u, offlineMessage: N, responseTime: f }),
-    /* @__PURE__ */ t($e, { onSubmit: F, loading: e.loading })
+    /* @__PURE__ */ t(P, { isOnline: u, offlineMessage: N, responseTime: f }),
+    /* @__PURE__ */ t($e, { onSubmit: q, loading: e.loading })
   ] }) : /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
-    /* @__PURE__ */ t(U, { isOnline: u, offlineMessage: N, responseTime: f }),
+    /* @__PURE__ */ t(P, { isOnline: u, offlineMessage: N, responseTime: f }),
     e.messages.length === 0 && !n ? /* @__PURE__ */ t("div", { className: "acx-flex-1 acx-flex acx-flex-col acx-items-center acx-justify-center acx-px-6 acx-text-center", children: u ? /* @__PURE__ */ i(O, { children: [
       /* @__PURE__ */ t("div", { className: "acx-w-12 acx-h-12 acx-bg-primary-100 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-mb-3", children: /* @__PURE__ */ t("svg", { className: "acx-w-6 acx-h-6 acx-text-primary-600", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) }) }),
       /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-600 acx-font-medium", children: "No messages yet" }),
@@ -1081,13 +1082,13 @@ function je() {
   ] });
 }
 function Ke() {
-  const { announcements: e } = j();
+  const { announcements: e } = K();
   return /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto", children: [
     /* @__PURE__ */ i("div", { className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100", children: [
       /* @__PURE__ */ t("h2", { className: "acx-text-base acx-font-semibold acx-text-gray-900", children: "News & Updates" }),
       /* @__PURE__ */ t("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5", children: "Latest from the team" })
     ] }),
-    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-3", children: e.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No announcements yet" }) }) : e.map((a) => /* @__PURE__ */ t(W, { announcement: a }, a.id)) })
+    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-3", children: e.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No announcements yet" }) }) : e.map((a) => /* @__PURE__ */ t(V, { announcement: a }, a.id)) })
   ] });
 }
 function We() {
@@ -1099,7 +1100,7 @@ function We() {
     }));
   }, [a]), { roadmapItems: e.roadmapItems };
 }
-const P = {
+const H = {
   planned: { bg: "acx-bg-gray-100", text: "acx-text-gray-600", label: "Planned" },
   in_progress: { bg: "acx-bg-blue-100", text: "acx-text-blue-700", label: "In Progress" },
   beta: { bg: "acx-bg-amber-100", text: "acx-text-amber-700", label: "Beta" },
@@ -1112,7 +1113,7 @@ const P = {
   platform: "Platform"
 };
 function Fe({ item: e }) {
-  const a = P[e.status] ?? P.planned;
+  const a = H[e.status] ?? H.planned;
   return /* @__PURE__ */ i("div", { className: "acx-p-4 acx-border acx-border-gray-200 acx-rounded-xl", children: [
     /* @__PURE__ */ i("div", { className: "acx-flex acx-items-center acx-justify-between acx-mb-2", children: [
       /* @__PURE__ */ t("span", { className: `acx-text-[10px] acx-font-semibold acx-px-2 acx-py-0.5 acx-rounded-full ${a.bg} ${a.text}`, children: a.label }),
@@ -1188,7 +1189,7 @@ function ze() {
         r.article_count !== 1 ? "s" : ""
       ] })
     ] }),
-    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: d ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Loading..." }) : l.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "No articles found" }) : l.map((o) => /* @__PURE__ */ t(K, { article: o, onClick: N }, o.id)) })
+    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: d ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Loading..." }) : l.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "No articles found" }) : l.map((o) => /* @__PURE__ */ t(W, { article: o, onClick: N }, o.id)) })
   ] }) : /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto", children: [
     /* @__PURE__ */ i("div", { className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100", children: [
       /* @__PURE__ */ t("h2", { className: "acx-text-base acx-font-semibold acx-text-gray-900", children: "Help Centre" }),
@@ -1208,7 +1209,7 @@ function ze() {
               o.article_count !== 1 ? "s" : ""
             ] })
           ] }),
-          /* @__PURE__ */ t($, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })
+          /* @__PURE__ */ t(j, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })
         ]
       },
       o.id
@@ -1216,7 +1217,7 @@ function ze() {
   ] });
 }
 function aa(e) {
-  return /* @__PURE__ */ t(re, { ...e, children: /* @__PURE__ */ t(Je, { position: e.position ?? ee.POSITION }) });
+  return /* @__PURE__ */ t(re, { ...e, children: /* @__PURE__ */ t(Je, { position: e.position ?? ae.POSITION }) });
 }
 function Je({ position: e }) {
   const { state: a, dispatch: c } = T(), [n, r] = E(!1);

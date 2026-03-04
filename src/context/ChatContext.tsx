@@ -22,6 +22,7 @@ interface ChatProviderProps extends ChatWidgetProps {
 export function ChatProvider({ children, ...config }: ChatProviderProps) {
   const [state, dispatch] = useReducer(chatReducer, {
     ...initialState,
+    activeTab: config.defaultTab ?? initialState.activeTab,
     visitorName: config.userName ?? '',
     visitorEmail: config.userEmail ?? '',
   })

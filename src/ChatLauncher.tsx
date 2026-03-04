@@ -20,7 +20,7 @@ export function ChatLauncher({ isOpen, onClick, position }: ChatLauncherProps) {
     <div className={`acx-fixed acx-bottom-4 sm:acx-bottom-6 ${positionClasses} acx-z-[9999]`}>
       <button
         onClick={onClick}
-        className="acx-launcher-btn acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-bg-white acx-shadow-lg acx-border acx-border-gray-200 acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center"
+        className="acx-launcher-btn acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-shadow-lg acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? (

@@ -14,6 +14,7 @@ export interface ChatWidgetProps {
   position?: WidgetPosition
   primaryColor?: string
   greeting?: string
+  defaultTab?: TabId
   onSessionCreated?: (sessionKey: string) => void
 }
 
@@ -23,6 +24,7 @@ export interface StandaloneInitOptions {
   position?: WidgetPosition
   primaryColor?: string
   greeting?: string
+  defaultTab?: TabId
   containerId?: string
 }
 
