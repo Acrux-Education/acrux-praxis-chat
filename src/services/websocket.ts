@@ -2,7 +2,7 @@ import type { WSIncomingMessage, WSOutgoingMessage } from '../types'
 import { TIMEOUTS } from '../constants'
 
 type MessageHandler = (message: WSIncomingMessage) => void
-type StatusHandler = (connected: boolean) => void
+type StatusHandler = (connected: boolean, retryCount: number) => void
 
 interface ChatWebSocketConfig {
   url: string
@@ -41,13 +41,13 @@ export class ChatWebSocket {
 
     this.ws.onopen = () => {
       this.retryCount = 0
-      this.onStatusChange(true)
+      this.onStatusChange(true, 0)
       this.startHeartbeat()
       this.flushQueue()
     }
 
     this.ws.onclose = () => {
-      this.onStatusChange(false)
+      this.onStatusChange(false, this.retryCount)
       this.stopHeartbeat()
       if (!this.intentionallyClosed) {
         this.scheduleReconnect()

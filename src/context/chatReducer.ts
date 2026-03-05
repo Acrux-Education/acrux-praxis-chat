@@ -18,6 +18,7 @@ export interface ChatState {
   operatingHours: OperatingHoursStatus | null
   visitorName: string
   visitorEmail: string
+  wsRetryCount: number
   loading: boolean
   error: string | null
 }
@@ -39,6 +40,7 @@ export const initialState: ChatState = {
   operatingHours: null,
   visitorName: '',
   visitorEmail: '',
+  wsRetryCount: 0,
   loading: false,
   error: null,
 }
@@ -137,6 +139,9 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
 
     case 'SET_ERROR':
       return { ...state, error: action.payload }
+
+    case 'SET_WS_RETRY_COUNT':
+      return { ...state, wsRetryCount: action.payload }
 
     default:
       return state

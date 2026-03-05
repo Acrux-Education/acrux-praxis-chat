@@ -23,8 +23,9 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
 
     const ws = new ChatWebSocket({
       url: wsUrl,
-      onStatusChange: (connected) => {
+      onStatusChange: (connected, retryCount) => {
         dispatch({ type: 'SET_CONNECTED', payload: connected })
+        dispatch({ type: 'SET_WS_RETRY_COUNT', payload: retryCount })
       },
       onMessage: (data: WSIncomingMessage) => {
         switch (data.type) {

@@ -6,6 +6,7 @@ import { useOperatingHours } from '../hooks/useOperatingHours'
 import { MessageList } from '../components/MessageList'
 import { MessageInput } from '../components/MessageInput'
 import { StatusBanner } from '../components/StatusBanner'
+import { ConnectionBanner } from '../components/ConnectionBanner'
 import { LeadCaptureForm } from '../components/LeadCaptureForm'
 
 export function MessagesTab() {
@@ -67,6 +68,7 @@ export function MessagesTab() {
   if (showLeadCapture && !session) {
     return (
       <div className="acx-flex acx-flex-col acx-h-full">
+        <ConnectionBanner isConnected={isConnected} retryCount={state.wsRetryCount} />
         <StatusBanner isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
         <LeadCaptureForm onSubmit={handleLeadCapture} loading={state.loading} />
       </div>
@@ -75,6 +77,7 @@ export function MessagesTab() {
 
   return (
     <div className="acx-flex acx-flex-col acx-h-full">
+      <ConnectionBanner isConnected={isConnected} retryCount={state.wsRetryCount} />
       <StatusBanner isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
 
       {state.messages.length === 0 && !session ? (

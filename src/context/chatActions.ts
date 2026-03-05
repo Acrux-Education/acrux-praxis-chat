@@ -22,3 +22,4 @@ export type ChatAction =
   | { type: 'SET_VISITOR_INFO'; payload: { name?: string; email?: string } }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
+  | { type: 'SET_WS_RETRY_COUNT'; payload: number }
