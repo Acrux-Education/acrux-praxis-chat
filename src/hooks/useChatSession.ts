@@ -33,8 +33,8 @@ export function useChatSession() {
       const session = await api.createSession({
         source: config.mode === 'lead' ? 'lead_bot' : 'user_bot',
         session_key: sessionKey,
-        visitor_name: config.userName,
-        visitor_email: config.userEmail,
+        visitor_name: state.visitorName || config.userName,
+        visitor_email: state.visitorEmail || config.userEmail,
         visitor_metadata: metadata,
       })
 
@@ -55,7 +55,7 @@ export function useChatSession() {
       dispatch({ type: 'SET_LOADING', payload: false })
       throw err
     }
-  }, [api, config, dispatch, setStoredSessionKey, setStoredAccessToken])
+  }, [api, config, state.visitorName, state.visitorEmail, dispatch, setStoredSessionKey, setStoredAccessToken])
 
   const restoreSession = useCallback(async (sessionKey: string) => {
     try {
