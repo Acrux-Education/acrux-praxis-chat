@@ -1,3 +1,4 @@
+// Acrux Chat Widget — replaces Crisp (deprecated)
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChatWidget } from './ChatWidget'
