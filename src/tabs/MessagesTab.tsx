@@ -17,31 +17,13 @@ export function MessagesTab() {
   const [showLeadCapture, setShowLeadCapture] = useState(false)
   const pendingMessageRef = useRef<string | null>(null)
 
-  // Send pending message once WebSocket connects after session creation.
-  // Uses both a reactive effect AND a polling fallback to guard against
-  // React batching / closure race conditions that can cause the effect
-  // to miss the isConnected transition.
-  const sendPending = useCallback(() => {
+  // Send pending message once WebSocket connects after session creation
+  useEffect(() => {
     if (isConnected && pendingMessageRef.current) {
       sendMessage(pendingMessageRef.current)
       pendingMessageRef.current = null
-      return true
     }
-    return false
   }, [isConnected, sendMessage])
-
-  useEffect(() => {
-    sendPending()
-  }, [sendPending])
-
-  // Polling fallback: if the effect missed the transition, retry briefly
-  useEffect(() => {
-    if (!pendingMessageRef.current) return
-    const id = setInterval(() => {
-      if (sendPending()) clearInterval(id)
-    }, 300)
-    return () => clearInterval(id)
-  }, [sendPending])
 
   const handleSend = useCallback(async (text: string) => {
     if (!session) {
