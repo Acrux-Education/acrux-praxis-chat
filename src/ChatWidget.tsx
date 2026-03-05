@@ -4,10 +4,7 @@ import { DEFAULTS } from './constants'
 import { ChatProvider, useChatContext } from './context/ChatContext'
 import { ChatLauncher } from './ChatLauncher'
 import { TabBar } from './components/TabBar'
-import { HomeTab } from './tabs/HomeTab'
 import { MessagesTab } from './tabs/MessagesTab'
-import { NewsTab } from './tabs/NewsTab'
-import { RoadmapTab } from './tabs/RoadmapTab'
 import { HelpTab } from './tabs/HelpTab'
 import './styles/index.css'
 
@@ -44,20 +41,17 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="acx-p-1 acx-rounded-lg hover:acx-bg-white/20 acx-transition-colors"
+              className="acx-p-1 acx-rounded-md acx-bg-white acx-transition-colors hover:acx-bg-gray-100"
               aria-label="Close chat"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#006383" strokeWidth="2" strokeLinecap="round">
                 <path d="M15 5L5 15M5 5l10 10" />
               </svg>
             </button>
           </div>
 
           <div className="acx-flex-1 acx-overflow-hidden">
-            {state.activeTab === 'home' && <HomeTab />}
             {state.activeTab === 'messages' && <MessagesTab />}
-            {state.activeTab === 'news' && <NewsTab />}
-            {state.activeTab === 'roadmap' && <RoadmapTab />}
             {state.activeTab === 'help' && <HelpTab />}
           </div>
 

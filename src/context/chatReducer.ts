@@ -28,7 +28,7 @@ export const initialState: ChatState = {
   messages: [],
   isConnected: false,
   isOpen: false,
-  activeTab: 'home',
+  activeTab: 'messages',
   unreadCount: 0,
   agentTyping: { is_typing: false },
   currentAgent: null,

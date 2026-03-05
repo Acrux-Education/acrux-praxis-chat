@@ -84,13 +84,8 @@ export function MessagesTab() {
         <div className="acx-flex-1 acx-flex acx-flex-col acx-items-center acx-justify-center acx-px-6 acx-text-center">
           {isOnline ? (
             <>
-              <div className="acx-w-12 acx-h-12 acx-bg-primary-100 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-mb-3">
-                <svg className="acx-w-6 acx-h-6 acx-text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-              <p className="acx-text-sm acx-text-gray-600 acx-font-medium">No messages yet</p>
-              <p className="acx-text-xs acx-text-gray-400 acx-mt-1">Send a message to start a conversation</p>
+              <p className="acx-text-lg acx-font-semibold acx-text-gray-800 acx-mb-1">{config.greeting || 'Hi there! How can we help?'}</p>
+              <p className="acx-text-sm acx-text-gray-500">Send a message to start a conversation</p>
             </>
           ) : (
             <>
