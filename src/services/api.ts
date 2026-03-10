@@ -44,6 +44,7 @@ export class ApiClient {
 
     const response = await fetch(`${this.baseUrl}${path}`, {
       ...options,
+      credentials: 'include',
       headers,
     })
 
