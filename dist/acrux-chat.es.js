@@ -148,6 +148,7 @@ class I {
     this.token && (r.Authorization = `Bearer ${this.token}`), this.chatToken && (r["X-Chat-Token"] = this.chatToken);
     const n = await fetch(`${this.baseUrl}${a}`, {
       ...c,
+      credentials: "include",
       headers: r
     });
     if (!n.ok) {
