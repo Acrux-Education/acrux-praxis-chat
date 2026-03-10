@@ -1,8 +1,8 @@
-var V = Object.defineProperty;
-var Y = (e, a, c) => a in e ? V(e, a, { enumerable: !0, configurable: !0, writable: !0, value: c }) : e[a] = c;
-var N = (e, a, c) => Y(e, typeof a != "symbol" ? a + "" : a, c);
+var K = Object.defineProperty;
+var V = (e, a, c) => a in e ? K(e, a, { enumerable: !0, configurable: !0, writable: !0, value: c }) : e[a] = c;
+var N = (e, a, c) => V(e, typeof a != "symbol" ? a + "" : a, c);
 import { jsxs as i, jsx as t, Fragment as A } from "react/jsx-runtime";
-import { createContext as F, useReducer as q, useMemo as z, useRef as S, useEffect as v, useContext as J, useState as E, useCallback as _ } from "react";
+import { createContext as Y, useReducer as F, useMemo as q, useRef as b, useEffect as v, useContext as z, useState as E, useCallback as _ } from "react";
 const T = {
   SESSIONS: "/api/chat/sessions/",
   SESSION: (e) => `/api/chat/sessions/${e}/`,
@@ -14,7 +14,7 @@ const T = {
   KB_TOPICS: "/api/kb/topics/",
   KB_TOPIC_ARTICLES: (e) => `/api/kb/topics/${e}/articles/`,
   OPERATING_HOURS: "/api/chat/operating-hours/status/"
-}, Q = (e) => `/ws/chat/${e}/`, X = {
+}, J = (e) => `/ws/chat/${e}/`, Q = {
   POSITION: "bottom-right"
 }, k = {
   WS_RECONNECT_BASE: 1e3,
@@ -53,7 +53,7 @@ const T = {
   loading: !1,
   error: null
 };
-function Z(e, a) {
+function X(e, a) {
   switch (a.type) {
     case "SET_SESSION":
       return { ...e, session: a.payload };
@@ -152,7 +152,7 @@ class I {
     });
     if (!n.ok) {
       const o = await n.text().catch(() => "");
-      throw new ee(n.status, n.statusText, o);
+      throw new Z(n.status, n.statusText, o);
     }
     if (n.status !== 204)
       return n.json();
@@ -198,7 +198,7 @@ class I {
     return this.request(T.OPERATING_HOURS);
   }
 }
-class ee extends Error {
+class Z extends Error {
   constructor(a, c, r) {
     super(`API Error ${a}: ${c}`), this.status = a, this.statusText = c, this.body = r, this.name = "ApiError";
   }
@@ -206,24 +206,24 @@ class ee extends Error {
 function O(e) {
   return Array.isArray(e) ? e : e && typeof e == "object" && "results" in e ? e.results : [];
 }
-const H = F(null);
-function ae({ children: e, ...a }) {
-  const [c, r] = q(Z, {
+const H = Y(null);
+function ee({ children: e, ...a }) {
+  const [c, r] = F(X, {
     ...L,
     activeTab: a.defaultTab ?? L.activeTab,
     visitorName: a.userName ?? "",
     visitorEmail: a.userEmail ?? ""
-  }), n = z(
+  }), n = q(
     () => ({ state: c, dispatch: r, config: a }),
     [c, a]
   );
   return /* @__PURE__ */ i(H.Provider, { value: n, children: [
-    /* @__PURE__ */ t(te, {}),
+    /* @__PURE__ */ t(ae, {}),
     e
   ] });
 }
-function te() {
-  const { dispatch: e, config: a } = w(), c = S(!1);
+function ae() {
+  const { dispatch: e, config: a } = w(), c = b(!1);
   return v(() => {
     if (c.current) return;
     c.current = !0;
@@ -236,7 +236,7 @@ function te() {
   }, [a.apiUrl, a.token, e]), null;
 }
 function w() {
-  const e = J(H);
+  const e = z(H);
   if (!e)
     throw new Error("useChatContext must be used within a ChatProvider");
   return e;
@@ -246,41 +246,41 @@ function $({ count: e }) {
   const a = e > 99 ? "99+" : String(e);
   return /* @__PURE__ */ t("span", { className: "acx-absolute -acx-top-1.5 -acx-right-1.5 acx-min-w-[18px] acx-h-[18px] acx-flex acx-items-center acx-justify-center acx-bg-red-500 acx-text-white acx-text-[10px] acx-font-bold acx-rounded-full acx-px-1 acx-leading-none", children: a });
 }
-function ce({ className: e }) {
+function te({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) });
 }
-function re({ className: e }) {
+function ce({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: /* @__PURE__ */ t("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) });
 }
-function ne({ className: e }) {
+function re({ className: e }) {
   return /* @__PURE__ */ i("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ t("circle", { cx: "12", cy: "12", r: "10" }),
     /* @__PURE__ */ t("path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" }),
     /* @__PURE__ */ t("line", { x1: "12", y1: "17", x2: "12.01", y2: "17" })
   ] });
 }
-function se({ className: e }) {
+function ne({ className: e }) {
   return /* @__PURE__ */ i("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ t("line", { x1: "22", y1: "2", x2: "11", y2: "13" }),
     /* @__PURE__ */ t("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })
   ] });
 }
-function ie({ className: e }) {
+function se({ className: e }) {
   return /* @__PURE__ */ i("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ t("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
     /* @__PURE__ */ t("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
   ] });
 }
-function oe({ className: e }) {
+function ie({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" }) });
 }
 function j({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("polyline", { points: "9 18 15 12 9 6" }) });
 }
-function le({ className: e }) {
+function oe({ className: e }) {
   return /* @__PURE__ */ t("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ t("polyline", { points: "15 18 9 12 15 6" }) });
 }
-function xe({ isOpen: e, onClick: a, position: c }) {
+function le({ isOpen: e, onClick: a, position: c }) {
   const { state: r } = w();
   return /* @__PURE__ */ t("div", { className: `acx-fixed acx-bottom-4 sm:acx-bottom-6 ${c === "bottom-right" ? "acx-right-4 sm:acx-right-6" : "acx-left-4 sm:acx-left-6"} acx-z-[9999]`, children: /* @__PURE__ */ t(
     "button",
@@ -288,20 +288,20 @@ function xe({ isOpen: e, onClick: a, position: c }) {
       onClick: a,
       className: "acx-launcher-btn acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-shadow-lg acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
       "aria-label": e ? "Close chat" : "Open chat",
-      children: e ? /* @__PURE__ */ t("span", { className: "acx-launcher-icon-stroke", children: /* @__PURE__ */ t(ie, { className: "acx-w-6 acx-h-6" }) }) : /* @__PURE__ */ i(A, { children: [
-        /* @__PURE__ */ t(re, { className: "acx-w-7 acx-h-7" }),
+      children: e ? /* @__PURE__ */ t("span", { className: "acx-launcher-icon-stroke", children: /* @__PURE__ */ t(se, { className: "acx-w-6 acx-h-6" }) }) : /* @__PURE__ */ i(A, { children: [
+        /* @__PURE__ */ t(ce, { className: "acx-w-7 acx-h-7" }),
         r.unreadCount > 0 && /* @__PURE__ */ t($, { count: r.unreadCount })
       ] })
     }
   ) });
 }
-const de = [
-  { id: "messages", label: "Messages", Icon: ce },
-  { id: "help", label: "Help", Icon: ne }
+const xe = [
+  { id: "messages", label: "Messages", Icon: te },
+  { id: "help", label: "Help", Icon: re }
 ];
 function ue({ activeTab: e, onTabChange: a }) {
   const { state: c } = w();
-  return /* @__PURE__ */ t("nav", { className: "acx-flex acx-border-t acx-border-gray-200 acx-bg-white", role: "tablist", children: de.map(({ id: r, label: n, Icon: o }) => /* @__PURE__ */ i(
+  return /* @__PURE__ */ t("nav", { className: "acx-flex acx-border-t acx-border-gray-200 acx-bg-white", role: "tablist", children: xe.map(({ id: r, label: n, Icon: o }) => /* @__PURE__ */ i(
     "button",
     {
       role: "tab",
@@ -319,9 +319,9 @@ function ue({ activeTab: e, onTabChange: a }) {
     r
   )) });
 }
-const he = "acrux_chat_";
+const de = "acrux_chat_";
 function D(e, a) {
-  const c = `${he}${e}`, [r, n] = E(() => {
+  const c = `${de}${e}`, [r, n] = E(() => {
     try {
       const l = window.localStorage.getItem(c);
       return l ? JSON.parse(l) : a;
@@ -346,7 +346,7 @@ function W() {
     return (e === "x" ? a : a & 3 | 8).toString(16);
   });
 }
-function pe() {
+function he() {
   const e = new URLSearchParams(window.location.search);
   return {
     page_url: window.location.href,
@@ -357,61 +357,61 @@ function pe() {
   };
 }
 function me() {
-  var f;
-  const { state: e, dispatch: a, config: c } = w(), [r, n] = D("session_key", null), [o, l] = D("chat_access_token", null), x = S(), m = S(null);
+  var S;
+  const { state: e, dispatch: a, config: c } = w(), [r, n] = D("session_key", null), [o, l] = D("chat_access_token", null), x = b(), g = b(null);
   x.current || (x.current = new I({ baseUrl: c.apiUrl, token: c.token }), o && x.current.setChatToken(o));
-  const h = x.current, p = _(async () => {
-    var d;
-    const g = W(), s = c.mode === "lead" ? pe() : void 0;
+  const u = x.current, h = _(async (d) => {
+    var C;
+    const s = W(), p = c.mode === "lead" ? he() : void 0;
     try {
       a({ type: "SET_LOADING", payload: !0 });
-      const y = await h.createSession({
+      const f = await u.createSession({
         source: c.mode === "lead" ? "lead_bot" : "user_bot",
-        session_key: g,
-        visitor_name: e.visitorName || c.userName,
-        visitor_email: e.visitorEmail || c.userEmail,
-        visitor_metadata: s
+        session_key: s,
+        visitor_name: (d == null ? void 0 : d.name) || e.visitorName || c.userName,
+        visitor_email: (d == null ? void 0 : d.email) || e.visitorEmail || c.userEmail,
+        visitor_metadata: p
       });
-      return y.access_token && (h.setChatToken(y.access_token), l(y.access_token)), m.current = y.session_key, a({ type: "SET_SESSION", payload: y }), n(y.session_key), (d = c.onSessionCreated) == null || d.call(c, y.session_key), a({ type: "SET_LOADING", payload: !1 }), y;
-    } catch (y) {
-      throw a({ type: "SET_ERROR", payload: "Failed to create chat session" }), a({ type: "SET_LOADING", payload: !1 }), y;
+      return f.access_token && (u.setChatToken(f.access_token), l(f.access_token)), g.current = f.session_key, a({ type: "SET_SESSION", payload: f }), n(f.session_key), (C = c.onSessionCreated) == null || C.call(c, f.session_key), a({ type: "SET_LOADING", payload: !1 }), f;
+    } catch (f) {
+      throw a({ type: "SET_ERROR", payload: "Failed to create chat session" }), a({ type: "SET_LOADING", payload: !1 }), f;
     }
-  }, [h, c, e.visitorName, e.visitorEmail, a, n, l]), u = _(async (g) => {
+  }, [u, c, e.visitorName, e.visitorEmail, a, n, l]), m = _(async (d) => {
     try {
       a({ type: "SET_LOADING", payload: !0 });
-      const s = await h.getSession(g);
-      if (m.current && m.current !== g)
+      const s = await u.getSession(d);
+      if (g.current && g.current !== d)
         return a({ type: "SET_LOADING", payload: !1 }), null;
-      const { messages: d, ...y } = s;
-      return m.current = y.session_key, a({ type: "SET_SESSION", payload: y }), a({ type: "SET_MESSAGES", payload: d }), a({ type: "SET_LOADING", payload: !1 }), y;
+      const { messages: p, ...C } = s;
+      return g.current = C.session_key, a({ type: "SET_SESSION", payload: C }), a({ type: "SET_MESSAGES", payload: p }), a({ type: "SET_LOADING", payload: !1 }), C;
     } catch {
-      return n(null), l(null), h.setChatToken(""), a({ type: "SET_LOADING", payload: !1 }), null;
+      return n(null), l(null), u.setChatToken(""), a({ type: "SET_LOADING", payload: !1 }), null;
     }
-  }, [h, a, n, l]), b = _(async (g, s) => {
+  }, [u, a, n, l]), y = _(async (d, s) => {
     if (e.session) {
-      a({ type: "SET_VISITOR_INFO", payload: { name: g, email: s } });
+      a({ type: "SET_VISITOR_INFO", payload: { name: d, email: s } });
       try {
-        await h.updateVisitor(e.session.session_key, {
-          visitor_name: g,
+        await u.updateVisitor(e.session.session_key, {
+          visitor_name: d,
           visitor_email: s
         });
       } catch {
       }
     }
-  }, [h, e.session, a]);
+  }, [u, e.session, a]);
   return v(() => {
-    r && !e.session && u(r);
+    r && !e.session && m(r);
   }, []), {
     session: e.session,
-    sessionKey: ((f = e.session) == null ? void 0 : f.session_key) ?? r,
-    accessToken: h.getChatToken() ?? o,
-    createSession: p,
-    restoreSession: u,
-    updateVisitorInfo: b,
-    api: h
+    sessionKey: ((S = e.session) == null ? void 0 : S.session_key) ?? r,
+    accessToken: u.getChatToken() ?? o,
+    createSession: h,
+    restoreSession: m,
+    updateVisitorInfo: y,
+    api: u
   };
 }
-class fe {
+class pe {
   constructor(a) {
     N(this, "ws", null);
     N(this, "url");
@@ -480,17 +480,17 @@ class fe {
     this.heartbeatTimer && (clearInterval(this.heartbeatTimer), this.heartbeatTimer = null);
   }
 }
-function ge(e, a) {
-  const { state: c, dispatch: r, config: n } = w(), o = S(null), l = S(/* @__PURE__ */ new Map()), x = S(null);
+function fe(e, a) {
+  const { state: c, dispatch: r, config: n } = w(), o = b(null), l = b(/* @__PURE__ */ new Map()), x = b(null);
   v(() => {
     if (!e) return;
-    const p = n.apiUrl.startsWith("https") ? "wss" : "ws", u = n.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
-    let b = `${p}://${u}${Q(e)}`;
-    a && (b += `?token=${encodeURIComponent(a)}`);
-    const f = new fe({
-      url: b,
-      onStatusChange: (s, d) => {
-        r({ type: "SET_CONNECTED", payload: s }), r({ type: "SET_WS_RETRY_COUNT", payload: d });
+    const h = n.apiUrl.startsWith("https") ? "wss" : "ws", m = n.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    let y = `${h}://${m}${J(e)}`;
+    a && (y += `?token=${encodeURIComponent(a)}`);
+    const S = new pe({
+      url: y,
+      onStatusChange: (s, p) => {
+        r({ type: "SET_CONNECTED", payload: s }), r({ type: "SET_WS_RETRY_COUNT", payload: p });
       },
       onMessage: (s) => {
         switch (s.type) {
@@ -503,8 +503,8 @@ function ge(e, a) {
           case "message_ack":
             if (s.temp_id && s.real_id) {
               r({ type: "ACK_MESSAGE", payload: { temp_id: s.temp_id, real_id: s.real_id } });
-              const d = l.current.get(s.temp_id);
-              d && (clearTimeout(d), l.current.delete(s.temp_id));
+              const p = l.current.get(s.temp_id);
+              p && (clearTimeout(p), l.current.delete(s.temp_id));
             }
             break;
           case "agent_joined":
@@ -526,52 +526,52 @@ function ge(e, a) {
         }
       }
     });
-    f.connect(), o.current = f;
-    const g = l.current;
+    S.connect(), o.current = S;
+    const d = l.current;
     return () => {
-      f.disconnect(), o.current = null, g.forEach((s) => clearTimeout(s)), g.clear(), x.current && (clearTimeout(x.current), x.current = null);
+      S.disconnect(), o.current = null, d.forEach((s) => clearTimeout(s)), d.clear(), x.current && (clearTimeout(x.current), x.current = null);
     };
   }, [e, a, n.apiUrl]);
-  const m = _((p) => {
+  const g = _((h) => {
     if (!o.current) return;
-    const u = W(), b = {
-      id: u,
+    const m = W(), y = {
+      id: m,
       session: 0,
       sender_type: n.mode === "lead" ? "visitor" : "user",
       sender_name: c.visitorName || "You",
-      content: p,
+      content: h,
       content_type: "text",
       attachments: [],
       is_read: !0,
       created_at: (/* @__PURE__ */ new Date()).toISOString(),
-      temp_id: u,
+      temp_id: m,
       status: "sending"
     };
-    r({ type: "ADD_MESSAGE", payload: b }), o.current.send({
+    r({ type: "ADD_MESSAGE", payload: y }), o.current.send({
       type: "message",
-      text: p,
-      temp_id: u
+      text: h,
+      temp_id: m
     });
-    const f = setTimeout(() => {
-      r({ type: "FAIL_MESSAGE", payload: { temp_id: u } }), l.current.delete(u);
+    const S = setTimeout(() => {
+      r({ type: "FAIL_MESSAGE", payload: { temp_id: m } }), l.current.delete(m);
     }, k.MESSAGE_ACK_TIMEOUT);
-    l.current.set(u, f);
-  }, [n.mode, c.visitorName, r]), h = _((p) => {
-    var u;
-    (u = o.current) == null || u.send({ type: "typing", is_typing: p });
+    l.current.set(m, S);
+  }, [n.mode, c.visitorName, r]), u = _((h) => {
+    var m;
+    (m = o.current) == null || m.send({ type: "typing", is_typing: h });
   }, []);
   return {
     isConnected: c.isConnected,
-    sendMessage: m,
-    sendTyping: h
+    sendMessage: g,
+    sendTyping: u
   };
 }
-function ye() {
+function ge() {
   var o, l, x;
-  const { state: e, dispatch: a, config: c } = w(), r = S(), n = S(!1);
+  const { state: e, dispatch: a, config: c } = w(), r = b(), n = b(!1);
   return r.current || (r.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
-    n.current || (n.current = !0, r.current.getOperatingHoursStatus().then((m) => {
-      a({ type: "SET_OPERATING_HOURS", payload: m });
+    n.current || (n.current = !0, r.current.getOperatingHoursStatus().then((g) => {
+      a({ type: "SET_OPERATING_HOURS", payload: g });
     }).catch(() => {
     }));
   }, [a]), {
@@ -580,7 +580,7 @@ function ye() {
     responseTime: (x = e.operatingHours) == null ? void 0 : x.response_time
   };
 }
-function Se(e) {
+function ye(e) {
   return e.split(" ").slice(0, 2).map((a) => a[0] ?? "").join("").toUpperCase();
 }
 const B = [
@@ -591,7 +591,7 @@ const B = [
   "acx-bg-pink-500",
   "acx-bg-teal-500"
 ];
-function be(e) {
+function Se(e) {
   let a = 0;
   for (let c = 0; c < e.length; c++)
     a = e.charCodeAt(c) + ((a << 5) - a);
@@ -608,8 +608,8 @@ function R({ name: e, avatarUrl: a }) {
   ) : /* @__PURE__ */ t(
     "div",
     {
-      className: `acx-w-8 acx-h-8 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-text-white acx-text-xs acx-font-semibold acx-flex-shrink-0 ${be(e)}`,
-      children: Se(e)
+      className: `acx-w-8 acx-h-8 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-text-white acx-text-xs acx-font-semibold acx-flex-shrink-0 ${Se(e)}`,
+      children: ye(e)
     }
   );
 }
@@ -620,7 +620,7 @@ function P(e) {
     day: "numeric"
   });
 }
-function Ne(e) {
+function be(e) {
   const a = new Date(e), c = /* @__PURE__ */ new Date(), r = new Date(c.getFullYear(), c.getMonth(), c.getDate()), n = new Date(a.getFullYear(), a.getMonth(), a.getDate()), o = Math.floor((r.getTime() - n.getTime()) / (1e3 * 60 * 60 * 24));
   return o === 0 ? "Today" : o === 1 ? "Yesterday" : a.toLocaleDateString(void 0, {
     weekday: "long",
@@ -628,18 +628,18 @@ function Ne(e) {
     day: "numeric"
   });
 }
-function _e(e, a) {
+function Ne(e, a) {
   const c = new Date(e), r = new Date(a);
   return c.getFullYear() === r.getFullYear() && c.getMonth() === r.getMonth() && c.getDate() === r.getDate();
 }
-function Te(e) {
-  let a = Ee(e);
+function _e(e) {
+  let a = Te(e);
   return a = a.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"), a = a.replace(/__(.+?)__/g, "<strong>$1</strong>"), a = a.replace(/\*(.+?)\*/g, "<em>$1</em>"), a = a.replace(new RegExp("(?<!\\w)_(.+?)_(?!\\w)", "g"), "<em>$1</em>"), a = a.replace(/`(.+?)`/g, "<code>$1</code>"), a = a.replace(
     /\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g,
     '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
   ), a = a.replace(/\n/g, "<br />"), a;
 }
-function Ee(e) {
+function Te(e) {
   const a = {
     "&": "&amp;",
     "<": "&lt;",
@@ -649,7 +649,7 @@ function Ee(e) {
   };
   return e.replace(/[&<>"']/g, (c) => a[c] ?? c);
 }
-function we({ message: e }) {
+function Ee({ message: e }) {
   var r;
   const a = e.sender_type === "visitor" || e.sender_type === "user", c = e.sender_type === "system";
   return c && e.content_type === "auto_response" ? /* @__PURE__ */ i("div", { className: "acx-flex acx-gap-2 acx-mb-3 acx-justify-start", children: [
@@ -671,7 +671,7 @@ function we({ message: e }) {
             "div",
             {
               className: "acx-prose acx-prose-sm",
-              dangerouslySetInnerHTML: { __html: Te(e.content) }
+              dangerouslySetInnerHTML: { __html: _e(e.content) }
             }
           ) : /* @__PURE__ */ t("p", { className: "acx-whitespace-pre-wrap", children: e.content })
         }
@@ -695,7 +695,7 @@ function we({ message: e }) {
     ] })
   ] });
 }
-function ve({ agentName: e }) {
+function we({ agentName: e }) {
   return /* @__PURE__ */ i("div", { className: "acx-flex acx-items-center acx-gap-2 acx-mb-3", children: [
     /* @__PURE__ */ t(R, { name: e ?? "Agent" }),
     /* @__PURE__ */ t("div", { className: "acx-bg-gray-100 acx-rounded-2xl acx-rounded-bl-md acx-px-4 acx-py-3", children: /* @__PURE__ */ i("div", { className: "acx-flex acx-gap-1", children: [
@@ -706,7 +706,7 @@ function ve({ agentName: e }) {
   ] });
 }
 function Ce({ messages: e, agentTyping: a }) {
-  const c = S(null), r = S(null);
+  const c = b(null), r = b(null);
   return v(() => {
     var n;
     (n = c.current) == null || n.scrollIntoView({ behavior: "smooth" });
@@ -717,31 +717,31 @@ function Ce({ messages: e, agentTyping: a }) {
       className: "acx-flex-1 acx-overflow-y-auto acx-px-4 acx-py-3 acx-space-y-1",
       children: [
         e.map((n, o) => {
-          const l = e[o - 1], x = !l || !_e(l.created_at, n.created_at);
+          const l = e[o - 1], x = !l || !Ne(l.created_at, n.created_at);
           return /* @__PURE__ */ i("div", { children: [
-            x && /* @__PURE__ */ t("div", { className: "acx-flex acx-items-center acx-justify-center acx-py-3", children: /* @__PURE__ */ t("span", { className: "acx-text-xs acx-text-gray-400 acx-bg-gray-50 acx-px-3 acx-py-1 acx-rounded-full", children: Ne(n.created_at) }) }),
-            /* @__PURE__ */ t(we, { message: n })
+            x && /* @__PURE__ */ t("div", { className: "acx-flex acx-items-center acx-justify-center acx-py-3", children: /* @__PURE__ */ t("span", { className: "acx-text-xs acx-text-gray-400 acx-bg-gray-50 acx-px-3 acx-py-1 acx-rounded-full", children: be(n.created_at) }) }),
+            /* @__PURE__ */ t(Ee, { message: n })
           ] }, n.temp_id ?? n.id);
         }),
-        a.is_typing && /* @__PURE__ */ t(ve, { agentName: a.agent_name }),
+        a.is_typing && /* @__PURE__ */ t(we, { agentName: a.agent_name }),
         /* @__PURE__ */ t("div", { ref: c })
       ]
     }
   );
 }
-function ke({ onSend: e, onTyping: a, onFileUpload: c, mode: r, disabled: n, placeholder: o }) {
-  const [l, x] = E(""), m = S(null), h = S(), p = _(() => {
+function ve({ onSend: e, onTyping: a, onFileUpload: c, mode: r, disabled: n, placeholder: o }) {
+  const [l, x] = E(""), g = b(null), u = b(), h = _(() => {
     const s = l.trim();
     !s || n || (e(s), x(""), a == null || a(!1));
-  }, [l, n, e, a]), u = (s) => {
-    s.key === "Enter" && !s.shiftKey && (s.preventDefault(), p());
-  }, b = (s) => {
-    const d = s.target.value;
-    d.length > M.MAX_MESSAGE_LENGTH || (x(d), a == null || a(!0), h.current && clearTimeout(h.current), h.current = setTimeout(() => a == null ? void 0 : a(!1), 2e3));
-  }, f = () => {
+  }, [l, n, e, a]), m = (s) => {
+    s.key === "Enter" && !s.shiftKey && (s.preventDefault(), h());
+  }, y = (s) => {
+    const p = s.target.value;
+    p.length > M.MAX_MESSAGE_LENGTH || (x(p), a == null || a(!0), u.current && clearTimeout(u.current), u.current = setTimeout(() => a == null ? void 0 : a(!1), 2e3));
+  }, S = () => {
     var s;
-    (s = m.current) == null || s.click();
-  }, g = (s) => {
+    (s = g.current) == null || s.click();
+  }, d = (s) => {
     s.target.files && s.target.files.length > 0 && (c == null || c(s.target.files), s.target.value = "");
   };
   return /* @__PURE__ */ t("div", { className: "acx-border-t acx-border-gray-200 acx-bg-white acx-px-3 acx-py-2", children: /* @__PURE__ */ i("div", { className: "acx-flex acx-items-end acx-gap-2", children: [
@@ -749,22 +749,22 @@ function ke({ onSend: e, onTyping: a, onFileUpload: c, mode: r, disabled: n, pla
       /* @__PURE__ */ t(
         "button",
         {
-          onClick: f,
+          onClick: S,
           className: "acx-p-1.5 acx-text-gray-400 hover:acx-text-gray-600 acx-transition-colors acx-flex-shrink-0",
           "aria-label": "Attach file",
           type: "button",
-          children: /* @__PURE__ */ t(oe, { className: "acx-w-5 acx-h-5" })
+          children: /* @__PURE__ */ t(ie, { className: "acx-w-5 acx-h-5" })
         }
       ),
       /* @__PURE__ */ t(
         "input",
         {
-          ref: m,
+          ref: g,
           type: "file",
           className: "acx-hidden",
           accept: M.ALLOWED_FILE_TYPES.join(","),
           multiple: !0,
-          onChange: g
+          onChange: d
         }
       )
     ] }),
@@ -772,8 +772,8 @@ function ke({ onSend: e, onTyping: a, onFileUpload: c, mode: r, disabled: n, pla
       "textarea",
       {
         value: l,
-        onChange: b,
-        onKeyDown: u,
+        onChange: y,
+        onKeyDown: m,
         placeholder: o ?? "Type a message...",
         disabled: n,
         rows: 1,
@@ -784,12 +784,12 @@ function ke({ onSend: e, onTyping: a, onFileUpload: c, mode: r, disabled: n, pla
     /* @__PURE__ */ t(
       "button",
       {
-        onClick: p,
+        onClick: h,
         disabled: !l.trim() || n,
         className: "acx-p-1.5 acx-text-primary-600 hover:acx-text-primary-700 disabled:acx-text-gray-300 acx-transition-colors acx-flex-shrink-0",
         "aria-label": "Send message",
         type: "button",
-        children: /* @__PURE__ */ t(se, { className: "acx-w-5 acx-h-5" })
+        children: /* @__PURE__ */ t(ne, { className: "acx-w-5 acx-h-5" })
       }
     )
   ] }) });
@@ -830,7 +830,7 @@ function U({ isConnected: e, retryCount: a }) {
     /* @__PURE__ */ t("p", { className: "acx-text-xs acx-text-amber-800", children: "Reconnecting..." })
   ] }) });
 }
-function Ae({ onSubmit: e, loading: a }) {
+function ke({ onSubmit: e, loading: a }) {
   const [c, r] = E(""), [n, o] = E("");
   return /* @__PURE__ */ i("form", { onSubmit: (x) => {
     x.preventDefault(), n.trim() && e({ name: c.trim(), email: n.trim() });
@@ -868,43 +868,43 @@ function Ae({ onSubmit: e, loading: a }) {
     )
   ] });
 }
-function Ie() {
-  const { state: e, dispatch: a, config: c } = w(), { session: r, sessionKey: n, accessToken: o, createSession: l, updateVisitorInfo: x } = me(), { sendMessage: m, sendTyping: h, isConnected: p } = ge(n, o), { isOnline: u, offlineMessage: b, responseTime: f } = ye(), [g, s] = E(!1), d = S(null);
+function Ae() {
+  const { state: e, dispatch: a, config: c } = w(), { session: r, sessionKey: n, accessToken: o, createSession: l } = me(), { sendMessage: x, sendTyping: g, isConnected: u } = fe(n, o), { isOnline: h, offlineMessage: m, responseTime: y } = ge(), [S, d] = E(!1), s = b(null);
   v(() => {
-    p && d.current && (m(d.current), d.current = null);
-  }, [p, m]);
-  const y = _(async (C) => {
+    u && s.current && (x(s.current), s.current = null);
+  }, [u, x]);
+  const p = _(async (f) => {
     if (!r) {
       if (c.mode === "lead" && !e.visitorEmail) {
-        d.current = C, s(!0);
+        s.current = f, d(!0);
         return;
       }
       try {
-        d.current = C, await l();
+        s.current = f, await l();
       } catch {
-        d.current = null;
+        s.current = null;
       }
       return;
     }
-    m(C);
-  }, [r, c.mode, e.visitorEmail, l, m]), K = _(async (C) => {
-    a({ type: "SET_VISITOR_INFO", payload: C }), s(!1);
+    x(f);
+  }, [r, c.mode, e.visitorEmail, l, x]), C = _(async (f) => {
+    a({ type: "SET_VISITOR_INFO", payload: f }), d(!1);
     try {
-      await l() && await x(C.name, C.email);
+      await l({ name: f.name, email: f.email });
     } catch {
-      d.current = null;
+      s.current = null;
     }
-  }, [l, x, a]);
+  }, [l, a]);
   return v(() => {
     e.unreadCount > 0 && e.activeTab === "messages" && a({ type: "RESET_UNREAD" });
-  }, [e.unreadCount, e.activeTab, a]), g && !r ? /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
-    /* @__PURE__ */ t(U, { isConnected: p, retryCount: e.wsRetryCount }),
-    /* @__PURE__ */ t(G, { isOnline: u, offlineMessage: b, responseTime: f }),
-    /* @__PURE__ */ t(Ae, { onSubmit: K, loading: e.loading })
+  }, [e.unreadCount, e.activeTab, a]), S && !r ? /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
+    /* @__PURE__ */ t(U, { isConnected: u, retryCount: e.wsRetryCount }),
+    /* @__PURE__ */ t(G, { isOnline: h, offlineMessage: m, responseTime: y }),
+    /* @__PURE__ */ t(ke, { onSubmit: C, loading: e.loading })
   ] }) : /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full", children: [
-    /* @__PURE__ */ t(U, { isConnected: p, retryCount: e.wsRetryCount }),
-    /* @__PURE__ */ t(G, { isOnline: u, offlineMessage: b, responseTime: f }),
-    e.messages.length === 0 && !r ? /* @__PURE__ */ t("div", { className: "acx-flex-1 acx-flex acx-flex-col acx-items-center acx-justify-center acx-px-6 acx-text-center", children: u ? /* @__PURE__ */ i(A, { children: [
+    /* @__PURE__ */ t(U, { isConnected: u, retryCount: e.wsRetryCount }),
+    /* @__PURE__ */ t(G, { isOnline: h, offlineMessage: m, responseTime: y }),
+    e.messages.length === 0 && !r ? /* @__PURE__ */ t("div", { className: "acx-flex-1 acx-flex acx-flex-col acx-items-center acx-justify-center acx-px-6 acx-text-center", children: h ? /* @__PURE__ */ i(A, { children: [
       /* @__PURE__ */ t("p", { className: "acx-text-lg acx-font-semibold acx-text-gray-800 acx-mb-1", children: c.greeting || "Hi there! How can we help?" }),
       /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-500", children: "Send a message to start a conversation" })
     ] }) : /* @__PURE__ */ i(A, { children: [
@@ -916,23 +916,23 @@ function Ie() {
       /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-600 acx-font-medium", children: "Leave us a message" }),
       /* @__PURE__ */ i("p", { className: "acx-text-xs acx-text-gray-400 acx-mt-1", children: [
         "Our team is currently away. Leave a message and we'll get back to you",
-        f ? ` ${f}` : " as soon as possible",
+        y ? ` ${y}` : " as soon as possible",
         "."
       ] })
     ] }) }) : /* @__PURE__ */ t(Ce, { messages: e.messages, agentTyping: e.agentTyping }),
     /* @__PURE__ */ t(
-      ke,
+      ve,
       {
-        onSend: y,
-        onTyping: h,
+        onSend: p,
+        onTyping: g,
         mode: c.mode,
         disabled: e.loading,
-        placeholder: u ? "Type a message..." : "Leave a message..."
+        placeholder: h ? "Type a message..." : "Leave a message..."
       }
     )
   ] });
 }
-function Oe({ article: e, onClick: a }) {
+function Ie({ article: e, onClick: a }) {
   return /* @__PURE__ */ i(
     "button",
     {
@@ -948,27 +948,27 @@ function Oe({ article: e, onClick: a }) {
     }
   );
 }
-function Re() {
-  var g;
-  const { state: e, dispatch: a, config: c } = w(), r = e.kbTopics, [n, o] = E(null), [l, x] = E([]), [m, h] = E(!1), p = S();
-  p.current || (p.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
+function Oe() {
+  var d;
+  const { state: e, dispatch: a, config: c } = w(), r = e.kbTopics, [n, o] = E(null), [l, x] = E([]), [g, u] = E(!1), h = b();
+  h.current || (h.current = new I({ baseUrl: c.apiUrl, token: c.token })), v(() => {
     var s;
-    ((s = e.kbTopics) == null ? void 0 : s.length) > 0 || p.current.getKBTopics().then((d) => a({ type: "SET_KB_TOPICS", payload: Array.isArray(d) ? d : [] })).catch(() => {
+    ((s = e.kbTopics) == null ? void 0 : s.length) > 0 || h.current.getKBTopics().then((p) => a({ type: "SET_KB_TOPICS", payload: Array.isArray(p) ? p : [] })).catch(() => {
     });
-  }, [(g = e.kbTopics) == null ? void 0 : g.length, a]);
-  const u = _(async (s) => {
-    o(s), h(!0);
+  }, [(d = e.kbTopics) == null ? void 0 : d.length, a]);
+  const m = _(async (s) => {
+    o(s), u(!0);
     try {
-      const d = await p.current.getKBTopicArticles(s.slug);
-      x(d);
+      const p = await h.current.getKBTopicArticles(s.slug);
+      x(p);
     } catch {
       x([]);
     } finally {
-      h(!1);
+      u(!1);
     }
-  }, []), b = _((s) => {
+  }, []), y = _((s) => {
     s.url && window.open(s.url, "_blank", "noopener,noreferrer");
-  }, []), f = _(() => {
+  }, []), S = _(() => {
     o(null), x([]);
   }, []);
   return n ? /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto", children: [
@@ -976,10 +976,10 @@ function Re() {
       /* @__PURE__ */ i(
         "button",
         {
-          onClick: f,
+          onClick: S,
           className: "acx-flex acx-items-center acx-gap-1 acx-text-sm acx-text-primary-600 acx-mb-2 hover:acx-text-primary-700",
           children: [
-            /* @__PURE__ */ t(le, { className: "acx-w-4 acx-h-4" }),
+            /* @__PURE__ */ t(oe, { className: "acx-w-4 acx-h-4" }),
             "Back"
           ]
         }
@@ -991,7 +991,7 @@ function Re() {
         n.article_count !== 1 ? "s" : ""
       ] })
     ] }),
-    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: m ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Loading..." }) : l.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "No articles found" }) : l.map((s) => /* @__PURE__ */ t(Oe, { article: s, onClick: b }, s.id)) })
+    /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: g ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "Loading..." }) : l.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400", children: "No articles found" }) : l.map((s) => /* @__PURE__ */ t(Ie, { article: s, onClick: y }, s.id)) })
   ] }) : /* @__PURE__ */ i("div", { className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto", children: [
     /* @__PURE__ */ i("div", { className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100", children: [
       /* @__PURE__ */ t("h2", { className: "acx-text-base acx-font-semibold acx-text-gray-900", children: "Help Centre" }),
@@ -1000,7 +1000,7 @@ function Re() {
     /* @__PURE__ */ t("div", { className: "acx-p-4 acx-space-y-1", children: r.length === 0 ? /* @__PURE__ */ t("div", { className: "acx-py-8 acx-text-center", children: /* @__PURE__ */ t("p", { className: "acx-text-sm acx-text-gray-400", children: "No help topics available" }) }) : r.map((s) => /* @__PURE__ */ i(
       "button",
       {
-        onClick: () => u(s),
+        onClick: () => m(s),
         className: "acx-w-full acx-flex acx-items-center acx-justify-between acx-p-3 acx-rounded-lg acx-text-left hover:acx-bg-gray-50 acx-transition-colors",
         children: [
           /* @__PURE__ */ i("div", { children: [
@@ -1018,10 +1018,10 @@ function Re() {
     )) })
   ] });
 }
-function Ge(e) {
-  return /* @__PURE__ */ t(ae, { ...e, children: /* @__PURE__ */ t(Me, { position: e.position ?? X.POSITION }) });
+function Be(e) {
+  return /* @__PURE__ */ t(ee, { ...e, children: /* @__PURE__ */ t(Re, { position: e.position ?? Q.POSITION }) });
 }
-function Me({ position: e }) {
+function Re({ position: e }) {
   const { state: a, dispatch: c } = w(), [r, n] = E(!1);
   return /* @__PURE__ */ i("div", { className: "acrux-chat-widget", children: [
     r && /* @__PURE__ */ i(
@@ -1047,8 +1047,8 @@ function Me({ position: e }) {
             )
           ] }),
           /* @__PURE__ */ i("div", { className: "acx-flex-1 acx-overflow-hidden", children: [
-            a.activeTab === "messages" && /* @__PURE__ */ t(Ie, {}),
-            a.activeTab === "help" && /* @__PURE__ */ t(Re, {})
+            a.activeTab === "messages" && /* @__PURE__ */ t(Ae, {}),
+            a.activeTab === "help" && /* @__PURE__ */ t(Oe, {})
           ] }),
           /* @__PURE__ */ t(
             ue,
@@ -1061,7 +1061,7 @@ function Me({ position: e }) {
       }
     ),
     /* @__PURE__ */ t(
-      xe,
+      le,
       {
         isOpen: r,
         onClick: () => n(!r),
@@ -1071,6 +1071,6 @@ function Me({ position: e }) {
   ] });
 }
 export {
-  Ge as ChatWidget
+  Be as ChatWidget
 };
 //# sourceMappingURL=acrux-chat.es.js.map
