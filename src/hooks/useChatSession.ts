@@ -24,7 +24,7 @@ export function useChatSession() {
 
   const api = apiRef.current
 
-  const createSession = useCallback(async () => {
+  const createSession = useCallback(async (visitorOverrides?: { name?: string; email?: string }) => {
     const sessionKey = generateUUID()
     const metadata = config.mode === 'lead' ? extractVisitorMetadata() : undefined
 
@@ -33,8 +33,8 @@ export function useChatSession() {
       const session = await api.createSession({
         source: config.mode === 'lead' ? 'lead_bot' : 'user_bot',
         session_key: sessionKey,
-        visitor_name: state.visitorName || config.userName,
-        visitor_email: state.visitorEmail || config.userEmail,
+        visitor_name: visitorOverrides?.name || state.visitorName || config.userName,
+        visitor_email: visitorOverrides?.email || state.visitorEmail || config.userEmail,
         visitor_metadata: metadata,
       })
 

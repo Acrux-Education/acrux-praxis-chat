@@ -47,14 +47,12 @@ export function MessagesTab() {
     dispatch({ type: 'SET_VISITOR_INFO', payload: data })
     setShowLeadCapture(false)
     try {
-      const newSession = await createSession()
-      if (newSession) {
-        await updateVisitorInfo(data.name, data.email)
-      }
+      // Pass visitor data directly to avoid React async state race condition
+      await createSession({ name: data.name, email: data.email })
     } catch {
       pendingMessageRef.current = null
     }
-  }, [createSession, updateVisitorInfo, dispatch])
+  }, [createSession, dispatch])
 
   // Reset unread when viewing messages tab
   useEffect(() => {
