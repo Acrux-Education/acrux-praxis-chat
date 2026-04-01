@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
@@ -13,13 +15,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Configure git user
         run: |
@@ -35,21 +35,13 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Commit built files
+      - name: Commit and push built files
         run: |
           git add dist/
           if git diff --cached --quiet; then
             echo "No changes to dist/, skipping commit"
           else
+            git remote set-url origin https://x-access-token:${{ secrets.DISPATCH_TOKEN }}@github.com/${{ github.repository }}
             git commit -m "chore: update dist [skip ci]"
             git push origin main
           fi
-
-      # Disabled: was triggering acrux-praxis-fe with empty version payload
-      # causing it to overwrite package.json ref to just #v
-      # - name: Trigger consumer update in acrux-praxis-fe
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.DISPATCH_TOKEN }}
-      #     repository: Acrux-Education/acrux-praxis-fe
-      #     event-type: chat-widget-update
