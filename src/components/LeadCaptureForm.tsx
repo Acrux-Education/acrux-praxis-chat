@@ -41,7 +41,7 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
       <button
         type="submit"
         disabled={!email.trim() || loading}
-        className="acx-w-full acx-bg-primary-600 acx-text-white acx-py-2.5 acx-rounded-lg acx-text-sm acx-font-medium hover:acx-bg-primary-700 disabled:acx-opacity-50 acx-transition-colors"
+        className="acx-w-full acx-bg-primary-600 acx-text-white acx-py-2.5 acx-rounded-lg acx-text-sm acx-font-medium acx-transition-colors enabled:hover:acx-bg-primary-700 disabled:acx-bg-gray-200 disabled:acx-text-gray-500 disabled:acx-cursor-not-allowed"
       >
         {loading ? 'Starting...' : 'Start conversation'}
       </button>

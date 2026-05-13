@@ -91,7 +91,7 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
         <button
           onClick={handleSubmit}
           disabled={!text.trim() || disabled}
-          className="acx-p-1.5 acx-text-primary-600 hover:acx-text-primary-700 disabled:acx-text-gray-300 acx-transition-colors acx-flex-shrink-0"
+          className="acx-p-1.5 acx-text-primary-600 acx-transition-colors acx-flex-shrink-0 enabled:hover:acx-text-primary-700 disabled:acx-text-gray-300 disabled:acx-cursor-not-allowed"
           aria-label="Send message"
           type="button"
         >
