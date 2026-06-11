@@ -2,7 +2,7 @@
   "version": "0.1.7",
   "js": {
     "file": "acrux-chat.v0.1.7.iife.js",
-    "integrity": "sha384-CMI7AEixMcuRLYbl72Jl6w/K2I+SpA/Rbb/pOrVSBVIMD0rv6qHpbTD0XJ4mK+vT"
+    "integrity": "sha384-TjWAtd1lzITyjlxjeVWZOtbTjRoWDpYjUjvvYFHLBsxNq2o+8SeuaqIa5w0Zb5CU"
   },
   "css": {
     "file": "style.v0.1.7.css",
