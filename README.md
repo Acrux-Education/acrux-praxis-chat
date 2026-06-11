@@ -56,7 +56,6 @@ Include the built files and initialise:
 | `userEmail` | `string` | No | Email for the current user |
 | `schoolId` | `string` | No | School identifier |
 | `position` | `'bottom-right' \| 'bottom-left'` | No | Widget position (default: `bottom-right`) |
-| `primaryColor` | `string` | No | Brand colour override (default: `#006383`) |
 | `greeting` | `string` | No | Custom greeting message |
 | `onSessionCreated` | `(sessionKey: string) => void` | No | Callback when a chat session is created |
 

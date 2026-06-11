@@ -12,7 +12,6 @@ export interface ChatWidgetProps {
   userEmail?: string
   schoolId?: string
   position?: WidgetPosition
-  primaryColor?: string
   greeting?: string
   defaultTab?: TabId
   onSessionCreated?: (sessionKey: string) => void
@@ -22,7 +21,6 @@ export interface StandaloneInitOptions {
   mode: WidgetMode
   apiUrl: string
   position?: WidgetPosition
-  primaryColor?: string
   greeting?: string
   defaultTab?: TabId
   containerId?: string

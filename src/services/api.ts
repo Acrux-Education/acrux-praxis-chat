@@ -61,10 +61,10 @@ export class ApiClient {
 
   async createSession(data: {
     source: 'lead_bot' | 'user_bot'
-    session_key: string
     visitor_name?: string
     visitor_email?: string
     visitor_metadata?: VisitorMetadata
+    turnstile_token?: string
   }): Promise<ChatSession> {
     return this.request<ChatSession>(API_PATHS.SESSIONS, {
       method: 'POST',

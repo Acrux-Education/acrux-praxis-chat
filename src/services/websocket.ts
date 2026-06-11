@@ -6,13 +6,34 @@ type StatusHandler = (connected: boolean, retryCount: number) => void
 
 interface ChatWebSocketConfig {
   url: string
+  token?: string
   onMessage: MessageHandler
   onStatusChange: StatusHandler
+}
+
+const KNOWN_WS_TYPES: WSIncomingMessage['type'][] = [
+  'history',
+  'message',
+  'message_ack',
+  'agent_joined',
+  'agent_typing',
+  'heartbeat_ack',
+  'error',
+]
+
+function isValidWSMessage(data: unknown): data is WSIncomingMessage {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    typeof (data as Record<string, unknown>).type === 'string' &&
+    KNOWN_WS_TYPES.includes((data as Record<string, unknown>).type as WSIncomingMessage['type'])
+  )
 }
 
 export class ChatWebSocket {
   private ws: WebSocket | null = null
   private url: string
+  private token?: string
   private onMessage: MessageHandler
   private onStatusChange: StatusHandler
   private retryCount = 0
@@ -23,6 +44,7 @@ export class ChatWebSocket {
 
   constructor(config: ChatWebSocketConfig) {
     this.url = config.url
+    this.token = config.token
     this.onMessage = config.onMessage
     this.onStatusChange = config.onStatusChange
   }
@@ -33,7 +55,10 @@ export class ChatWebSocket {
     this.intentionallyClosed = false
 
     try {
-      this.ws = new WebSocket(this.url)
+      const protocols = this.token
+        ? ['acrux-chat', `acrux-chat-token.${this.token}`]
+        : ['acrux-chat']
+      this.ws = new WebSocket(this.url, protocols)
     } catch {
       this.scheduleReconnect()
       return
@@ -60,8 +85,11 @@ export class ChatWebSocket {
 
     this.ws.onmessage = (event) => {
       try {
-        const data = JSON.parse(event.data) as WSIncomingMessage
-        this.onMessage(data)
+        const data: unknown = JSON.parse(event.data)
+        if (isValidWSMessage(data)) {
+          this.onMessage(data)
+        }
+        // Silently ignore messages with unknown type (consistent with malformed-JSON catch below)
       } catch {
         // Ignore malformed messages
       }

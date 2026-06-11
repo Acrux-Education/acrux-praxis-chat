@@ -1,3 +1,5 @@
+export const TURNSTILE_SITE_KEY = '0x4AAAAAADHbxC4Cc2tAgr_N'
+
 export const API_PATHS = {
   SESSIONS: '/api/chat/sessions/',
   SESSION: (key: string) => `/api/chat/sessions/${key}/`,
@@ -15,7 +17,6 @@ export const WS_PATH = (sessionKey: string) => `/ws/chat/${sessionKey}/`
 
 export const DEFAULTS = {
   POSITION: 'bottom-right' as const,
-  PRIMARY_COLOR: '#006383',
   GREETING: 'Hi there! How can we help?',
   WIDGET_WIDTH: 380,
   WIDGET_HEIGHT: 600,

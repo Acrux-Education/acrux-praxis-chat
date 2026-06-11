@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { useChatContext } from '../context/ChatContext'
 import { ChatWebSocket } from '../services/websocket'
-import { WS_PATH, TIMEOUTS } from '../constants'
+import { WS_PATH, TIMEOUTS, LIMITS } from '../constants'
 import { generateUUID } from '../utils/uuid'
 import type { WSIncomingMessage, ChatMessage } from '../types'
 
@@ -16,13 +16,11 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
 
     const wsProtocol = config.apiUrl.startsWith('https') ? 'wss' : 'ws'
     const wsHost = config.apiUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
-    let wsUrl = `${wsProtocol}://${wsHost}${WS_PATH(sessionKey)}`
-    if (accessToken) {
-      wsUrl += `?token=${encodeURIComponent(accessToken)}`
-    }
+    const wsUrl = `${wsProtocol}://${wsHost}${WS_PATH(sessionKey)}`
 
     const ws = new ChatWebSocket({
       url: wsUrl,
+      token: accessToken ?? undefined,
       onStatusChange: (connected, retryCount) => {
         dispatch({ type: 'SET_CONNECTED', payload: connected })
         dispatch({ type: 'SET_WS_RETRY_COUNT', payload: retryCount })
@@ -30,13 +28,13 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
       onMessage: (data: WSIncomingMessage) => {
         switch (data.type) {
           case 'history':
-            if (data.messages) {
+            if (Array.isArray(data.messages)) {
               dispatch({ type: 'SET_MESSAGES', payload: data.messages })
             }
             break
 
           case 'message':
-            if (data.message) {
+            if (data.message && typeof data.message === 'object') {
               dispatch({ type: 'ADD_MESSAGE', payload: data.message })
               // Increment unread if widget is closed or on different tab
               if (!state.isOpen || state.activeTab !== 'messages') {
@@ -46,7 +44,7 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
             break
 
           case 'message_ack':
-            if (data.temp_id && data.real_id) {
+            if (typeof data.temp_id === 'string' && typeof data.real_id === 'number') {
               dispatch({ type: 'ACK_MESSAGE', payload: { temp_id: data.temp_id, real_id: data.real_id } })
               const timer = ackTimersRef.current.get(data.temp_id)
               if (timer) {
@@ -104,6 +102,7 @@ export function useChatWebSocket(sessionKey: string | null, accessToken?: string
   }, [sessionKey, accessToken, config.apiUrl]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const sendMessage = useCallback((text: string) => {
+    if (!text || text.length > LIMITS.MAX_MESSAGE_LENGTH) return
     if (!wsRef.current) return
 
     const tempId = generateUUID()
