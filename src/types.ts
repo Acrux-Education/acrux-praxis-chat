@@ -118,6 +118,16 @@ export interface KBArticle {
   relevance?: number
 }
 
+// Response of POST /api/kb/chatbot/answer/ (PLATDEV-616). `answer` is null
+// and `fallback` true when no grounded answer could be produced — show the
+// `results` card list and the human-chat handoff instead.
+export interface KBAnswer {
+  answer: string | null
+  sources: KBArticle[]
+  results: KBArticle[]
+  fallback: boolean
+}
+
 export interface KBTopic {
   id: number
   name: string

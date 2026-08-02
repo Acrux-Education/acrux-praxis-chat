@@ -1,4 +1,4 @@
-import type { ChatSession, ChatMessage, Announcement, RoadmapItem, KBArticle, KBTopic, OperatingHoursStatus, VisitorMetadata } from '../types'
+import type { ChatSession, ChatMessage, Announcement, RoadmapItem, KBArticle, KBAnswer, KBTopic, OperatingHoursStatus, VisitorMetadata } from '../types'
 import { API_PATHS } from '../constants'
 
 interface ApiClientConfig {
@@ -109,6 +109,13 @@ export class ApiClient {
   async searchKB(query: string): Promise<KBArticle[]> {
     const params = new URLSearchParams({ q: query })
     return this.request<KBArticle[]>(`${API_PATHS.KB_SEARCH}?${params}`)
+  }
+
+  async askKB(question: string, sessionId?: string): Promise<KBAnswer> {
+    return this.request<KBAnswer>(API_PATHS.KB_ANSWER, {
+      method: 'POST',
+      body: JSON.stringify({ question, session_id: sessionId ?? '' }),
+    })
   }
 
   async getKBTopics(): Promise<KBTopic[]> {

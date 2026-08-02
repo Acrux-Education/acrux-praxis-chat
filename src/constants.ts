@@ -8,6 +8,7 @@ export const API_PATHS = {
   ANNOUNCEMENTS: '/api/chat/announcements/',
   ROADMAP: '/api/chat/roadmap/',
   KB_SEARCH: '/api/kb/chatbot/search/',
+  KB_ANSWER: '/api/kb/chatbot/answer/',
   KB_TOPICS: '/api/kb/topics/',
   KB_TOPIC_ARTICLES: (slug: string) => `/api/kb/topics/${slug}/articles/`,
   OPERATING_HOURS: '/api/chat/operating-hours/status/',

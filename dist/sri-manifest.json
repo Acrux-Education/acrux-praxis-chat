@@ -2,10 +2,10 @@
   "version": "0.1.7",
   "js": {
     "file": "acrux-chat.v0.1.7.iife.js",
-    "integrity": "sha384-TjWAtd1lzITyjlxjeVWZOtbTjRoWDpYjUjvvYFHLBsxNq2o+8SeuaqIa5w0Zb5CU"
+    "integrity": "sha384-v18WVPFqUrER/GqWNQ/zuyjIR1A2VeWuTwr2+tpqL1gSKgbkL0U5Of3mz7yDOd0+"
   },
   "css": {
     "file": "style.v0.1.7.css",
-    "integrity": "sha384-6PBCAgKB0ufqqz5OPd4PiOAKsM5KM2dkgmkyGP7TLyP06mov7CdiWyCUKrCbf9Ul"
+    "integrity": "sha384-8tDvBefBPzoAjRBCwerlV8qjSemR0MCBevqLRM7T6g4HSxlHrP4MaIMtwit33egW"
   }
 }
