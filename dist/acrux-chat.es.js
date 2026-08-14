@@ -288,7 +288,7 @@ function ye({ className: e }) {
 function fe({ className: e }) {
   return /* @__PURE__ */ a("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ a("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" }) });
 }
-function z({ className: e }) {
+function J({ className: e }) {
   return /* @__PURE__ */ a("svg", { className: e, width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ a("polyline", { points: "9 18 15 12 9 6" }) });
 }
 function ge({ className: e }) {
@@ -389,7 +389,6 @@ function ve() {
           }
           x.render(r, {
             sitekey: re,
-            size: "invisible",
             callback: (m) => n(m),
             "error-callback": () => n(null),
             "expired-callback": () => n(null)
@@ -1035,7 +1034,7 @@ function qe() {
     )
   ] });
 }
-function ze() {
+function Je() {
   const { dispatch: e, config: t } = C(), c = g(), r = g();
   c.current || (c.current = new O({ baseUrl: t.apiUrl, token: t.token }));
   const n = b((i) => {
@@ -1056,7 +1055,7 @@ function ze() {
     r.current && clearTimeout(r.current);
   }, []), { search: n };
 }
-function Je({ onSearch: e, onSubmit: t, placeholder: c = "Search for help..." }) {
+function ze({ onSearch: e, onSubmit: t, placeholder: c = "Search for help..." }) {
   const [r, n] = w(""), i = g();
   return v(() => (i.current && clearTimeout(i.current), i.current = setTimeout(() => {
     e(r.trim());
@@ -1090,14 +1089,14 @@ function Y({ article: e, onClick: t }) {
           /* @__PURE__ */ a("h4", { className: "acx-text-sm acx-font-medium acx-text-gray-900 acx-truncate group-hover:acx-text-primary-600 acx-transition-colors", children: e.title }),
           e.summary && /* @__PURE__ */ a("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5 acx-line-clamp-2", children: e.summary })
         ] }),
-        /* @__PURE__ */ a(z, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })
+        /* @__PURE__ */ a(J, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })
       ]
     }
   );
 }
 function Qe() {
   var G, H;
-  const { state: e, dispatch: t, config: c } = C(), { search: r } = ze(), n = e.kbTopics, [i, l] = w(null), [x, m] = w([]), [f, u] = w(!1), [h, p] = w(null), [_, E] = w(!1), s = g();
+  const { state: e, dispatch: t, config: c } = C(), { search: r } = Je(), n = e.kbTopics, [i, l] = w(null), [x, m] = w([]), [f, u] = w(!1), [h, p] = w(null), [_, E] = w(!1), s = g();
   s.current || (s.current = new O({ baseUrl: c.apiUrl, token: c.token }));
   const y = b((d) => {
     d || p(null), r(d);
@@ -1130,7 +1129,7 @@ function Qe() {
     }
   }, []), N = b((d) => {
     d.url && window.open(d.url, "_blank", "noopener,noreferrer");
-  }, []), J = b(() => {
+  }, []), z = b(() => {
     l(null), m([]);
   }, []);
   if (i)
@@ -1139,7 +1138,7 @@ function Qe() {
         /* @__PURE__ */ o(
           "button",
           {
-            onClick: J,
+            onClick: z,
             className: "acx-flex acx-items-center acx-gap-1 acx-text-sm acx-text-primary-600 acx-mb-2 hover:acx-text-primary-700",
             children: [
               /* @__PURE__ */ a(ge, { className: "acx-w-4 acx-h-4" }),
@@ -1161,7 +1160,7 @@ function Qe() {
     /* @__PURE__ */ o("div", { className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100", children: [
       /* @__PURE__ */ a("h2", { className: "acx-text-base acx-font-semibold acx-text-gray-900", children: "Help Centre" }),
       /* @__PURE__ */ a("p", { className: "acx-text-xs acx-text-gray-500 acx-mt-0.5", children: "Ask a question or browse topics" }),
-      /* @__PURE__ */ a("div", { className: "acx-mt-3", children: /* @__PURE__ */ a(Je, { onSearch: y, onSubmit: A, placeholder: "Ask a question or search..." }) }),
+      /* @__PURE__ */ a("div", { className: "acx-mt-3", children: /* @__PURE__ */ a(ze, { onSearch: y, onSubmit: A, placeholder: "Ask a question or search..." }) }),
       _ && /* @__PURE__ */ a("div", { className: "acx-mt-3 acx-py-3 acx-text-center acx-text-sm acx-text-gray-400", children: "Finding an answer..." }),
       !_ && (h == null ? void 0 : h.answer) && /* @__PURE__ */ o("div", { className: "acx-mt-3 acx-rounded-lg acx-bg-primary-50 acx-border acx-border-primary-100 acx-p-3", children: [
         /* @__PURE__ */ a("p", { className: "acx-text-sm acx-text-gray-800 acx-whitespace-pre-line", children: h.answer }),
@@ -1194,7 +1193,7 @@ function Qe() {
               d.article_count !== 1 ? "s" : ""
             ] })
           ] }),
-          /* @__PURE__ */ a(z, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })
+          /* @__PURE__ */ a(J, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })
         ]
       },
       d.id

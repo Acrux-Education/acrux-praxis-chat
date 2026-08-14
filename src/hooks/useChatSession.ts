@@ -11,7 +11,7 @@ const TURNSTILE_TIMEOUT_MS = 5000
 
 // Lazily loads the Turnstile script (idempotent) and executes an invisible
 // challenge. Fails open: returns null on any error or timeout.
-function getTurnstileToken(): Promise<string | null> {
+export function getTurnstileToken(): Promise<string | null> {
   return new Promise((resolve) => {
     let settled = false
     let pollTimer: number | undefined
@@ -45,7 +45,6 @@ function getTurnstileToken(): Promise<string | null> {
         }
         turnstile.render(container, {
           sitekey: TURNSTILE_SITE_KEY,
-          size: 'invisible',
           callback: (token: string) => finish(token),
           'error-callback': () => finish(null),
           'expired-callback': () => finish(null),
