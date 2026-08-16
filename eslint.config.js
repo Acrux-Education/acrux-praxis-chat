@@ -18,7 +18,12 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
+      // Pin to the two core hooks rules rather than the full recommended
+      // preset — the v6+ React Compiler ruleset is a deliberate adoption
+      // decision, not dependency fallout (same stance as praxis-fe,
+      // PLATDEV-252).
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

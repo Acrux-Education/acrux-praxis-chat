@@ -15,3 +15,8 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      majors:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
