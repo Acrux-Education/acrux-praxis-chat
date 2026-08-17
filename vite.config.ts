@@ -24,5 +24,7 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     sourcemap: false,
+    // Versioned release files are immutable and must survive later builds.
+    emptyOutDir: false,
   },
 })

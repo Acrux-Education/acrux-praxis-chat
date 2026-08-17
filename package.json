@@ -1,6 +1,6 @@
 {
   "name": "@acrux-education/chat-widget",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Acrux Education embeddable chat widget",
   "type": "module",
   "main": "dist/acrux-chat.es.js",
@@ -22,9 +22,11 @@
     "build": "npm run build:esm && npm run build:iife",
     "build:esm": "vite build",
     "build:iife": "vite build --config vite.config.iife.ts && node scripts/sri-manifest.mjs",
+    "verify:release": "node scripts/sri-manifest.mjs --verify",
     "lint": "eslint src/",
     "preview": "vite preview",
     "test": "vitest",
+    "test:integrity": "node --test scripts/sri-manifest.node-test.mjs",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
   },

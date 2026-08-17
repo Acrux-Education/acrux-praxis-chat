@@ -9,7 +9,9 @@ on:
 
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    # Only this workflow's own dist commit may skip the rebuild loop. A user
+    # commit message cannot bypass release-integrity verification.
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     # Allow the default GITHUB_TOKEN to push the rebuilt dist/ back to main.
     # Previous PAT-based approach (secrets.DISPATCH_TOKEN) broke when the
@@ -39,6 +41,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Verify immutable release assets
+        run: npm run verify:release
 
       - name: Lint
         run: npm run lint
