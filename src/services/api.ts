@@ -1,19 +1,22 @@
-import type { ChatSession, ChatMessage, Announcement, RoadmapItem, KBArticle, KBAnswer, KBTopic, OperatingHoursStatus, VisitorMetadata } from '../types'
+import type { ChatSession, ChatMessage, Announcement, RoadmapItem, KBArticle, KBAnswer, KBTopic, OperatingHoursStatus, VisitorMetadata, ChatRegion } from '../types'
 import { API_PATHS } from '../constants'
 
 interface ApiClientConfig {
   baseUrl: string
   token?: string
+  region?: ChatRegion
 }
 
 export class ApiClient {
   private baseUrl: string
   private token?: string
   private chatToken?: string
+  private region?: ChatRegion
 
   constructor(config: ApiClientConfig) {
     this.baseUrl = config.baseUrl.replace(/\/$/, '')
     this.token = config.token
+    this.region = config.region
   }
 
   setToken(token: string) {
@@ -68,7 +71,10 @@ export class ApiClient {
   }): Promise<ChatSession> {
     return this.request<ChatSession>(API_PATHS.SESSIONS, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        ...(this.region ? { region: this.region } : {}),
+      }),
     })
   }
 
@@ -127,7 +133,8 @@ export class ApiClient {
   }
 
   async getOperatingHoursStatus(): Promise<OperatingHoursStatus> {
-    return this.request<OperatingHoursStatus>(API_PATHS.OPERATING_HOURS)
+    const params = this.region ? `?${new URLSearchParams({ region: this.region })}` : ''
+    return this.request<OperatingHoursStatus>(`${API_PATHS.OPERATING_HOURS}${params}`)
   }
 }
 

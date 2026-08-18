@@ -6,6 +6,7 @@ import { chatReducer, initialState } from './chatReducer'
 import type { ChatState } from './chatReducer'
 import { ApiClient } from '../services/api'
 import { toArray } from '../utils/toArray'
+import { useOperatingHours } from '../hooks/useOperatingHours'
 
 interface ChatContextValue {
   state: ChatState
@@ -35,6 +36,7 @@ export function ChatProvider({ children, ...config }: ChatProviderProps) {
   return (
     <ChatContext.Provider value={value}>
       <ContentFetcher />
+      <OperatingHoursFetcher />
       {children}
     </ChatContext.Provider>
   )
@@ -48,7 +50,7 @@ function ContentFetcher() {
     if (fetchedRef.current) return
     fetchedRef.current = true
 
-    const api = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
+    const api = new ApiClient({ baseUrl: config.apiUrl, token: config.token, region: config.region })
 
     api.getAnnouncements()
       .then((data) => dispatch({ type: 'SET_ANNOUNCEMENTS', payload: toArray(data) }))
@@ -62,11 +64,13 @@ function ContentFetcher() {
       .then((data) => dispatch({ type: 'SET_KB_TOPICS', payload: toArray(data) }))
       .catch(() => {})
 
-    api.getOperatingHoursStatus()
-      .then((data) => dispatch({ type: 'SET_OPERATING_HOURS', payload: data }))
-      .catch(() => {})
-  }, [config.apiUrl, config.token, dispatch])
+  }, [config.apiUrl, config.token, config.region, dispatch])
 
+  return null
+}
+
+function OperatingHoursFetcher() {
+  useOperatingHours()
   return null
 }
 

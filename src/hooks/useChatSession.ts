@@ -126,7 +126,7 @@ export function useChatSession() {
   }, [])
 
   if (!apiRef.current) {
-    apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token })
+    apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token, region: config.region })
     // Restore chat token from sessionStorage if available
     if (storedAccessToken) {
       apiRef.current.setChatToken(storedAccessToken)

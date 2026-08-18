@@ -4,10 +4,13 @@ export type TabId = 'home' | 'messages' | 'news' | 'roadmap' | 'help'
 
 export type WidgetPosition = 'bottom-right' | 'bottom-left'
 
+export type ChatRegion = 'default' | 'au' | 'uk' | 'sg'
+
 export interface ChatWidgetProps {
   mode: WidgetMode
   apiUrl: string
   token?: string
+  region?: ChatRegion
   userName?: string
   userEmail?: string
   schoolId?: string
@@ -20,6 +23,7 @@ export interface ChatWidgetProps {
 export interface StandaloneInitOptions {
   mode: WidgetMode
   apiUrl: string
+  region?: ChatRegion
   position?: WidgetPosition
   greeting?: string
   defaultTab?: TabId
@@ -138,8 +142,9 @@ export interface KBTopic {
 
 export interface OperatingHoursStatus {
   is_online: boolean
-  next_open?: string
+  effective_region?: ChatRegion
   timezone?: string
+  next_status_change_at?: string | null
   offline_message?: string
   response_time?: string
 }

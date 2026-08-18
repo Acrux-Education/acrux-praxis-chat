@@ -4,6 +4,7 @@ export type {
   WidgetMode,
   TabId,
   WidgetPosition,
+  ChatRegion,
   ChatSession,
   ChatMessage,
   SenderType,

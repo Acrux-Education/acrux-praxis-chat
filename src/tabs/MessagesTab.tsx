@@ -2,7 +2,6 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 import { useChatContext } from '../context/ChatContext'
 import { useChatSession } from '../hooks/useChatSession'
 import { useChatWebSocket } from '../hooks/useChatWebSocket'
-import { useOperatingHours } from '../hooks/useOperatingHours'
 import { MessageList } from '../components/MessageList'
 import { MessageInput } from '../components/MessageInput'
 import { StatusBanner } from '../components/StatusBanner'
@@ -13,7 +12,9 @@ export function MessagesTab() {
   const { state, dispatch, config } = useChatContext()
   const { session, sessionKey, accessToken, createSession } = useChatSession()
   const { sendMessage, sendTyping, isConnected } = useChatWebSocket(sessionKey, accessToken)
-  const { isOnline, offlineMessage, responseTime } = useOperatingHours()
+  const isOnline = state.operatingHours?.is_online ?? false
+  const offlineMessage = state.operatingHours?.offline_message
+  const responseTime = state.operatingHours?.response_time
   const [showLeadCapture, setShowLeadCapture] = useState(false)
   const pendingMessageRef = useRef<string | null>(null)
 
