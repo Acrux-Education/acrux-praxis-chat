@@ -1,11 +1,11 @@
 {
-  "version": "0.1.8",
+  "version": "0.1.9",
   "js": {
-    "file": "acrux-chat.v0.1.8.iife.js",
-    "integrity": "sha384-lMQZchJKOd1dUPCoDZ3L/46bCcyJ3i/A2SVzoO75TANrziR1u8AwMLEeREZWGzjS"
+    "file": "acrux-chat.v0.1.9.iife.js",
+    "integrity": "sha384-/yM9Ao47ab2nu43oqJTmx3HH45OhJ1SGDTut89zd7o6idL7cNzyOZ+RtvBUqYvzx"
   },
   "css": {
-    "file": "style.v0.1.8.css",
+    "file": "style.v0.1.9.css",
     "integrity": "sha384-wlGyaCIVnc4475v+DddauMzoH/G0I7gZUOpm6Yms+N9WOc2T3o8NOswWXkwRtKfd"
   }
 }

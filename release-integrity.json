@@ -6,5 +6,9 @@
   "0.1.8": {
     "js": "sha384-lMQZchJKOd1dUPCoDZ3L/46bCcyJ3i/A2SVzoO75TANrziR1u8AwMLEeREZWGzjS",
     "css": "sha384-wlGyaCIVnc4475v+DddauMzoH/G0I7gZUOpm6Yms+N9WOc2T3o8NOswWXkwRtKfd"
+  },
+  "0.1.9": {
+    "js": "sha384-/yM9Ao47ab2nu43oqJTmx3HH45OhJ1SGDTut89zd7o6idL7cNzyOZ+RtvBUqYvzx",
+    "css": "sha384-wlGyaCIVnc4475v+DddauMzoH/G0I7gZUOpm6Yms+N9WOc2T3o8NOswWXkwRtKfd"
   }
 }
