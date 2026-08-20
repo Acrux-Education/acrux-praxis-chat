@@ -385,7 +385,7 @@ function k() {
 //#region src/components/Badge.tsx
 function A({ count: e }) {
 	return e <= 0 ? null : /* @__PURE__ */ l("span", {
-		className: "acx-absolute -acx-top-1.5 -acx-right-1.5 acx-min-w-[18px] acx-h-[18px] acx-flex acx-items-center acx-justify-center acx-bg-red-500 acx-text-white acx-text-[10px] acx-font-bold acx-rounded-full acx-px-1 acx-leading-none",
+		className: "acx:absolute -acx-top-1.5 -acx-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
 		children: e > 99 ? "99+" : String(e)
 	});
 }
@@ -556,15 +556,15 @@ function oe({ className: e }) {
 function se({ isOpen: e, onClick: t, position: n }) {
 	let { state: r } = k();
 	return /* @__PURE__ */ l("div", {
-		className: `acx-fixed acx-bottom-4 sm:acx-bottom-6 ${n === "bottom-right" ? "acx-right-4 sm:acx-right-6" : "acx-left-4 sm:acx-left-6"} acx-z-[9999]`,
+		className: `acx:fixed acx:bottom-4 acx:sm:bottom-6 ${n === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999]`,
 		children: /* @__PURE__ */ l("button", {
 			onClick: t,
-			className: "acx-launcher-btn acx-relative acx-w-14 acx-h-14 acx-rounded-full acx-shadow-lg acx-transition-all hover:acx-scale-105 acx-flex acx-items-center acx-justify-center",
+			className: "acx-launcher-btn acx:relative acx:w-14 acx:h-14 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center",
 			"aria-label": e ? "Close chat" : "Open chat",
 			children: e ? /* @__PURE__ */ l("span", {
 				className: "acx-launcher-icon-stroke",
-				children: /* @__PURE__ */ l(ie, { className: "acx-w-6 acx-h-6" })
-			}) : /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l(j, { className: "acx-w-7 acx-h-7" }), r.unreadCount > 0 && /* @__PURE__ */ l(A, { count: r.unreadCount })] })
+				children: /* @__PURE__ */ l(ie, { className: "acx:w-6 acx:h-6" })
+			}) : /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l(j, { className: "acx:w-7 acx:h-7" }), r.unreadCount > 0 && /* @__PURE__ */ l(A, { count: r.unreadCount })] })
 		})
 	});
 }
@@ -582,18 +582,18 @@ var N = [{
 function P({ activeTab: e, onTabChange: t }) {
 	let { state: n } = k();
 	return /* @__PURE__ */ l("nav", {
-		className: "acx-flex acx-border-t acx-border-gray-200 acx-bg-white",
+		className: "acx:flex acx:border-t acx:border-gray-200 acx:bg-white",
 		role: "tablist",
 		children: N.map(({ id: r, label: i, Icon: a }) => /* @__PURE__ */ u("button", {
 			role: "tab",
 			"aria-selected": e === r,
 			onClick: () => t(r),
-			className: `acx-flex-1 acx-flex acx-flex-col acx-items-center acx-py-2 acx-gap-0.5 acx-relative acx-transition-colors ${e === r ? "acx-text-primary-600" : "acx-text-gray-400 hover:acx-text-primary-600"}`,
+			className: `acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${e === r ? "acx:text-primary-600" : "acx:text-gray-400 acx:hover:text-primary-600"}`,
 			children: [/* @__PURE__ */ u("div", {
-				className: "acx-relative",
-				children: [/* @__PURE__ */ l(a, { className: "acx-w-5 acx-h-5" }), r === "messages" && n.unreadCount > 0 && /* @__PURE__ */ l(A, { count: n.unreadCount })]
+				className: "acx:relative",
+				children: [/* @__PURE__ */ l(a, { className: "acx:w-5 acx:h-5" }), r === "messages" && n.unreadCount > 0 && /* @__PURE__ */ l(A, { count: n.unreadCount })]
 			}), /* @__PURE__ */ l("span", {
-				className: "acx-text-[10px] acx-font-medium",
+				className: "acx:text-[10px] acx:font-medium",
 				children: i
 			})]
 		}, r))
@@ -1019,12 +1019,12 @@ function de(e) {
 	return e.split(" ").slice(0, 2).map((e) => e[0] ?? "").join("").toUpperCase();
 }
 var q = [
-	"acx-bg-blue-500",
-	"acx-bg-green-500",
-	"acx-bg-purple-500",
-	"acx-bg-orange-500",
-	"acx-bg-pink-500",
-	"acx-bg-teal-500"
+	"acx:bg-blue-500",
+	"acx:bg-green-500",
+	"acx:bg-purple-500",
+	"acx:bg-orange-500",
+	"acx:bg-pink-500",
+	"acx:bg-teal-500"
 ];
 function fe(e) {
 	let t = 0;
@@ -1035,9 +1035,9 @@ function J({ name: e, avatarUrl: t }) {
 	return t ? /* @__PURE__ */ l("img", {
 		src: t,
 		alt: e,
-		className: "acx-w-8 acx-h-8 acx-rounded-full acx-object-cover acx-flex-shrink-0"
+		className: "acx:w-8 acx:h-8 acx:rounded-full acx:object-cover acx:flex-shrink-0"
 	}) : /* @__PURE__ */ l("div", {
-		className: `acx-w-8 acx-h-8 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-text-white acx-text-xs acx-font-semibold acx-flex-shrink-0 ${fe(e)}`,
+		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${fe(e)}`,
 		children: de(e)
 	});
 }
@@ -1083,75 +1083,75 @@ function ge(e) {
 function _e({ message: e }) {
 	let t = e.sender_type === "visitor" || e.sender_type === "user", n = e.sender_type === "system";
 	return n && e.content_type === "auto_response" ? /* @__PURE__ */ u("div", {
-		className: "acx-flex acx-gap-2 acx-mb-3 acx-justify-start",
+		className: "acx:flex acx:gap-2 acx:mb-3 acx:justify-start",
 		children: [/* @__PURE__ */ l(J, { name: e.sender_name }), /* @__PURE__ */ u("div", {
-			className: "acx-max-w-[75%]",
+			className: "acx:max-w-[75%]",
 			children: [
 				e.sender_name && /* @__PURE__ */ l("span", {
-					className: "acx-text-xs acx-text-gray-500 acx-ml-1 acx-mb-0.5 acx-block",
+					className: "acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block",
 					children: e.sender_name
 				}),
 				/* @__PURE__ */ l("div", {
-					className: "acx-px-3.5 acx-py-2.5 acx-rounded-2xl acx-text-sm acx-leading-relaxed acx-bg-amber-50 acx-text-gray-800 acx-rounded-bl-md acx-border acx-border-amber-200",
+					className: "acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed acx:bg-amber-50 acx:text-gray-800 acx:rounded-bl-md acx:border acx:border-amber-200",
 					children: /* @__PURE__ */ l("p", {
-						className: "acx-whitespace-pre-wrap",
+						className: "acx:whitespace-pre-wrap",
 						children: e.content
 					})
 				}),
 				/* @__PURE__ */ l("span", {
-					className: "acx-text-[10px] acx-text-gray-400 acx-mt-0.5 acx-block",
+					className: "acx:text-[10px] acx:text-gray-400 acx:mt-0.5 acx:block",
 					children: Y(e.created_at)
 				})
 			]
 		})]
 	}) : n ? /* @__PURE__ */ l("div", {
-		className: "acx-flex acx-justify-center acx-py-2",
+		className: "acx:flex acx:justify-center acx:py-2",
 		children: /* @__PURE__ */ l("span", {
-			className: "acx-text-xs acx-text-gray-400 acx-italic",
+			className: "acx:text-xs acx:text-gray-400 acx:italic",
 			children: e.content
 		})
 	}) : /* @__PURE__ */ u("div", {
-		className: `acx-flex acx-gap-2 acx-mb-3 ${t ? "acx-justify-end" : "acx-justify-start"}`,
+		className: `acx:flex acx:gap-2 acx:mb-3 ${t ? "acx:justify-end" : "acx:justify-start"}`,
 		children: [!t && /* @__PURE__ */ l(J, { name: e.sender_name }), /* @__PURE__ */ u("div", {
-			className: `acx-max-w-[75%] ${t ? "acx-order-1" : ""}`,
+			className: `acx:max-w-[75%] ${t ? "acx:order-1" : ""}`,
 			children: [
 				!t && e.sender_name && /* @__PURE__ */ l("span", {
-					className: "acx-text-xs acx-text-gray-500 acx-ml-1 acx-mb-0.5 acx-block",
+					className: "acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block",
 					children: e.sender_name
 				}),
 				/* @__PURE__ */ l("div", {
-					className: `acx-px-3.5 acx-py-2.5 acx-rounded-2xl acx-text-sm acx-leading-relaxed ${t ? "acx-bg-primary-600 acx-text-white acx-rounded-br-md" : (e.sender_type, "acx-bg-gray-100 acx-text-gray-800 acx-rounded-bl-md")}`,
+					className: `acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed ${t ? "acx:bg-primary-600 acx:text-white acx:rounded-br-md" : (e.sender_type, "acx:bg-gray-100 acx:text-gray-800 acx:rounded-bl-md")}`,
 					children: e.content_type === "markdown" ? /* @__PURE__ */ l("div", {
-						className: "acx-prose acx-prose-sm",
+						className: "acx:prose acx:prose-sm",
 						dangerouslySetInnerHTML: { __html: he(e.content) }
 					}) : /* @__PURE__ */ l("p", {
-						className: "acx-whitespace-pre-wrap",
+						className: "acx:whitespace-pre-wrap",
 						children: e.content
 					})
 				}),
 				e.attachments?.length > 0 && /* @__PURE__ */ l("div", {
-					className: "acx-mt-1 acx-space-y-1",
+					className: "acx:mt-1 acx:space-y-1",
 					children: e.attachments.map((e, t) => /* @__PURE__ */ l("a", {
 						href: e.url,
 						target: "_blank",
 						rel: "noopener noreferrer",
-						className: "acx-block acx-text-xs acx-text-primary-600 hover:acx-underline acx-truncate",
+						className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:underline acx:truncate",
 						children: e.name
 					}, t))
 				}),
 				/* @__PURE__ */ u("div", {
-					className: `acx-flex acx-items-center acx-gap-1 acx-mt-0.5 ${t ? "acx-justify-end" : ""}`,
+					className: `acx:flex acx:items-center acx:gap-1 acx:mt-0.5 ${t ? "acx:justify-end" : ""}`,
 					children: [
 						/* @__PURE__ */ l("span", {
-							className: "acx-text-[10px] acx-text-gray-400",
+							className: "acx:text-[10px] acx:text-gray-400",
 							children: Y(e.created_at)
 						}),
 						t && e.status === "sending" && /* @__PURE__ */ l("span", {
-							className: "acx-text-[10px] acx-text-gray-400",
+							className: "acx:text-[10px] acx:text-gray-400",
 							children: "Sending..."
 						}),
 						t && e.status === "failed" && /* @__PURE__ */ l("span", {
-							className: "acx-text-[10px] acx-text-red-500",
+							className: "acx:text-[10px] acx:text-red-500",
 							children: "Failed"
 						})
 					]
@@ -1164,15 +1164,15 @@ function _e({ message: e }) {
 //#region src/components/TypingIndicator.tsx
 function ve({ agentName: e }) {
 	return /* @__PURE__ */ u("div", {
-		className: "acx-flex acx-items-center acx-gap-2 acx-mb-3",
+		className: "acx:flex acx:items-center acx:gap-2 acx:mb-3",
 		children: [/* @__PURE__ */ l(J, { name: e ?? "Agent" }), /* @__PURE__ */ l("div", {
-			className: "acx-bg-gray-100 acx-rounded-2xl acx-rounded-bl-md acx-px-4 acx-py-3",
+			className: "acx:bg-gray-100 acx:rounded-2xl acx:rounded-bl-md acx:px-4 acx:py-3",
 			children: /* @__PURE__ */ u("div", {
-				className: "acx-flex acx-gap-1",
+				className: "acx:flex acx:gap-1",
 				children: [
-					/* @__PURE__ */ l("span", { className: "acx-w-1.5 acx-h-1.5 acx-bg-gray-400 acx-rounded-full acx-typing-dot" }),
-					/* @__PURE__ */ l("span", { className: "acx-w-1.5 acx-h-1.5 acx-bg-gray-400 acx-rounded-full acx-typing-dot" }),
-					/* @__PURE__ */ l("span", { className: "acx-w-1.5 acx-h-1.5 acx-bg-gray-400 acx-rounded-full acx-typing-dot" })
+					/* @__PURE__ */ l("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
+					/* @__PURE__ */ l("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
+					/* @__PURE__ */ l("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" })
 				]
 			})
 		})]
@@ -1186,14 +1186,14 @@ function ye({ messages: e, agentTyping: t }) {
 		n.current?.scrollIntoView({ behavior: "smooth" });
 	}, [e.length, t.is_typing]), /* @__PURE__ */ u("div", {
 		ref: i,
-		className: "acx-flex-1 acx-overflow-y-auto acx-px-4 acx-py-3 acx-space-y-1",
+		className: "acx:flex-1 acx:overflow-y-auto acx:px-4 acx:py-3 acx:space-y-1",
 		children: [
 			e.map((t, n) => {
 				let r = e[n - 1], i = !r || !me(r.created_at, t.created_at);
 				return /* @__PURE__ */ u("div", { children: [i && /* @__PURE__ */ l("div", {
-					className: "acx-flex acx-items-center acx-justify-center acx-py-3",
+					className: "acx:flex acx:items-center acx:justify-center acx:py-3",
 					children: /* @__PURE__ */ l("span", {
-						className: "acx-text-xs acx-text-gray-400 acx-bg-gray-50 acx-px-3 acx-py-1 acx-rounded-full",
+						className: "acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full",
 						children: pe(t.created_at)
 					})
 				}), /* @__PURE__ */ l(_e, { message: t })] }, t.temp_id ?? t.id);
@@ -1216,22 +1216,22 @@ function be({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, pla
 		n
 	]);
 	return /* @__PURE__ */ l("div", {
-		className: "acx-border-t acx-border-gray-200 acx-bg-white acx-px-3 acx-py-2",
+		className: "acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2",
 		children: /* @__PURE__ */ u("div", {
-			className: "acx-flex acx-items-end acx-gap-2",
+			className: "acx:flex acx:items-end acx:gap-2",
 			children: [
 				i === "user" && r && /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l("button", {
 					onClick: () => {
 						m.current?.click();
 					},
-					className: "acx-p-1.5 acx-text-gray-400 hover:acx-text-gray-600 acx-transition-colors acx-flex-shrink-0",
+					className: "acx:p-1.5 acx:text-gray-400 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0",
 					"aria-label": "Attach file",
 					type: "button",
-					children: /* @__PURE__ */ l(ae, { className: "acx-w-5 acx-h-5" })
+					children: /* @__PURE__ */ l(ae, { className: "acx:w-5 acx:h-5" })
 				}), /* @__PURE__ */ l("input", {
 					ref: m,
 					type: "file",
-					className: "acx-hidden",
+					className: "acx:hidden",
 					accept: g.ALLOWED_FILE_TYPES.join(","),
 					multiple: !0,
 					onChange: (e) => {
@@ -1250,16 +1250,16 @@ function be({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, pla
 					placeholder: d ?? "Type a message...",
 					disabled: a,
 					rows: 1,
-					className: "acx-flex-1 acx-resize-none acx-border-0 acx-outline-none acx-text-sm acx-py-2 acx-max-h-24 acx-bg-transparent placeholder:acx-text-gray-400",
+					className: "acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400",
 					style: { fieldSizing: "content" }
 				}),
 				/* @__PURE__ */ l("button", {
 					onClick: _,
 					disabled: !f.trim() || a,
-					className: "acx-p-1.5 acx-text-primary-600 acx-transition-colors acx-flex-shrink-0 enabled:hover:acx-text-primary-700 disabled:acx-text-gray-300 disabled:acx-cursor-not-allowed",
+					className: "acx:p-1.5 acx:text-primary-600 acx:transition-colors acx:flex-shrink-0 acx:enabled:hover:text-primary-700 acx:disabled:text-gray-300 acx:disabled:cursor-not-allowed",
 					"aria-label": "Send message",
 					type: "button",
-					children: /* @__PURE__ */ l(re, { className: "acx-w-5 acx-h-5" })
+					children: /* @__PURE__ */ l(re, { className: "acx:w-5 acx:h-5" })
 				})
 			]
 		})
@@ -1269,13 +1269,13 @@ function be({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, pla
 //#region src/components/StatusBanner.tsx
 function X({ isOnline: e, offlineMessage: t, responseTime: n }) {
 	return e ? null : /* @__PURE__ */ l("div", {
-		className: "acx-bg-amber-50 acx-border-b acx-border-amber-200 acx-px-4 acx-py-2.5",
+		className: "acx:bg-amber-50 acx:border-b acx:border-amber-200 acx:px-4 acx:py-2.5",
 		children: /* @__PURE__ */ u("div", {
-			className: "acx-flex acx-items-center acx-gap-2",
-			children: [/* @__PURE__ */ l("div", { className: "acx-w-2 acx-h-2 acx-rounded-full acx-bg-amber-400 acx-flex-shrink-0" }), /* @__PURE__ */ u("p", {
-				className: "acx-text-xs acx-text-amber-800",
+			className: "acx:flex acx:items-center acx:gap-2",
+			children: [/* @__PURE__ */ l("div", { className: "acx:w-2 acx:h-2 acx:rounded-full acx:bg-amber-400 acx:flex-shrink-0" }), /* @__PURE__ */ u("p", {
+				className: "acx:text-xs acx:text-amber-800",
 				children: [t ?? "We're currently offline.", n && /* @__PURE__ */ u("span", {
-					className: "acx-font-medium",
+					className: "acx:font-medium",
 					children: [
 						" We typically respond ",
 						n,
@@ -1290,44 +1290,44 @@ function X({ isOnline: e, offlineMessage: t, responseTime: n }) {
 //#region src/components/ConnectionBanner.tsx
 function Z({ isConnected: e, retryCount: t }) {
 	return e || t === 0 ? null : t >= 5 ? /* @__PURE__ */ l("div", {
-		className: "acx-bg-red-50 acx-border-b acx-border-red-200 acx-px-4 acx-py-2.5",
+		className: "acx:bg-red-50 acx:border-b acx:border-red-200 acx:px-4 acx:py-2.5",
 		children: /* @__PURE__ */ u("div", {
-			className: "acx-flex acx-items-center acx-justify-between acx-gap-2",
+			className: "acx:flex acx:items-center acx:justify-between acx:gap-2",
 			children: [/* @__PURE__ */ u("div", {
-				className: "acx-flex acx-items-center acx-gap-2",
-				children: [/* @__PURE__ */ l("div", { className: "acx-w-2 acx-h-2 acx-rounded-full acx-bg-red-400 acx-flex-shrink-0" }), /* @__PURE__ */ l("p", {
-					className: "acx-text-xs acx-text-red-800",
+				className: "acx:flex acx:items-center acx:gap-2",
+				children: [/* @__PURE__ */ l("div", { className: "acx:w-2 acx:h-2 acx:rounded-full acx:bg-red-400 acx:flex-shrink-0" }), /* @__PURE__ */ l("p", {
+					className: "acx:text-xs acx:text-red-800",
 					children: "Connection lost. Please refresh."
 				})]
 			}), /* @__PURE__ */ l("button", {
 				type: "button",
 				onClick: () => window.location.reload(),
-				className: "acx-text-xs acx-font-medium acx-text-red-700 acx-bg-red-100 acx-px-2 acx-py-0.5 acx-rounded hover:acx-bg-red-200 acx-flex-shrink-0",
+				className: "acx:text-xs acx:font-medium acx:text-red-700 acx:bg-red-100 acx:px-2 acx:py-0.5 acx:rounded acx:hover:bg-red-200 acx:flex-shrink-0",
 				children: "Refresh"
 			})]
 		})
 	}) : /* @__PURE__ */ l("div", {
-		className: "acx-bg-amber-50 acx-border-b acx-border-amber-200 acx-px-4 acx-py-2.5",
+		className: "acx:bg-amber-50 acx:border-b acx:border-amber-200 acx:px-4 acx:py-2.5",
 		children: /* @__PURE__ */ u("div", {
-			className: "acx-flex acx-items-center acx-gap-2",
+			className: "acx:flex acx:items-center acx:gap-2",
 			children: [/* @__PURE__ */ u("svg", {
-				className: "acx-w-3 acx-h-3 acx-text-amber-500 acx-animate-spin acx-flex-shrink-0",
+				className: "acx:w-3 acx:h-3 acx:text-amber-500 acx:animate-spin acx:flex-shrink-0",
 				viewBox: "0 0 24 24",
 				fill: "none",
 				children: [/* @__PURE__ */ l("circle", {
-					className: "acx-opacity-25",
+					className: "acx:opacity-25",
 					cx: "12",
 					cy: "12",
 					r: "10",
 					stroke: "currentColor",
 					strokeWidth: "4"
 				}), /* @__PURE__ */ l("path", {
-					className: "acx-opacity-75",
+					className: "acx:opacity-75",
 					fill: "currentColor",
 					d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
 				})]
 			}), /* @__PURE__ */ l("p", {
-				className: "acx-text-xs acx-text-amber-800",
+				className: "acx:text-xs acx:text-amber-800",
 				children: "Reconnecting..."
 			})]
 		})
@@ -1344,10 +1344,10 @@ function xe({ onSubmit: e, loading: t }) {
 				email: i.trim()
 			});
 		},
-		className: "acx-p-4 acx-space-y-3",
+		className: "acx:p-4 acx:space-y-3",
 		children: [
 			/* @__PURE__ */ l("p", {
-				className: "acx-text-sm acx-text-gray-600 acx-mb-1",
+				className: "acx:text-sm acx:text-gray-600 acx:mb-1",
 				children: "Before we start, could you share your details?"
 			}),
 			/* @__PURE__ */ l("input", {
@@ -1355,7 +1355,7 @@ function xe({ onSubmit: e, loading: t }) {
 				value: n,
 				onChange: (e) => r(e.target.value),
 				placeholder: "Your name",
-				className: "acx-w-full acx-px-3 acx-py-2 acx-border acx-border-gray-200 acx-rounded-lg acx-text-sm acx-outline-none focus:acx-border-primary-500 focus:acx-ring-1 focus:acx-ring-primary-500"
+				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
 			}),
 			/* @__PURE__ */ l("input", {
 				type: "email",
@@ -1363,10 +1363,10 @@ function xe({ onSubmit: e, loading: t }) {
 				onChange: (e) => a(e.target.value),
 				placeholder: "Your email *",
 				required: !0,
-				className: "acx-w-full acx-px-3 acx-py-2 acx-border acx-border-gray-200 acx-rounded-lg acx-text-sm acx-outline-none focus:acx-border-primary-500 focus:acx-ring-1 focus:acx-ring-primary-500"
+				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
 			}),
 			/* @__PURE__ */ u("p", {
-				className: "acx-text-xs acx-text-gray-400 acx-leading-snug",
+				className: "acx:text-xs acx:text-gray-400 acx:leading-snug",
 				children: [
 					"By starting a chat, your details, messages, and the page you're on are shared with Acrux to respond to your enquiry — see our",
 					" ",
@@ -1374,7 +1374,7 @@ function xe({ onSubmit: e, loading: t }) {
 						href: "https://www.acrux.education/legal/privacy-policy",
 						target: "_blank",
 						rel: "noopener noreferrer",
-						className: "acx-underline hover:acx-text-gray-600",
+						className: "acx:underline acx:hover:text-gray-600",
 						children: "Privacy Policy"
 					}),
 					"."
@@ -1383,7 +1383,7 @@ function xe({ onSubmit: e, loading: t }) {
 			/* @__PURE__ */ l("button", {
 				type: "submit",
 				disabled: !i.trim() || t,
-				className: "acx-w-full acx-bg-primary-600 acx-text-white acx-py-2.5 acx-rounded-lg acx-text-sm acx-font-medium acx-transition-colors enabled:hover:acx-bg-primary-700 disabled:acx-bg-gray-200 disabled:acx-text-gray-500 disabled:acx-cursor-not-allowed",
+				className: "acx:w-full acx:bg-primary-600 acx:text-white acx:py-2.5 acx:rounded-lg acx:text-sm acx:font-medium acx:transition-colors acx:enabled:hover:bg-primary-700 acx:disabled:bg-gray-200 acx:disabled:text-gray-500 acx:disabled:cursor-not-allowed",
 				children: t ? "Starting..." : "Start conversation"
 			})
 		]
@@ -1437,7 +1437,7 @@ function Q() {
 		e.activeTab,
 		n
 	]), b && !a ? /* @__PURE__ */ u("div", {
-		className: "acx-flex acx-flex-col acx-h-full",
+		className: "acx:flex acx:flex-col acx:h-full",
 		children: [
 			/* @__PURE__ */ l(Z, {
 				isConnected: g,
@@ -1454,7 +1454,7 @@ function Q() {
 			})
 		]
 	}) : /* @__PURE__ */ u("div", {
-		className: "acx-flex acx-flex-col acx-h-full",
+		className: "acx:flex acx:flex-col acx:h-full",
 		children: [
 			/* @__PURE__ */ l(Z, {
 				isConnected: g,
@@ -1466,18 +1466,18 @@ function Q() {
 				responseTime: y
 			}),
 			e.messages.length === 0 && !a ? /* @__PURE__ */ l("div", {
-				className: "acx-flex-1 acx-flex acx-flex-col acx-items-center acx-justify-center acx-px-6 acx-text-center",
+				className: "acx:flex-1 acx:flex acx:flex-col acx:items-center acx:justify-center acx:px-6 acx:text-center",
 				children: _ ? /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l("p", {
-					className: "acx-text-lg acx-font-semibold acx-text-gray-800 acx-mb-1",
+					className: "acx:text-lg acx:font-semibold acx:text-gray-800 acx:mb-1",
 					children: i.greeting || "Hi there! How can we help?"
 				}), /* @__PURE__ */ l("p", {
-					className: "acx-text-sm acx-text-gray-500",
+					className: "acx:text-sm acx:text-gray-500",
 					children: "Send a message to start a conversation"
 				})] }) : /* @__PURE__ */ u(c, { children: [
 					/* @__PURE__ */ l("div", {
-						className: "acx-w-12 acx-h-12 acx-bg-amber-100 acx-rounded-full acx-flex acx-items-center acx-justify-center acx-mb-3",
+						className: "acx:w-12 acx:h-12 acx:bg-amber-100 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:mb-3",
 						children: /* @__PURE__ */ u("svg", {
-							className: "acx-w-6 acx-h-6 acx-text-amber-600",
+							className: "acx:w-6 acx:h-6 acx:text-amber-600",
 							viewBox: "0 0 24 24",
 							fill: "none",
 							stroke: "currentColor",
@@ -1490,11 +1490,11 @@ function Q() {
 						})
 					}),
 					/* @__PURE__ */ l("p", {
-						className: "acx-text-sm acx-text-gray-600 acx-font-medium",
+						className: "acx:text-sm acx:text-gray-600 acx:font-medium",
 						children: "Leave us a message"
 					}),
 					/* @__PURE__ */ u("p", {
-						className: "acx-text-xs acx-text-gray-400 acx-mt-1",
+						className: "acx:text-xs acx:text-gray-400 acx:mt-1",
 						children: [
 							"Our team is currently away. Leave a message and we'll get back to you",
 							y ? ` ${y}` : " as soon as possible",
@@ -1563,8 +1563,8 @@ function Ce({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 	}, h.SEARCH_DEBOUNCE), () => {
 		c.current && clearTimeout(c.current);
 	}), [i, e]), /* @__PURE__ */ u("div", {
-		className: "acx-relative",
-		children: [/* @__PURE__ */ l(ne, { className: "acx-absolute acx-left-3 acx-top-1/2 -acx-translate-y-1/2 acx-w-4 acx-h-4 acx-text-gray-400" }), /* @__PURE__ */ l("input", {
+		className: "acx:relative",
+		children: [/* @__PURE__ */ l(ne, { className: "acx:absolute acx:left-3 acx:top-1/2 -acx-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ l("input", {
 			type: "text",
 			value: i,
 			onChange: (e) => a(e.target.value),
@@ -1572,7 +1572,7 @@ function Ce({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 				e.key === "Enter" && t && i.trim() && (e.preventDefault(), t(i.trim()));
 			},
 			placeholder: n,
-			className: "acx-w-full acx-pl-9 acx-pr-4 acx-py-2.5 acx-border acx-border-gray-200 acx-rounded-lg acx-text-sm acx-outline-none focus:acx-border-primary-500 focus:acx-ring-1 focus:acx-ring-primary-500 acx-transition-colors acx-bg-white"
+			className: "acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
 		})]
 	});
 }
@@ -1581,17 +1581,17 @@ function Ce({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 function $({ article: e, onClick: t }) {
 	return /* @__PURE__ */ u("button", {
 		onClick: () => t(e),
-		className: "acx-w-full acx-flex acx-items-center acx-justify-between acx-p-3 acx-rounded-lg acx-text-left hover:acx-bg-gray-50 acx-transition-colors acx-group",
+		className: "acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors acx:group",
 		children: [/* @__PURE__ */ u("div", {
-			className: "acx-flex-1 acx-min-w-0",
+			className: "acx:flex-1 acx:min-w-0",
 			children: [/* @__PURE__ */ l("h4", {
-				className: "acx-text-sm acx-font-medium acx-text-gray-900 acx-truncate group-hover:acx-text-primary-600 acx-transition-colors",
+				className: "acx:text-sm acx:font-medium acx:text-gray-900 acx:truncate acx:group-hover:text-primary-600 acx:transition-colors",
 				children: e.title
 			}), e.summary && /* @__PURE__ */ l("p", {
-				className: "acx-text-xs acx-text-gray-500 acx-mt-0.5 acx-line-clamp-2",
+				className: "acx:text-xs acx:text-gray-500 acx:mt-0.5 acx:line-clamp-2",
 				children: e.summary
 			})]
-		}), /* @__PURE__ */ l(M, { className: "acx-w-4 acx-h-4 acx-text-gray-400 acx-flex-shrink-0 acx-ml-2" })]
+		}), /* @__PURE__ */ l(M, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
 	});
 }
 //#endregion
@@ -1640,21 +1640,21 @@ function we() {
 		f(null), m([]);
 	}, []);
 	if (d) return /* @__PURE__ */ u("div", {
-		className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto",
+		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
 		children: [/* @__PURE__ */ u("div", {
-			className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100",
+			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
 			children: [
 				/* @__PURE__ */ u("button", {
 					onClick: D,
-					className: "acx-flex acx-items-center acx-gap-1 acx-text-sm acx-text-primary-600 acx-mb-2 hover:acx-text-primary-700",
-					children: [/* @__PURE__ */ l(oe, { className: "acx-w-4 acx-h-4" }), "Back"]
+					className: "acx:flex acx:items-center acx:gap-1 acx:text-sm acx:text-primary-600 acx:mb-2 acx:hover:text-primary-700",
+					children: [/* @__PURE__ */ l(oe, { className: "acx:w-4 acx:h-4" }), "Back"]
 				}),
 				/* @__PURE__ */ l("h2", {
-					className: "acx-text-base acx-font-semibold acx-text-gray-900",
+					className: "acx:text-base acx:font-semibold acx:text-gray-900",
 					children: d.name
 				}),
 				/* @__PURE__ */ u("p", {
-					className: "acx-text-xs acx-text-gray-500 acx-mt-0.5",
+					className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
 					children: [
 						d.article_count,
 						" article",
@@ -1663,12 +1663,12 @@ function we() {
 				})
 			]
 		}), /* @__PURE__ */ l("div", {
-			className: "acx-p-4 acx-space-y-1",
+			className: "acx:p-4 acx:space-y-1",
 			children: h ? /* @__PURE__ */ l("div", {
-				className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400",
+				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "Loading..."
 			}) : p.length === 0 ? /* @__PURE__ */ l("div", {
-				className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400",
+				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "No articles found"
 			}) : p.map((e) => /* @__PURE__ */ l($, {
 				article: e,
@@ -1678,20 +1678,20 @@ function we() {
 	});
 	let O = e.kbLoading || e.kbResults.length > 0;
 	return /* @__PURE__ */ u("div", {
-		className: "acx-flex acx-flex-col acx-h-full acx-overflow-y-auto",
+		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
 		children: [/* @__PURE__ */ u("div", {
-			className: "acx-px-5 acx-py-4 acx-border-b acx-border-gray-100",
+			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
 			children: [
 				/* @__PURE__ */ l("h2", {
-					className: "acx-text-base acx-font-semibold acx-text-gray-900",
+					className: "acx:text-base acx:font-semibold acx:text-gray-900",
 					children: "Help Centre"
 				}),
 				/* @__PURE__ */ l("p", {
-					className: "acx-text-xs acx-text-gray-500 acx-mt-0.5",
+					className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
 					children: "Ask a question or browse topics"
 				}),
 				/* @__PURE__ */ l("div", {
-					className: "acx-mt-3",
+					className: "acx:mt-3",
 					children: /* @__PURE__ */ l(Ce, {
 						onSearch: C,
 						onSubmit: w,
@@ -1699,59 +1699,59 @@ function we() {
 					})
 				}),
 				b && /* @__PURE__ */ l("div", {
-					className: "acx-mt-3 acx-py-3 acx-text-center acx-text-sm acx-text-gray-400",
+					className: "acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400",
 					children: "Finding an answer..."
 				}),
 				!b && _?.answer && /* @__PURE__ */ u("div", {
-					className: "acx-mt-3 acx-rounded-lg acx-bg-primary-50 acx-border acx-border-primary-100 acx-p-3",
+					className: "acx:mt-3 acx:rounded-lg acx:bg-primary-50 acx:border acx:border-primary-100 acx:p-3",
 					children: [/* @__PURE__ */ l("p", {
-						className: "acx-text-sm acx-text-gray-800 acx-whitespace-pre-line",
+						className: "acx:text-sm acx:text-gray-800 acx:whitespace-pre-line",
 						children: _.answer
 					}), _.sources.length > 0 && /* @__PURE__ */ l("div", {
-						className: "acx-mt-2 acx-pt-2 acx-border-t acx-border-primary-100 acx-space-y-1",
+						className: "acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1",
 						children: _.sources.map((e) => /* @__PURE__ */ u("button", {
 							onClick: () => E(e),
-							className: "acx-block acx-text-xs acx-text-primary-600 hover:acx-text-primary-700 acx-text-left",
+							className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
 							children: [e.title, " →"]
 						}, e.id))
 					})]
 				}),
 				!b && _?.fallback && /* @__PURE__ */ l("p", {
-					className: "acx-mt-3 acx-text-xs acx-text-gray-500",
+					className: "acx:mt-3 acx:text-xs acx:text-gray-500",
 					children: "We couldn't find a direct answer — try these articles, or send us a message."
 				})
 			]
 		}), O ? /* @__PURE__ */ l("div", {
-			className: "acx-p-4 acx-space-y-1",
+			className: "acx:p-4 acx:space-y-1",
 			children: e.kbLoading ? /* @__PURE__ */ l("div", {
-				className: "acx-py-4 acx-text-center acx-text-sm acx-text-gray-400",
+				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "Searching..."
 			}) : e.kbResults.slice(0, 5).map((e) => /* @__PURE__ */ l($, {
 				article: e,
 				onClick: E
 			}, e.id))
 		}) : /* @__PURE__ */ l("div", {
-			className: "acx-p-4 acx-space-y-1",
+			className: "acx:p-4 acx:space-y-1",
 			children: c.length === 0 ? /* @__PURE__ */ l("div", {
-				className: "acx-py-8 acx-text-center",
+				className: "acx:py-8 acx:text-center",
 				children: /* @__PURE__ */ l("p", {
-					className: "acx-text-sm acx-text-gray-400",
+					className: "acx:text-sm acx:text-gray-400",
 					children: "No help topics available"
 				})
 			}) : c.map((e) => /* @__PURE__ */ u("button", {
 				onClick: () => T(e),
-				className: "acx-w-full acx-flex acx-items-center acx-justify-between acx-p-3 acx-rounded-lg acx-text-left hover:acx-bg-gray-50 acx-transition-colors",
+				className: "acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors",
 				children: [/* @__PURE__ */ u("div", { children: [/* @__PURE__ */ l("h4", {
-					className: "acx-text-sm acx-font-medium acx-text-gray-900",
+					className: "acx:text-sm acx:font-medium acx:text-gray-900",
 					children: e.name
 				}), /* @__PURE__ */ u("p", {
-					className: "acx-text-xs acx-text-gray-500",
+					className: "acx:text-xs acx:text-gray-500",
 					children: [
 						e.article_count,
 						" article",
 						e.article_count === 1 ? "" : "s"
 					]
-				})] }), /* @__PURE__ */ l(M, { className: "acx-w-4 acx-h-4 acx-text-gray-400" })]
+				})] }), /* @__PURE__ */ l(M, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
 			}, e.id))
 		})]
 	});
@@ -1769,32 +1769,32 @@ function Ee({ position: e }) {
 	return /* @__PURE__ */ u("div", {
 		className: "acrux-chat-widget",
 		children: [r && /* @__PURE__ */ u("div", {
-			className: `acx-fixed acx-bottom-20 ${e === "bottom-right" ? "acx-right-4 sm:acx-right-6" : "acx-left-4 sm:acx-left-6"} acx-z-[9999] acx-w-[380px] acx-max-w-[calc(100vw-2rem)] acx-h-[600px] acx-max-h-[calc(100vh-6rem)] acx-bg-white acx-rounded-2xl acx-shadow-2xl acx-flex acx-flex-col acx-overflow-hidden acx-animate-slide-up`,
+			className: `acx:fixed acx:bottom-20 ${e === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up`,
 			role: "dialog",
 			"aria-label": "Chat widget",
 			children: [
 				/* @__PURE__ */ u("div", {
-					className: "acx-flex acx-items-center acx-justify-between acx-px-5 acx-py-4 acx-bg-primary-600 acx-text-white",
+					className: "acx:flex acx:items-center acx:justify-between acx:px-5 acx:py-4 acx:bg-primary-600 acx:text-white",
 					children: [/* @__PURE__ */ u("div", {
-						className: "acx-flex acx-items-center acx-gap-2.5",
+						className: "acx:flex acx:items-center acx:gap-2.5",
 						children: [/* @__PURE__ */ l("svg", {
 							xmlns: "http://www.w3.org/2000/svg",
 							width: "24",
 							height: "24",
 							viewBox: "0 0 375 375",
-							className: "acx-flex-shrink-0",
+							className: "acx:flex-shrink-0",
 							children: /* @__PURE__ */ l("path", {
 								fill: "#ffde5a",
 								d: "M 366.039062 86.546875 L 209.414062 117.519531 L 156.304688 4.511719 L 132.847656 127.152344 L 8.957031 142.746094 L 120.160156 174.398438 L 91.242188 158.484375 L 154.742188 150.492188 L 166.765625 87.632812 L 193.984375 145.554688 L 282.449219 125.828125 L 210.808594 181.351562 L 238.035156 239.269531 L 181.964844 208.414062 L 14 374.972656 L 185.960938 240.164062 L 295.355469 300.371094 L 242.242188 187.359375 L 366.039062 86.546875",
 								fillRule: "nonzero"
 							})
 						}), /* @__PURE__ */ l("h2", {
-							className: "acx-text-lg acx-font-semibold",
+							className: "acx:text-lg acx:font-semibold",
 							children: "Acrux Chat"
 						})]
 					}), /* @__PURE__ */ l("button", {
 						onClick: () => i(!1),
-						className: "acx-p-1 acx-rounded-md acx-bg-white acx-transition-colors hover:acx-bg-gray-100",
+						className: "acx:p-1 acx:rounded-md acx:bg-white acx:transition-colors acx:hover:bg-gray-100",
 						"aria-label": "Close chat",
 						children: /* @__PURE__ */ l("svg", {
 							width: "20",
@@ -1809,7 +1809,7 @@ function Ee({ position: e }) {
 					})]
 				}),
 				/* @__PURE__ */ u("div", {
-					className: "acx-flex-1 acx-overflow-hidden",
+					className: "acx:flex-1 acx:overflow-hidden",
 					children: [t.activeTab === "messages" && /* @__PURE__ */ l(Q, {}), t.activeTab === "help" && /* @__PURE__ */ l(we, {})]
 				}),
 				/* @__PURE__ */ l(P, {
