@@ -20,7 +20,7 @@ export function MessageList({ messages, agentTyping }: MessageListProps) {
   return (
     <div
       ref={containerRef}
-      className="acx-flex-1 acx-overflow-y-auto acx-px-4 acx-py-3 acx-space-y-1"
+      className="acx:flex-1 acx:overflow-y-auto acx:px-4 acx:py-3 acx:space-y-1"
     >
       {messages.map((message, index) => {
         const prevMessage = messages[index - 1]
@@ -29,8 +29,8 @@ export function MessageList({ messages, agentTyping }: MessageListProps) {
         return (
           <div key={message.temp_id ?? message.id}>
             {showDateSeparator && (
-              <div className="acx-flex acx-items-center acx-justify-center acx-py-3">
-                <span className="acx-text-xs acx-text-gray-400 acx-bg-gray-50 acx-px-3 acx-py-1 acx-rounded-full">
+              <div className="acx:flex acx:items-center acx:justify-center acx:py-3">
+                <span className="acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full">
                   {formatDateSeparator(message.created_at)}
                 </span>
               </div>

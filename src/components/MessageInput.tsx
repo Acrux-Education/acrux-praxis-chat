@@ -54,22 +54,22 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
   }
 
   return (
-    <div className="acx-border-t acx-border-gray-200 acx-bg-white acx-px-3 acx-py-2">
-      <div className="acx-flex acx-items-end acx-gap-2">
+    <div className="acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2">
+      <div className="acx:flex acx:items-end acx:gap-2">
         {mode === 'user' && onFileUpload && (
           <>
             <button
               onClick={handleFileClick}
-              className="acx-p-1.5 acx-text-gray-400 hover:acx-text-gray-600 acx-transition-colors acx-flex-shrink-0"
+              className="acx:p-1.5 acx:text-gray-400 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0"
               aria-label="Attach file"
               type="button"
             >
-              <PaperclipIcon className="acx-w-5 acx-h-5" />
+              <PaperclipIcon className="acx:w-5 acx:h-5" />
             </button>
             <input
               ref={fileInputRef}
               type="file"
-              className="acx-hidden"
+              className="acx:hidden"
               accept={LIMITS.ALLOWED_FILE_TYPES.join(',')}
               multiple
               onChange={handleFileChange}
@@ -84,18 +84,18 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
           placeholder={placeholder ?? 'Type a message...'}
           disabled={disabled}
           rows={1}
-          className="acx-flex-1 acx-resize-none acx-border-0 acx-outline-none acx-text-sm acx-py-2 acx-max-h-24 acx-bg-transparent placeholder:acx-text-gray-400"
+          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400"
           style={{ fieldSizing: 'content' } as React.CSSProperties}
         />
 
         <button
           onClick={handleSubmit}
           disabled={!text.trim() || disabled}
-          className="acx-p-1.5 acx-text-primary-600 acx-transition-colors acx-flex-shrink-0 enabled:hover:acx-text-primary-700 disabled:acx-text-gray-300 disabled:acx-cursor-not-allowed"
+          className="acx:p-1.5 acx:text-primary-600 acx:transition-colors acx:flex-shrink-0 acx:enabled:hover:text-primary-700 acx:disabled:text-gray-300 acx:disabled:cursor-not-allowed"
           aria-label="Send message"
           type="button"
         >
-          <SendIcon className="acx-w-5 acx-h-5" />
+          <SendIcon className="acx:w-5 acx:h-5" />
         </button>
       </div>
     </div>

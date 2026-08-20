@@ -16,8 +16,8 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="acx-p-4 acx-space-y-3">
-      <p className="acx-text-sm acx-text-gray-600 acx-mb-1">
+    <form onSubmit={handleSubmit} className="acx:p-4 acx:space-y-3">
+      <p className="acx:text-sm acx:text-gray-600 acx:mb-1">
         Before we start, could you share your details?
       </p>
 
@@ -26,7 +26,7 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Your name"
-        className="acx-w-full acx-px-3 acx-py-2 acx-border acx-border-gray-200 acx-rounded-lg acx-text-sm acx-outline-none focus:acx-border-primary-500 focus:acx-ring-1 focus:acx-ring-primary-500"
+        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
       />
 
       <input
@@ -35,17 +35,17 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Your email *"
         required
-        className="acx-w-full acx-px-3 acx-py-2 acx-border acx-border-gray-200 acx-rounded-lg acx-text-sm acx-outline-none focus:acx-border-primary-500 focus:acx-ring-1 focus:acx-ring-primary-500"
+        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
       />
 
-      <p className="acx-text-xs acx-text-gray-400 acx-leading-snug">
+      <p className="acx:text-xs acx:text-gray-400 acx:leading-snug">
         By starting a chat, your details, messages, and the page you&apos;re on are shared with
         Acrux to respond to your enquiry &mdash; see our{' '}
         <a
           href="https://www.acrux.education/legal/privacy-policy"
           target="_blank"
           rel="noopener noreferrer"
-          className="acx-underline hover:acx-text-gray-600"
+          className="acx:underline acx:hover:text-gray-600"
         >
           Privacy Policy
         </a>
@@ -55,7 +55,7 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
       <button
         type="submit"
         disabled={!email.trim() || loading}
-        className="acx-w-full acx-bg-primary-600 acx-text-white acx-py-2.5 acx-rounded-lg acx-text-sm acx-font-medium acx-transition-colors enabled:hover:acx-bg-primary-700 disabled:acx-bg-gray-200 disabled:acx-text-gray-500 disabled:acx-cursor-not-allowed"
+        className="acx:w-full acx:bg-primary-600 acx:text-white acx:py-2.5 acx:rounded-lg acx:text-sm acx:font-medium acx:transition-colors acx:enabled:hover:bg-primary-700 acx:disabled:bg-gray-200 acx:disabled:text-gray-500 acx:disabled:cursor-not-allowed"
       >
         {loading ? 'Starting...' : 'Start conversation'}
       </button>

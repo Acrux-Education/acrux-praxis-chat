@@ -1,97 +1,143 @@
-/* NOTE: No @tailwind base — Preflight reset is intentionally excluded.
-   Including it would inject an unscoped global CSS reset that conflicts
-   with the host app's styles (e.g. Pnyx's own Tailwind). The widget's
-   reset is scoped to .acrux-chat-widget below. */
+/* NOTE: Preflight is deliberately NOT imported — only theme + utilities below.
+   Including it would inject an unscoped global CSS reset that conflicts with the
+   host app's styles (e.g. Pnyx's own Tailwind). The widget's reset is scoped to
+   .acrux-chat-widget and lives in @layer base. */
+/* Layer order must be declared explicitly. Without this statement CSS orders
+   layers by first appearance — which puts @layer base (written below) AFTER
+   @layer utilities (pulled in by the import), making the scoped reset beat the
+   widget's own utilities. Verified: padding/margin/border-width utilities were
+   silently zeroed without it. */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) prefix(acx);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(acx);
+@source "../**/*.{ts,tsx}";
+
+/* Theme ported from tailwind.config.ts — Tailwind 4 CSS-first config (PLATDEV-697).
+   With prefix(acx) these are emitted as --acx-* custom properties. */
+@theme {
+  --color-primary-50: #f0f9fb;
+  --color-primary-100: #d6eff5;
+  --color-primary-200: #abe0eb;
+  --color-primary-300: #78cbdc;
+  --color-primary-400: #3dafc6;
+  --color-primary-500: #1a8fa8;
+  --color-primary-600: #006383;
+  --color-primary-700: #00536e;
+  --color-primary-800: #00445a;
+  --color-primary-900: #003849;
+  --color-primary-950: #002230;
+
+  --animate-slide-up: slideUp 0.3s ease-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-fade-in: fadeIn 0.2s ease-out;
+  --animate-bounce-in: bounceIn 0.3s ease-out;
+
+  @keyframes slideUp {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideDown {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+}
 
 /* ── Scoped reset ──────────────────────────────────────────────────────
-   MUST come before @tailwind so that utility classes (same specificity)
-   win by source order.  e.g.  .acx-mt-auto { margin-top:auto }  will
-   override  .acrux-chat-widget * { margin:0 }  because it appears later
-   in the compiled stylesheet. */
+   MUST live in @layer base. Tailwind 4 emits utilities into @layer utilities,
+   and unlayered CSS beats any layer regardless of specificity — left unlayered
+   this reset would override the widget's own utilities. Inside @layer base it
+   sits below them, which is the ordering the v3 source-order trick achieved. */
+@layer base {
+  .acrux-chat-widget *,
+  .acrux-chat-widget *::before,
+  .acrux-chat-widget *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+  }
 
-.acrux-chat-widget *,
-.acrux-chat-widget *::before,
-.acrux-chat-widget *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border-width: 0;
-  border-style: solid;
-  border-color: #e5e7eb;
+  .acrux-chat-widget {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Preflight-equivalent resets scoped to the widget */
+  .acrux-chat-widget img,
+  .acrux-chat-widget svg,
+  .acrux-chat-widget video {
+    display: block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .acrux-chat-widget button,
+  .acrux-chat-widget input,
+  .acrux-chat-widget textarea,
+  .acrux-chat-widget select {
+    font: inherit;
+    color: inherit;
+  }
+
+  .acrux-chat-widget button,
+  .acrux-chat-widget [role="button"] {
+    cursor: pointer;
+  }
+
+  .acrux-chat-widget a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  .acrux-chat-widget textarea {
+    resize: vertical;
+  }
+
+  .acrux-chat-widget input::placeholder,
+  .acrux-chat-widget textarea::placeholder {
+    opacity: 1;
+    color: #9ca3af;
+  }
+
+  .acrux-chat-widget h1,
+  .acrux-chat-widget h2,
+  .acrux-chat-widget h3,
+  .acrux-chat-widget h4,
+  .acrux-chat-widget h5,
+  .acrux-chat-widget h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .acrux-chat-widget ol,
+  .acrux-chat-widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .acrux-chat-widget p {
+    margin: 0;
+  }
 }
-
-.acrux-chat-widget {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #1f2937;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Preflight-equivalent resets scoped to the widget */
-.acrux-chat-widget img,
-.acrux-chat-widget svg,
-.acrux-chat-widget video {
-  display: block;
-  vertical-align: middle;
-  max-width: 100%;
-  height: auto;
-}
-
-.acrux-chat-widget button,
-.acrux-chat-widget input,
-.acrux-chat-widget textarea,
-.acrux-chat-widget select {
-  font: inherit;
-  color: inherit;
-}
-
-.acrux-chat-widget button,
-.acrux-chat-widget [role="button"] {
-  cursor: pointer;
-}
-
-.acrux-chat-widget a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-.acrux-chat-widget textarea {
-  resize: vertical;
-}
-
-.acrux-chat-widget input::placeholder,
-.acrux-chat-widget textarea::placeholder {
-  opacity: 1;
-  color: #9ca3af;
-}
-
-.acrux-chat-widget h1,
-.acrux-chat-widget h2,
-.acrux-chat-widget h3,
-.acrux-chat-widget h4,
-.acrux-chat-widget h5,
-.acrux-chat-widget h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-.acrux-chat-widget ol,
-.acrux-chat-widget ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.acrux-chat-widget p {
-  margin: 0;
-}
-
-/* ── Tailwind layers ─────────────────────────────────────────────────── */
-@tailwind components;
-@tailwind utilities;
 
 /* ── Animations (safe after utilities — no property conflicts) ──────── */
 @keyframes typing-dot {
