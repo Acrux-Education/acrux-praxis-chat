@@ -14,5 +14,9 @@
   "0.1.10": {
     "js": "sha384-i6lPA2WR7UqAOPQfA5nhAbNEf9w4TgLY7yoJ0hVRitgPnsuNiV9iROEgyB1wV4lk",
     "css": "sha384-e/aTuloN0RTEckoYg7uTkGS43FbdbmFZM287yzDGQ5y+m7bdchqGljIUafqDQu3U"
+  },
+  "0.1.11": {
+    "js": "sha384-Y3e37HxFpFXwZykhMcEGJ9EKAV1nSEYm2YMbZVgWcHXb+h7+mwLNz/17D9fiN+YV",
+    "css": "sha384-lCd/Q8MYZm06/S/FxfFeCnlvrLqSDYD4+0gKTslagkMwr5tPn1os+iGwDFmtg1Ag"
   }
 }

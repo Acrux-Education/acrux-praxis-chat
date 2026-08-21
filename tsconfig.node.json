@@ -16,5 +16,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["vite.config.ts", "vite.config.iife.ts", "tailwind.config.ts", "postcss.config.js", "eslint.config.js"]
+  "include": ["vite.config.ts", "vite.config.iife.ts", "eslint.config.js"]
 }

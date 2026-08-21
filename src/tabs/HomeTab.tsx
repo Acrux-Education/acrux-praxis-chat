@@ -61,7 +61,7 @@ export function HomeTab() {
         </p>
       </div>
 
-      <div className="acx:px-4 -acx-mt-4">
+      <div className="acx:px-4 acx:-mt-4">
         <div className="acx:bg-white acx:rounded-xl acx:shadow-lg acx:p-4">
           <SearchInput onSearch={search} onSubmit={ask} placeholder="Ask a question or search..." />
 

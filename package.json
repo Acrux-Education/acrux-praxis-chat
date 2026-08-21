@@ -1,6 +1,6 @@
 {
   "name": "@acrux-education/chat-widget",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Acrux Education embeddable chat widget",
   "type": "module",
   "main": "dist/acrux-chat.es.js",

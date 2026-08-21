@@ -385,7 +385,7 @@ function k() {
 //#region src/components/Badge.tsx
 function A({ count: e }) {
 	return e <= 0 ? null : /* @__PURE__ */ l("span", {
-		className: "acx:absolute -acx-top-1.5 -acx-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
+		className: "acx:absolute acx:-top-1.5 acx:-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
 		children: e > 99 ? "99+" : String(e)
 	});
 }
@@ -1564,7 +1564,7 @@ function Ce({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 		c.current && clearTimeout(c.current);
 	}), [i, e]), /* @__PURE__ */ u("div", {
 		className: "acx:relative",
-		children: [/* @__PURE__ */ l(ne, { className: "acx:absolute acx:left-3 acx:top-1/2 -acx-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ l("input", {
+		children: [/* @__PURE__ */ l(ne, { className: "acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ l("input", {
 			type: "text",
 			value: i,
 			onChange: (e) => a(e.target.value),

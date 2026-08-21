@@ -26,7 +26,7 @@ export function SearchInput({ onSearch, onSubmit, placeholder = 'Search for help
 
   return (
     <div className="acx:relative">
-      <SearchIcon className="acx:absolute acx:left-3 acx:top-1/2 -acx-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" />
+      <SearchIcon className="acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" />
       <input
         type="text"
         value={value}
