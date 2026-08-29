@@ -1,0 +1,14 @@
+name: acrux-praxis-chat
+id: ari:cloud:compass:cc65eaf3-365a-4fc7-8ba8-a11d38b3c117:component/6658eec8-5c1a-45b8-a240-703d004eb437/2922d5e3-a764-4860-9de8-720acdc43f8f
+description: null
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links: []
+relationships:
+  DEPENDS_ON: []
+labels:
+  - language:typescript
+  - source:github
+customFields: null
