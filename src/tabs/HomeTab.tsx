@@ -8,6 +8,14 @@ import { ArticleCard } from '../components/ArticleCard'
 import { AnnouncementCard } from '../components/AnnouncementCard'
 import type { KBArticle, KBAnswer } from '../types'
 
+/**
+ * @deprecated 4 September 2026 (PLATDEV-914) — the widget has no Home tab.
+ *
+ * Nothing mounts this. Broadcast content now reaches teachers as What's new
+ * entries the host passes in (NewsTab / WhatsNewCard), and prospects see no
+ * broadcast rendition at all. Left in place rather than deleted: review on
+ * 4 March 2027 and remove if still unused.
+ */
 export function HomeTab() {
   const { state, dispatch, config } = useChatContext()
   const { search } = useKBSearch()

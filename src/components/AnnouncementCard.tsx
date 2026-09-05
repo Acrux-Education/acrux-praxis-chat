@@ -22,6 +22,14 @@ const categoryLabels: Record<string, string> = {
   event: 'Event',
 }
 
+/**
+ * @deprecated 4 September 2026 (PLATDEV-914) — renders a chat announcement.
+ *
+ * Nothing mounts this. Broadcast content now reaches teachers as What's new
+ * entries the host passes in (NewsTab / WhatsNewCard), and prospects see no
+ * broadcast rendition at all. Left in place rather than deleted: review on
+ * 4 March 2027 and remove if still unused.
+ */
 export function AnnouncementCard({ announcement, onClick }: AnnouncementCardProps) {
   return (
     <button

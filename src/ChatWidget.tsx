@@ -5,6 +5,7 @@ import { ChatProvider, useChatContext } from './context/ChatContext'
 import { ChatLauncher } from './ChatLauncher'
 import { TabBar } from './components/TabBar'
 import { MessagesTab } from './tabs/MessagesTab'
+import { NewsTab } from './tabs/NewsTab'
 import { HelpTab } from './tabs/HelpTab'
 import './styles/index.css'
 
@@ -52,6 +53,7 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
 
           <div className="acx:flex-1 acx:overflow-hidden">
             {state.activeTab === 'messages' && <MessagesTab />}
+            {state.activeTab === 'news' && <NewsTab />}
             {state.activeTab === 'help' && <HelpTab />}
           </div>
 

@@ -9,6 +9,14 @@ export type ChatRegion = 'default' | 'au' | 'uk' | 'sg'
 export interface ChatWidgetProps {
   mode: WidgetMode
   apiUrl: string
+  /**
+   * What's new entries to show in the News tab (PLATDEV-914). The host passes
+   * what it already holds as an authenticated teacher — the widget never
+   * fetches these. `mode` is a client-side claim (init() is public JS), so an
+   * endpoint the widget could call for teacher content would serve it to
+   * anyone. No entries, no News tab; the marketing site passes none.
+   */
+  whatsNew?: WhatsNewEntry[]
   token?: string
   region?: ChatRegion
   userName?: string
@@ -92,6 +100,25 @@ export interface AgentInfo {
   avatar_url?: string
 }
 
+/**
+ * One rendition of a broadcast — the sentence-or-two entry, plus a link to the
+ * page-length explainer. Mirrors the host's own feed shape (Agora /whats-new/).
+ */
+export interface WhatsNewEntry {
+  id: string
+  title: string
+  summary: string
+  read_more_url: string | null
+  category: 'update' | 'notice' | 'digest'
+  sent_at: string
+}
+
+/**
+ * @deprecated 4 September 2026 (PLATDEV-914) — superseded by WhatsNewEntry.
+ * Nothing renders announcements: the News tab reads What's new entries and the
+ * marketing site shows none. Kept until 4 March 2027, then removed if still
+ * unused. See also useAnnouncements, AnnouncementCard, HomeTab, RoadmapTab.
+ */
 export interface Announcement {
   id: number
   title: string

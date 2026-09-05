@@ -1,6 +1,6 @@
 import type { TabId } from '../types'
 import { useChatContext } from '../context/ChatContext'
-import { ChatBubbleIcon, QuestionIcon } from '../icons'
+import { ChatBubbleIcon, QuestionIcon, MegaphoneIcon } from '../icons'
 import { Badge } from './Badge'
 
 interface TabBarProps {
@@ -8,17 +8,24 @@ interface TabBarProps {
   onTabChange: (tab: TabId) => void
 }
 
-const allTabs: { id: TabId; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
-  { id: 'messages', label: 'Messages', Icon: ChatBubbleIcon },
-  { id: 'help', label: 'Help', Icon: QuestionIcon },
-]
+type TabSpec = { id: TabId; label: string; Icon: React.ComponentType<{ className?: string }> }
+
+const MESSAGES_TAB: TabSpec = { id: 'messages', label: 'Messages', Icon: ChatBubbleIcon }
+const NEWS_TAB: TabSpec = { id: 'news', label: "What's new", Icon: MegaphoneIcon }
+const HELP_TAB: TabSpec = { id: 'help', label: 'Help', Icon: QuestionIcon }
 
 export function TabBar({ activeTab, onTabChange }: TabBarProps) {
-  const { state } = useChatContext()
+  const { state, config } = useChatContext()
+
+  // News is a teacher rendition: it shows only when the host passed entries,
+  // which the marketing site never does (PLATDEV-914).
+  const tabs = (config.whatsNew?.length ?? 0) > 0
+    ? [MESSAGES_TAB, NEWS_TAB, HELP_TAB]
+    : [MESSAGES_TAB, HELP_TAB]
 
   return (
     <nav className="acx:flex acx:border-t acx:border-gray-200 acx:bg-white" role="tablist">
-      {allTabs.map(({ id, label, Icon }) => (
+      {tabs.map(({ id, label, Icon }) => (
         <button
           key={id}
           role="tab"

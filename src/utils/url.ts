@@ -21,3 +21,17 @@ export function extractVisitorMetadata(): VisitorMetadata {
     utm_campaign: params.get('utm_campaign') ?? undefined,
   }
 }
+
+/**
+ * True when `value` parses as an absolute http(s) URL. read_more_url arrives
+ * from the host's feed, so it is never trusted to render a javascript: or
+ * other unsafe scheme as an anchor href.
+ */
+export function isSafeHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'http:' || url.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
