@@ -23,3 +23,7 @@ updates:
           - "*"
         update-types:
           - "major"
+    ignore:
+      # Blocked on PLATDEV-828: typescript-eslint peer range is typescript <6.1.0, and TS 7.0 has no JS compiler API until 7.1; remove when it clears
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
