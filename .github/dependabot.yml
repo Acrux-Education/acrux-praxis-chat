@@ -3,7 +3,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "sunday"
+      time: "20:00"
+      timezone: "Australia/Perth"
     open-pull-requests-limit: 10
     labels:
       - "dependencies"
