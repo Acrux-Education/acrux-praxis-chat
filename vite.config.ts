@@ -8,8 +8,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
     dts({
-      include: ['src/index.ts', 'src/types.ts', 'src/ChatWidget.tsx'],
+      include: ['src/index.ts', 'src/types.ts', 'src/ChatWidget.tsx', 'src/vite-env.d.ts'],
       outDirs: 'dist',
+      // The root tsconfig.json is a solution file ("files": []), so the plugin
+      // compiled an empty program and emitted nothing while reporting success.
+      // Point it at the project that actually owns src.
+      tsconfigPath: 'tsconfig.app.json',
     }),
   ],
   build: {
