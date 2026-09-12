@@ -84,7 +84,7 @@ so they pick up the new version:
 npm install
 npm run dev        # Start dev server
 npm run build      # Build both ESM and IIFE bundles
-npm run lint       # Run ESLint
+npm run lint       # Run oxlint
 npm run test:run   # Run tests
 ```
 
