@@ -1,3 +1,8 @@
+/* oxlint-disable react/only-export-components -- ChatProvider and the
+   useChatContext hook ship from this one module. Moving the hook to its own
+   file would change the emitted bundle, and release-integrity.json pins the
+   SRI hashes of the published 0.1.13 assets, so the split has to wait for a
+   release that is doing it deliberately. */
 import { createContext, useContext, useReducer, useMemo, useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import type { ChatWidgetProps } from '../types'
