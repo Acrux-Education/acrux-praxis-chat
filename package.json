@@ -32,7 +32,8 @@
     "test": "vitest",
     "test:integrity": "node --test scripts/sri-manifest.node-test.mjs",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "knip": "knip --no-exit-code"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -47,6 +48,7 @@
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.0.5",
     "@vitest/coverage-v8": "^4.1.11",
+    "knip": "6.35.1",
     "oxlint": "^1.82.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
