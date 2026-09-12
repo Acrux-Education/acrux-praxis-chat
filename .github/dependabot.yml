@@ -2,6 +2,73 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    target-branch: develop  # develop -> main is the promotion path; PRs against main bypass dev
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "20:00"
+      timezone: "Australia/Perth"
+    # Set so the grouped minor/patch PR and individual major PRs can coexist
+    # (majors are intentionally NOT grouped — see below).
+    open-pull-requests-limit: 10
+    groups:
+      # No security-critical group: praxis-chat has no Tier 2 direct
+      # dependency (§5). Checked against the Tier 2 list — none of axios,
+      # jsonwebtoken, jwt-decode, dompurify, helmet, zod, xlsx, jszip,
+      # pdf-lib, katex, sharp or @cloudflare/workers-oauth-provider is a
+      # direct dependency here. The widget has no runtime dependencies at
+      # all: react and react-dom are peers. Add the group with the package
+      # when one arrives.
+      #
+      # Bundle all low-risk minor/patch bumps into a single reviewable PR.
+      # Major bumps fall outside this group and each opens its own PR, so a
+      # breaking change is never entangled with safe updates. There was
+      # previously a second `majors` group here grouping every major
+      # together, which is the thing that entanglement rule exists to stop.
+      minor-and-patch:
+        patterns: ["*"]
+        update-types:
+          - "minor"
+          - "patch"
+    # Majors on a declared line are ignored so the weekly PR stays takeable;
+    # minors and patches within each line still come through and are routine.
+    # A line moves by a deliberate decision, never by a Dependabot PR (§6.3).
+    ignore:
+      # TypeScript line 6 (§3.2, blocker-held platform-wide). PLATDEV-828
+      # records it here: TS 7.0 ships no JS compiler API until 7.1.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # Vitest line 4, blocker-held (§3.3: @testing-library/jest-dom Assertion
+      # types conflict with Vitest 5)
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitest/coverage-v8"
+        update-types: ["version-update:semver-major"]
+      # React line 19 (§3.1). Declared as a peer range and installed as a dev
+      # dependency for the build and the tests; both stay on the line.
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      # Vite line 8 (§3.2)
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      # Tailwind line 4 (§3.1)
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      # oxlint line 1 (§3.2, chosen)
+      - dependency-name: "oxlint"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "dependencies"
+
+  # .github/workflows/publish.yml pins actions/checkout and actions/setup-node
+  # by commit SHA, so those pins only move when something moves them.
+  # Dependabot refreshes them by PR on the same weekly cadence as the npm
+  # entry (Acrux Dependency & Runtime Standard §7.1).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: develop  # develop -> main is the promotion path; PRs against main bypass dev
     schedule:
       interval: "weekly"
       day: "sunday"
@@ -10,20 +77,6 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - "dependencies"
-      - "security"
-    groups:
-      minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-      majors:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
-    ignore:
-      # Blocked on PLATDEV-828: TS 7.0 has no JS compiler API until 7.1; remove when it clears
-      - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
+
+  # No docker ecosystem: praxis-chat has no Dockerfile. It is a published npm
+  # package built by the GitHub Actions workflow above, not a container.
