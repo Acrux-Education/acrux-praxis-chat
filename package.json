@@ -16,6 +16,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "prepare": "npm run build",
     "dev": "vite",
