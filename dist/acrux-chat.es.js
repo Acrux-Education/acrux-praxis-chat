@@ -716,7 +716,7 @@ function ce(e) {
 	} catch {}
 }
 function le() {
-	let { state: e, dispatch: n, config: i } = k(), [a, c] = z("session_key", null), [l, u] = s(() => (localStorage.removeItem(H), K())), d = o(), f = o(null), p = t((e) => {
+	let { state: e, dispatch: n, config: i } = k(), [a, c] = z("session_key", null), [l, u] = s(() => (localStorage.removeItem(H), K())), d = o(void 0), f = o(null), p = t((e) => {
 		ce(e), u(e);
 	}, []);
 	d.current || (d.current = new y({
@@ -1236,7 +1236,7 @@ function Ce({ messages: e, agentTyping: t }) {
 //#endregion
 //#region src/components/MessageInput.tsx
 function we({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
-	let [f, p] = s(""), m = o(null), h = o(), _ = t(() => {
+	let [f, p] = s(""), m = o(null), h = o(void 0), _ = t(() => {
 		let t = f.trim();
 		!t || a || (e(t), p(""), n?.(!1));
 	}, [
@@ -1620,7 +1620,7 @@ function ke() {
 //#endregion
 //#region src/hooks/useKBSearch.ts
 function Ae() {
-	let { dispatch: e, config: n } = k(), i = o(), a = o();
+	let { dispatch: e, config: n } = k(), i = o(void 0), a = o(void 0);
 	i.current ||= new y({
 		baseUrl: n.apiUrl,
 		token: n.token
@@ -1658,7 +1658,7 @@ function Ae() {
 //#endregion
 //#region src/components/SearchInput.tsx
 function je({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
-	let [i, a] = s(""), c = o();
+	let [i, a] = s(""), c = o(void 0);
 	return r(() => (c.current && clearTimeout(c.current), c.current = setTimeout(() => {
 		e(i.trim());
 	}, h.SEARCH_DEBOUNCE), () => {
@@ -1698,7 +1698,7 @@ function $({ article: e, onClick: t }) {
 //#endregion
 //#region src/tabs/HelpTab.tsx
 function Me() {
-	let { state: e, dispatch: n, config: i } = k(), { search: a } = Ae(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [_, v] = s(null), [b, x] = s(!1), S = o();
+	let { state: e, dispatch: n, config: i } = k(), { search: a } = Ae(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [_, v] = s(null), [b, x] = s(!1), S = o(void 0);
 	S.current ||= new y({
 		baseUrl: i.apiUrl,
 		token: i.token
