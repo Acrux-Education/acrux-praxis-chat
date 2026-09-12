@@ -42,7 +42,12 @@ export type SessionStatus = 'active' | 'waiting' | 'assigned' | 'resolved' | 'ab
 
 export type SenderType = 'visitor' | 'user' | 'agent' | 'bot' | 'system'
 
-export type ContentType = 'text' | 'markdown' | 'card'
+// auto_response is what praxis-be writes for the offline acknowledgement
+// (praxis/chat/consumers.py, ChatMessage.objects.create and the payload it
+// returns), and MessageBubble already branches on it. It was missing from
+// this union, so that branch was unreachable to the type checker while
+// still firing at runtime.
+export type ContentType = 'text' | 'markdown' | 'card' | 'auto_response'
 
 export interface ChatSession {
   id: number

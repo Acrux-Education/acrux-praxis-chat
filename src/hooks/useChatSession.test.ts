@@ -29,10 +29,10 @@ describe('getTurnstileToken', () => {
 
     await expect(getTurnstileToken()).resolves.toBe('turnstile-token')
     expect(render).toHaveBeenCalledOnce()
-    expect(render.mock.calls[0][1]).toMatchObject({
+    expect(render.mock.calls[0]![1]).toMatchObject({
       sitekey: TURNSTILE_SITE_KEY,
     })
-    expect(render.mock.calls[0][1]).not.toHaveProperty('size')
+    expect(render.mock.calls[0]![1]).not.toHaveProperty('size')
     expect(container.remove).toHaveBeenCalledOnce()
   })
 })

@@ -15,7 +15,7 @@ interface MessageInputProps {
 export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, placeholder }: MessageInputProps) {
   const [text, setText] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   const handleSubmit = useCallback(() => {
     const trimmed = text.trim()

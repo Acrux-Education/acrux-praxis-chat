@@ -11,7 +11,7 @@ interface SearchInputProps {
 
 export function SearchInput({ onSearch, onSubmit, placeholder = 'Search for help...' }: SearchInputProps) {
   const [value, setValue] = useState('')
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)

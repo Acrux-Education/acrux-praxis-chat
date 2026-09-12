@@ -22,7 +22,7 @@ export function HomeTab() {
   const { announcements } = useAnnouncements()
   const [answer, setAnswer] = useState<KBAnswer | null>(null)
   const [asking, setAsking] = useState(false)
-  const apiRef = useRef<ApiClient>()
+  const apiRef = useRef<ApiClient | undefined>(undefined)
 
   if (!apiRef.current) {
     apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token })

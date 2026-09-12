@@ -5,8 +5,8 @@ import { TIMEOUTS } from '../constants'
 
 export function useKBSearch() {
   const { dispatch, config } = useChatContext()
-  const apiRef = useRef<ApiClient>()
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>()
+  const apiRef = useRef<ApiClient | undefined>(undefined)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   if (!apiRef.current) {
     apiRef.current = new ApiClient({ baseUrl: config.apiUrl, token: config.token })

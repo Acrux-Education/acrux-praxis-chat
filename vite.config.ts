@@ -9,7 +9,7 @@ export default defineConfig({
     tailwindcss(),
     dts({
       include: ['src/index.ts', 'src/types.ts', 'src/ChatWidget.tsx'],
-      outDir: 'dist',
+      outDirs: 'dist',
     }),
   ],
   build: {

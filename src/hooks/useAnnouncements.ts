@@ -13,7 +13,7 @@ import { toArray } from '../utils/toArray'
  */
 export function useAnnouncements() {
   const { state, dispatch, config } = useChatContext()
-  const apiRef = useRef<ApiClient>()
+  const apiRef = useRef<ApiClient | undefined>(undefined)
   const fetchedRef = useRef(false)
 
   if (!apiRef.current) {

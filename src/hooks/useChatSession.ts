@@ -115,7 +115,7 @@ export function useChatSession() {
     localStorage.removeItem(SESSION_TOKEN_KEY)
     return readSessionToken()
   })
-  const apiRef = useRef<ApiClient>()
+  const apiRef = useRef<ApiClient | undefined>(undefined)
   // Track the active session key to prevent stale restoreSession from
   // overwriting a newer session created while the restore was in-flight.
   const activeSessionKeyRef = useRef<string | null>(null)
