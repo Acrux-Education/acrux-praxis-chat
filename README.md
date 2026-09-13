@@ -88,6 +88,10 @@ npm run lint       # Run oxlint
 npm run test:run   # Run tests
 ```
 
+CI (`.github/workflows/publish.yml`, on push to `main`) gates the dist rebuild
+on lint → type-check → knip (warn-only) → tests → build → release-integrity
+verification; there is no container image here, so no Trivy scan applies.
+
 ### Build outputs
 
 | File | Format | React | Use case |
