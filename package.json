@@ -26,7 +26,7 @@
     "build:esm": "vite build",
     "build:iife": "vite build --config vite.config.iife.ts && node scripts/sri-manifest.mjs",
     "verify:release": "node scripts/sri-manifest.mjs --verify",
-    "lint": "oxlint src/",
+    "lint": "oxlint . --deny-warnings --report-unused-disable-directives",
     "type-check": "tsc -b --noEmit",
     "preview": "vite preview",
     "test": "vitest",
