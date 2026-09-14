@@ -1,4 +1,5 @@
 // Creates and verifies immutable, versioned browser assets and their SRI manifest.
+// Guards the IIFE bundle, the ESM entry (package main/module) and the stylesheet.
 // Uses only Node builtins so the same guard runs locally, in Pages, and in CI.
 
 import { createHash } from 'node:crypto'
@@ -14,6 +15,7 @@ const version = pkg.version
 
 const targets = [
   { kind: 'js', stable: 'acrux-chat.iife.js', versioned: `acrux-chat.v${version}.iife.js` },
+  { kind: 'es', stable: 'acrux-chat.es.js', versioned: `acrux-chat.v${version}.es.js` },
   { kind: 'css', stable: 'style.css', versioned: `style.v${version}.css` },
 ]
 
@@ -38,6 +40,13 @@ if (!expected) {
   fail(`version ${version} is not recorded in release-integrity.json`)
 }
 
+// Every current release records all three artefacts; a missing one is a recording mistake.
+for (const target of targets) {
+  if (!expected[target.kind]) {
+    fail(`version ${version} does not record the ${target.kind} SHA-384 in release-integrity.json`)
+  }
+}
+
 const stableBytes = new Map()
 for (const target of targets) {
   const bytes = readFileSync(join(distDir, target.stable))
@@ -59,10 +68,14 @@ function verifyRelease() {
   for (const [recordedVersion, recordedIntegrity] of Object.entries(releases)) {
     const recordedTargets = [
       { kind: 'js', versioned: `acrux-chat.v${recordedVersion}.iife.js` },
+      { kind: 'es', versioned: `acrux-chat.v${recordedVersion}.es.js` },
       { kind: 'css', versioned: `style.v${recordedVersion}.css` },
     ]
 
     for (const target of recordedTargets) {
+      // Releases made before the ESM entry was guarded record no `es` hash and ship no versioned copy.
+      if (!recordedIntegrity[target.kind]) continue
+
       const path = join(distDir, target.versioned)
       if (!existsSync(path)) fail(`${target.versioned} is missing`)
       assertEqual(

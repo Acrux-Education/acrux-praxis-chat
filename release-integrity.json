@@ -25,6 +25,7 @@
   },
   "0.1.13": {
     "js": "sha384-r7+Qc2WMHxuC+WM8q1zvMZ8EeDYfREJ/M1jaMjXTcL3J0cE4f+cuH5dpx4nycnbl",
+    "es": "sha384-KPtDafdDThX1umm/ZZ9t+yMYXGaI+tncIyqgSOIxaETX5w/UQjbPZMsQWLUp3GWb",
     "css": "sha384-kNPGX3k1Q8mjNz8K0Zghr+TZNtebZ/mlU8hVz9an9OBVHV3L9CXPpZq/GbLE4p4Z"
   }
 }

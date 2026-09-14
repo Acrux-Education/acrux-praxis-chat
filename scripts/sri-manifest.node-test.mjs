@@ -20,6 +20,7 @@ test('verification rejects corruption in a prior recorded release', () => {
     cpSync(join(repoRoot, 'scripts', 'sri-manifest.mjs'), join(fixture, 'scripts', 'sri-manifest.mjs'))
     for (const file of [
       'acrux-chat.iife.js',
+      'acrux-chat.es.js',
       'acrux-chat.v0.1.7.iife.js',
       'acrux-chat.v0.1.8.iife.js',
       'style.css',
