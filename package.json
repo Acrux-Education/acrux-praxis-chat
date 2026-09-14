@@ -1,6 +1,6 @@
 {
   "name": "@acrux-education/chat-widget",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Acrux Education embeddable chat widget",
   "type": "module",
   "main": "dist/acrux-chat.es.js",
@@ -38,9 +38,6 @@
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
-  },
-  "overrides": {
-    "rolldown": "1.2.4"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
