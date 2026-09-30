@@ -71,12 +71,18 @@ Tabs are **dynamic** — they only appear when the backend returns content for t
 
 ## Deployment — updating consumers
 
-After pushing changes to this repo, you must update **all three consumers**
-so they pick up the new version:
+After a release reaches `main`, `chat.acrux.education` (Cloudflare Pages) serves
+the new versioned files. Then update **both consumers**:
 
-1. **Pnyx** (`platform-regional/pnyx`) — `npm install @acrux-education/chat-widget@github:Acrux-Education/acrux-praxis-chat#main`, commit lockfile, push to `develop`
-2. **Praxis-FE** (`praxis/praxis-fe`) — same `npm install`, commit lockfile, push to `main` (triggers Railway deploy)
-3. **Webflow** — upload the updated `dist/acrux-chat.iife.js` and `dist/style.css` to the Webflow site
+1. **Pnyx** (`platform-regional/pnyx`) — pins this repo by commit SHA (PLATDEV-914):
+   `npm install @acrux-education/chat-widget@github:Acrux-Education/acrux-praxis-chat#<main sha>`,
+   commit the lockfile, push to `develop`.
+2. **praxis-website** (`praxis/praxis-website`) — `src/layouts/BaseLayout.astro`
+   `CHAT_ASSETS`: set both file names to the new version and both `integrity`
+   values from `release-integrity.json` (check them against the files served
+   from `chat.acrux.education`).
+
+praxis-fe does not use the widget.
 
 ## Development
 
