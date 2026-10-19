@@ -1427,7 +1427,8 @@ function Ee() {
 		g && S.current && (m(S.current), S.current = null);
 	}, [g, m]);
 	let C = t(async (t) => {
-		if (!a) {
+		if (a) m(t);
+		else {
 			if (i.mode === "lead" && !e.visitorEmail) {
 				S.current = t, x(!0);
 				return;
@@ -1437,9 +1438,7 @@ function Ee() {
 			} catch {
 				S.current = null;
 			}
-			return;
 		}
-		m(t);
 	}, [
 		a,
 		i.mode,
@@ -1626,14 +1625,7 @@ function Ae() {
 		token: n.token
 	});
 	let s = t((t) => {
-		if (a.current && clearTimeout(a.current), !t.trim()) {
-			e({
-				type: "SET_KB_RESULTS",
-				payload: []
-			});
-			return;
-		}
-		e({
+		a.current && clearTimeout(a.current), t.trim() ? (e({
 			type: "SET_KB_LOADING",
 			payload: !0
 		}), a.current = setTimeout(async () => {
@@ -1649,7 +1641,10 @@ function Ae() {
 					payload: []
 				});
 			}
-		}, h.SEARCH_DEBOUNCE);
+		}, h.SEARCH_DEBOUNCE)) : e({
+			type: "SET_KB_RESULTS",
+			payload: []
+		});
 	}, [e]);
 	return r(() => () => {
 		a.current && clearTimeout(a.current);
