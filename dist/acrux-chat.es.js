@@ -1,6 +1,6 @@
 import { createContext as e, useCallback as t, useContext as n, useEffect as r, useMemo as i, useReducer as a, useRef as o, useState as s } from "react";
 import { Fragment as c, jsx as l, jsxs as u } from "react/jsx-runtime";
-//#region src/constants.ts
+// src/constants.ts
 var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 	SESSIONS: "/api/chat/sessions/",
 	SESSION: (e) => `/api/chat/sessions/${e}/`,
@@ -169,8 +169,7 @@ function v(e, t) {
 		default: return e;
 	}
 }
-//#endregion
-//#region src/services/api.ts
+// src/services/api.ts
 var y = class {
 	baseUrl;
 	token;
@@ -265,13 +264,11 @@ var y = class {
 		super(`API Error ${e}: ${t}`), this.status = e, this.statusText = t, this.body = n, this.name = "ApiError";
 	}
 };
-//#endregion
-//#region src/utils/toArray.ts
+// src/utils/toArray.ts
 function x(e) {
 	return Array.isArray(e) ? e : e && typeof e == "object" && "results" in e ? e.results : [];
 }
-//#endregion
-//#region src/hooks/useOperatingHours.ts
+// src/hooks/useOperatingHours.ts
 var S = { is_online: !1 };
 function C(e, t = Date.now()) {
 	if (!e) return null;
@@ -323,8 +320,7 @@ function w() {
 		responseTime: e.operatingHours?.response_time
 	};
 }
-//#endregion
-//#region src/context/ChatContext.tsx
+// src/context/ChatContext.tsx
 var T = e(null);
 function E({ children: e, ...t }) {
 	let [n, r] = a(v, {
@@ -381,16 +377,14 @@ function k() {
 	if (!e) throw Error("useChatContext must be used within a ChatProvider");
 	return e;
 }
-//#endregion
-//#region src/components/Badge.tsx
+// src/components/Badge.tsx
 function A({ count: e }) {
 	return e <= 0 ? null : /* @__PURE__ */ l("span", {
 		className: "acx:absolute acx:-top-1.5 acx:-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
 		children: e > 99 ? "99+" : String(e)
 	});
 }
-//#endregion
-//#region src/icons/index.tsx
+// src/icons/index.tsx
 function ee({ className: e }) {
 	return /* @__PURE__ */ l("svg", {
 		className: e,
@@ -565,8 +559,7 @@ function oe({ className: e }) {
 		children: /* @__PURE__ */ l("polyline", { points: "15 18 9 12 15 6" })
 	});
 }
-//#endregion
-//#region src/ChatLauncher.tsx
+// src/ChatLauncher.tsx
 function se({ isOpen: e, onClick: t, position: n }) {
 	let { state: r } = k();
 	return /* @__PURE__ */ l("div", {
@@ -582,8 +575,7 @@ function se({ isOpen: e, onClick: t, position: n }) {
 		})
 	});
 }
-//#endregion
-//#region src/components/TabBar.tsx
+// src/components/TabBar.tsx
 var P = {
 	id: "messages",
 	label: "Messages",
@@ -621,8 +613,7 @@ function L({ activeTab: e, onTabChange: t }) {
 		}, r))
 	});
 }
-//#endregion
-//#region src/hooks/useLocalStorage.ts
+// src/hooks/useLocalStorage.ts
 var R = "acrux_chat_";
 function z(e, n) {
 	let r = `${R}${e}`, [i, a] = s(() => {
@@ -640,8 +631,7 @@ function z(e, n) {
 		} catch {}
 	}, [r])];
 }
-//#endregion
-//#region src/utils/url.ts
+// src/utils/url.ts
 function B() {
 	let e = new URLSearchParams(window.location.search), t = "";
 	if (document.referrer) try {
@@ -664,8 +654,7 @@ function V(e) {
 		return !1;
 	}
 }
-//#endregion
-//#region src/hooks/useChatSession.ts
+// src/hooks/useChatSession.ts
 var H = "acrux_chat_chat_access_token", U = "https://challenges.cloudflare.com/turnstile/v0/api.js", W = 5e3;
 function G() {
 	return new Promise((e) => {
@@ -828,8 +817,7 @@ function le() {
 		api: m
 	};
 }
-//#endregion
-//#region src/services/websocket.ts
+// src/services/websocket.ts
 var ue = [
 	"history",
 	"message",
@@ -906,16 +894,14 @@ var fe = class {
 		this.heartbeatTimer &&= (clearInterval(this.heartbeatTimer), null);
 	}
 };
-//#endregion
-//#region src/utils/uuid.ts
+// src/utils/uuid.ts
 function pe() {
 	return typeof crypto < "u" && typeof crypto.randomUUID == "function" ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
 		let t = Math.random() * 16 | 0;
 		return (e === "x" ? t : t & 3 | 8).toString(16);
 	});
 }
-//#endregion
-//#region src/hooks/useChatWebSocket.ts
+// src/hooks/useChatWebSocket.ts
 function me(e, n) {
 	let { state: i, dispatch: a, config: s } = k(), c = o(null), l = o(/* @__PURE__ */ new Map()), u = o(null);
 	r(() => {
@@ -944,7 +930,7 @@ function me(e, n) {
 						e.message && typeof e.message == "object" && (a({
 							type: "ADD_MESSAGE",
 							payload: e.message
-						}), (!i.isOpen || i.activeTab !== "messages") && a({ type: "INCREMENT_UNREAD" }));
+						}), i.isOpen && i.activeTab === "messages" || a({ type: "INCREMENT_UNREAD" }));
 						break;
 					case "message_ack":
 						if (typeof e.temp_id == "string" && typeof e.real_id == "number") {
@@ -1043,8 +1029,7 @@ function me(e, n) {
 		sendTyping: f
 	};
 }
-//#endregion
-//#region src/components/AgentAvatar.tsx
+// src/components/AgentAvatar.tsx
 function he(e) {
 	return e.split(" ").slice(0, 2).map((e) => e[0] ?? "").join("").toUpperCase();
 }
@@ -1071,8 +1056,7 @@ function J({ name: e, avatarUrl: t }) {
 		children: he(e)
 	});
 }
-//#endregion
-//#region src/utils/time.ts
+// src/utils/time.ts
 function Y(e) {
 	let t = new Date(e), n = (/* @__PURE__ */ new Date()).getTime() - t.getTime(), r = Math.floor(n / 1e3), i = Math.floor(r / 60), a = Math.floor(i / 60), o = Math.floor(a / 24);
 	return r < 60 ? "Just now" : i < 60 ? `${i}m ago` : a < 24 ? `${a}h ago` : o < 7 ? `${o}d ago` : t.toLocaleDateString(void 0, {
@@ -1092,8 +1076,7 @@ function ve(e, t) {
 	let n = new Date(e), r = new Date(t);
 	return n.getFullYear() === r.getFullYear() && n.getMonth() === r.getMonth() && n.getDate() === r.getDate();
 }
-//#endregion
-//#region src/utils/sanitize.ts
+// src/utils/sanitize.ts
 function ye(e) {
 	let t = be(e);
 	return t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"), t = t.replace(/__(.+?)__/g, "<strong>$1</strong>"), t = t.replace(/\*(.+?)\*/g, "<em>$1</em>"), t = t.replace(/(?<!\w)_(.+?)_(?!\w)/g, "<em>$1</em>"), t = t.replace(/`(.+?)`/g, "<code>$1</code>"), t = t.replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, "<a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">$1</a>"), t = t.replace(/\n/g, "<br />"), t;
@@ -1108,8 +1091,7 @@ function be(e) {
 	};
 	return e.replace(/[&<>"']/g, (e) => t[e] ?? e);
 }
-//#endregion
-//#region src/components/MessageBubble.tsx
+// src/components/MessageBubble.tsx
 function xe({ message: e }) {
 	let t = e.sender_type === "visitor" || e.sender_type === "user", n = e.sender_type === "system";
 	return n && e.content_type === "auto_response" ? /* @__PURE__ */ u("div", {
@@ -1190,8 +1172,7 @@ function xe({ message: e }) {
 		})]
 	});
 }
-//#endregion
-//#region src/components/TypingIndicator.tsx
+// src/components/TypingIndicator.tsx
 function Se({ agentName: e }) {
 	return /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:items-center acx:gap-2 acx:mb-3",
@@ -1208,8 +1189,7 @@ function Se({ agentName: e }) {
 		})]
 	});
 }
-//#endregion
-//#region src/components/MessageList.tsx
+// src/components/MessageList.tsx
 function Ce({ messages: e, agentTyping: t }) {
 	let n = o(null), i = o(null);
 	return r(() => {
@@ -1233,8 +1213,7 @@ function Ce({ messages: e, agentTyping: t }) {
 		]
 	});
 }
-//#endregion
-//#region src/components/MessageInput.tsx
+// src/components/MessageInput.tsx
 function we({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
 	let [f, p] = s(""), m = o(null), h = o(void 0), _ = t(() => {
 		let t = f.trim();
@@ -1295,8 +1274,7 @@ function we({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, pla
 		})
 	});
 }
-//#endregion
-//#region src/components/StatusBanner.tsx
+// src/components/StatusBanner.tsx
 function X({ isOnline: e, offlineMessage: t, responseTime: n }) {
 	return e ? null : /* @__PURE__ */ l("div", {
 		className: "acx:bg-amber-50 acx:border-b acx:border-amber-200 acx:px-4 acx:py-2.5",
@@ -1316,8 +1294,7 @@ function X({ isOnline: e, offlineMessage: t, responseTime: n }) {
 		})
 	});
 }
-//#endregion
-//#region src/components/ConnectionBanner.tsx
+// src/components/ConnectionBanner.tsx
 function Z({ isConnected: e, retryCount: t }) {
 	return e || t === 0 ? null : t >= 5 ? /* @__PURE__ */ l("div", {
 		className: "acx:bg-red-50 acx:border-b acx:border-red-200 acx:px-4 acx:py-2.5",
@@ -1363,8 +1340,7 @@ function Z({ isConnected: e, retryCount: t }) {
 		})
 	});
 }
-//#endregion
-//#region src/components/LeadCaptureForm.tsx
+// src/components/LeadCaptureForm.tsx
 function Te({ onSubmit: e, loading: t }) {
 	let [n, r] = s(""), [i, a] = s("");
 	return /* @__PURE__ */ u("form", {
@@ -1419,8 +1395,7 @@ function Te({ onSubmit: e, loading: t }) {
 		]
 	});
 }
-//#endregion
-//#region src/tabs/MessagesTab.tsx
+// src/tabs/MessagesTab.tsx
 function Ee() {
 	let { state: e, dispatch: n, config: i } = k(), { session: a, sessionKey: d, accessToken: f, createSession: p } = le(), { sendMessage: m, sendTyping: h, isConnected: g } = me(d, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = s(!1), S = o(null);
 	r(() => {
@@ -1545,8 +1520,7 @@ function Ee() {
 		]
 	});
 }
-//#endregion
-//#region src/components/WhatsNewCard.tsx
+// src/components/WhatsNewCard.tsx
 var De = {
 	update: "acx:bg-green-100 acx:text-green-700",
 	notice: "acx:bg-orange-100 acx:text-orange-700",
@@ -1589,8 +1563,7 @@ function Q({ entry: e }) {
 		]
 	});
 }
-//#endregion
-//#region src/tabs/NewsTab.tsx
+// src/tabs/NewsTab.tsx
 function ke() {
 	let { config: e } = k(), t = e.whatsNew ?? [];
 	return /* @__PURE__ */ u("div", {
@@ -1616,8 +1589,7 @@ function ke() {
 		})]
 	});
 }
-//#endregion
-//#region src/hooks/useKBSearch.ts
+// src/hooks/useKBSearch.ts
 function Ae() {
 	let { dispatch: e, config: n } = k(), i = o(void 0), a = o(void 0);
 	i.current ||= new y({
@@ -1650,8 +1622,7 @@ function Ae() {
 		a.current && clearTimeout(a.current);
 	}, []), { search: s };
 }
-//#endregion
-//#region src/components/SearchInput.tsx
+// src/components/SearchInput.tsx
 function je({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
 	let [i, a] = s(""), c = o(void 0);
 	return r(() => (c.current && clearTimeout(c.current), c.current = setTimeout(() => {
@@ -1672,8 +1643,7 @@ function je({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 		})]
 	});
 }
-//#endregion
-//#region src/components/ArticleCard.tsx
+// src/components/ArticleCard.tsx
 function $({ article: e, onClick: t }) {
 	return /* @__PURE__ */ u("button", {
 		onClick: () => t(e),
@@ -1690,8 +1660,7 @@ function $({ article: e, onClick: t }) {
 		}), /* @__PURE__ */ l(N, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
 	});
 }
-//#endregion
-//#region src/tabs/HelpTab.tsx
+// src/tabs/HelpTab.tsx
 function Me() {
 	let { state: e, dispatch: n, config: i } = k(), { search: a } = Ae(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [_, v] = s(null), [b, x] = s(!1), S = o(void 0);
 	S.current ||= new y({
@@ -1852,8 +1821,7 @@ function Me() {
 		})]
 	});
 }
-//#endregion
-//#region src/ChatWidget.tsx
+// src/ChatWidget.tsx
 function Ne(e) {
 	return /* @__PURE__ */ l(E, {
 		...e,
@@ -1927,5 +1895,4 @@ function Pe({ position: e }) {
 		})]
 	});
 }
-//#endregion
 export { Ne as ChatWidget };
