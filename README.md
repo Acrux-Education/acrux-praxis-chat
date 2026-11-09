@@ -1,6 +1,6 @@
 # @acrux-education/chat-widget
 
-Embeddable chat widget for Acrux Education. Provides live chat, knowledge base search, announcements, and product roadmap — packaged as both an ESM library (for React apps) and a standalone IIFE bundle (for non-React sites like Webflow).
+Embeddable chat widget for Acrux Education. Provides live chat, knowledge base search, announcements, and product roadmap — packaged as both an ESM library (for React apps) and a standalone IIFE bundle (for non-React sites such as praxis-website).
 
 ## Installation
 
@@ -30,7 +30,7 @@ function App() {
 }
 ```
 
-### Standalone (IIFE) — Webflow / static sites
+### Standalone (IIFE) — static sites (praxis-website)
 
 Include the built files and initialise:
 
@@ -103,7 +103,7 @@ verification; there is no container image here, so no Trivy scan applies.
 | File | Format | React | Use case |
 |------|--------|-------|----------|
 | `dist/acrux-chat.es.js` | ESM | Externalised (peer dep) | React host apps |
-| `dist/acrux-chat.iife.js` | IIFE | Bundled | Non-React sites (Webflow) |
+| `dist/acrux-chat.iife.js` | IIFE | Bundled | Non-React sites (praxis-website) |
 | `dist/style.css` | CSS | — | Styles for both builds |
 
 ### CSS isolation
