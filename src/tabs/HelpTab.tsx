@@ -3,6 +3,7 @@ import { useChatContext } from '../context/ChatContext'
 import { useKBSearch } from '../hooks/useKBSearch'
 import { ApiClient } from '../services/api'
 import { SearchInput } from '../components/SearchInput'
+import { AI_ANSWER_TEXT } from '../constants'
 import { ArticleCard } from '../components/ArticleCard'
 import { ChevronLeftIcon, ChevronRightIcon } from '../icons'
 import type { KBTopic, KBArticle, KBAnswer } from '../types'
@@ -117,6 +118,7 @@ export function HelpTab() {
         <p className="acx:text-xs acx:text-gray-500 acx:mt-0.5">Ask a question or browse topics</p>
         <div className="acx:mt-3">
           <SearchInput onSearch={handleSearch} onSubmit={ask} placeholder="Ask a question or search..." />
+          <p className="acx:mt-2 acx:text-xs acx:text-gray-500">{AI_ANSWER_TEXT.line}</p>
         </div>
 
         {asking && (
@@ -127,6 +129,7 @@ export function HelpTab() {
 
         {!asking && answer?.answer && (
           <div className="acx:mt-3 acx:rounded-lg acx:bg-primary-50 acx:border acx:border-primary-100 acx:p-3">
+            <span className="acx:inline-block acx:mb-2 acx:rounded-full acx:bg-primary-600 acx:px-2.5 acx:py-0.5 acx:text-xs acx:font-semibold acx:text-white">{AI_ANSWER_TEXT.label}</span>
             <p className="acx:text-sm acx:text-gray-800 acx:whitespace-pre-line">{answer.answer}</p>
             {answer.sources.length > 0 && (
               <div className="acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1">

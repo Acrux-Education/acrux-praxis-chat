@@ -43,6 +43,9 @@ var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 		"application/pdf"
 	]
 }, _ = {
+	label: "AI-generated answer",
+	line: "Answers are written by AI. Please don't type personal or student information here."
+}, v = {
 	session: null,
 	messages: [],
 	isConnected: !1,
@@ -63,7 +66,7 @@ var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 	loading: !1,
 	error: null
 };
-function v(e, t) {
+function y(e, t) {
 	switch (t.type) {
 		case "SET_SESSION": return {
 			...e,
@@ -170,7 +173,7 @@ function v(e, t) {
 	}
 }
 // src/services/api.ts
-var y = class {
+var b = class {
 	baseUrl;
 	token;
 	chatToken;
@@ -199,7 +202,7 @@ var y = class {
 		});
 		if (!r.ok) {
 			let e = await r.text().catch(() => "");
-			throw new b(r.status, r.statusText, e);
+			throw new x(r.status, r.statusText, e);
 		}
 		if (r.status !== 204) return r.json();
 	}
@@ -256,7 +259,7 @@ var y = class {
 		let e = this.region ? `?${new URLSearchParams({ region: this.region })}` : "";
 		return this.request(`${f.OPERATING_HOURS}${e}`);
 	}
-}, b = class extends Error {
+}, x = class extends Error {
 	status;
 	statusText;
 	body;
@@ -265,20 +268,20 @@ var y = class {
 	}
 };
 // src/utils/toArray.ts
-function x(e) {
+function S(e) {
 	return Array.isArray(e) ? e : e && typeof e == "object" && "results" in e ? e.results : [];
 }
 // src/hooks/useOperatingHours.ts
-var S = { is_online: !1 };
-function C(e, t = Date.now()) {
+var C = { is_online: !1 };
+function w(e, t = Date.now()) {
 	if (!e) return null;
 	let n = Date.parse(e);
 	return Number.isFinite(n) ? Math.min(Math.max(n - t + h.AVAILABILITY_BOUNDARY_SKEW, h.AVAILABILITY_BOUNDARY_SKEW), h.MAX_TIMER_DELAY) : null;
 }
-function w() {
-	let { state: e, dispatch: t, config: n } = k();
+function T() {
+	let { state: e, dispatch: t, config: n } = A();
 	return r(() => {
-		let e = new y({
+		let e = new b({
 			baseUrl: n.apiUrl,
 			token: n.token,
 			region: n.region
@@ -292,12 +295,12 @@ function w() {
 						type: "SET_OPERATING_HOURS",
 						payload: n
 					}), r && clearTimeout(r);
-					let a = C(n.next_status_change_at);
+					let a = w(n.next_status_change_at);
 					a !== null && (r = setTimeout(o, a));
 				} catch {
 					i || t({
 						type: "SET_OPERATING_HOURS",
-						payload: S
+						payload: C
 					});
 				} finally {
 					a = !1;
@@ -321,11 +324,11 @@ function w() {
 	};
 }
 // src/context/ChatContext.tsx
-var T = e(null);
-function E({ children: e, ...t }) {
-	let [n, r] = a(v, {
-		..._,
-		activeTab: t.defaultTab ?? _.activeTab,
+var E = e(null);
+function D({ children: e, ...t }) {
+	let [n, r] = a(y, {
+		...v,
+		activeTab: t.defaultTab ?? v.activeTab,
 		visitorName: t.userName ?? "",
 		visitorEmail: t.userEmail ?? ""
 	}), o = i(() => ({
@@ -333,34 +336,34 @@ function E({ children: e, ...t }) {
 		dispatch: r,
 		config: t
 	}), [n, t]);
-	return /* @__PURE__ */ u(T.Provider, {
+	return /* @__PURE__ */ u(E.Provider, {
 		value: o,
 		children: [
-			/* @__PURE__ */ l(D, {}),
 			/* @__PURE__ */ l(O, {}),
+			/* @__PURE__ */ l(k, {}),
 			e
 		]
 	});
 }
-function D() {
-	let { dispatch: e, config: t } = k(), n = o(!1);
+function O() {
+	let { dispatch: e, config: t } = A(), n = o(!1);
 	return r(() => {
 		if (n.current) return;
 		n.current = !0;
-		let r = new y({
+		let r = new b({
 			baseUrl: t.apiUrl,
 			token: t.token,
 			region: t.region
 		});
 		r.getAnnouncements().then((t) => e({
 			type: "SET_ANNOUNCEMENTS",
-			payload: x(t)
+			payload: S(t)
 		})).catch(() => {}), r.getRoadmapItems().then((t) => e({
 			type: "SET_ROADMAP_ITEMS",
-			payload: x(t)
+			payload: S(t)
 		})).catch(() => {}), r.getKBTopics().then((t) => e({
 			type: "SET_KB_TOPICS",
-			payload: x(t)
+			payload: S(t)
 		})).catch(() => {});
 	}, [
 		t.apiUrl,
@@ -369,16 +372,16 @@ function D() {
 		e
 	]), null;
 }
-function O() {
-	return w(), null;
-}
 function k() {
-	let e = n(T);
+	return T(), null;
+}
+function A() {
+	let e = n(E);
 	if (!e) throw Error("useChatContext must be used within a ChatProvider");
 	return e;
 }
 // src/components/Badge.tsx
-function A({ count: e }) {
+function j({ count: e }) {
 	return e <= 0 ? null : /* @__PURE__ */ l("span", {
 		className: "acx:absolute acx:-top-1.5 acx:-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
 		children: e > 99 ? "99+" : String(e)
@@ -410,7 +413,7 @@ function te({ className: e }) {
 		children: /* @__PURE__ */ l("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
 	});
 }
-function j({ className: e }) {
+function M({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		width: "24",
@@ -424,7 +427,7 @@ function j({ className: e }) {
 		children: [/* @__PURE__ */ l("path", { d: "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" }), /* @__PURE__ */ l("path", { d: "M13.73 21a2 2 0 0 1-3.46 0" })]
 	});
 }
-function M({ className: e }) {
+function N({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		width: "24",
@@ -531,7 +534,7 @@ function ae({ className: e }) {
 		children: /* @__PURE__ */ l("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" })
 	});
 }
-function N({ className: e }) {
+function P({ className: e }) {
 	return /* @__PURE__ */ l("svg", {
 		className: e,
 		width: "24",
@@ -561,7 +564,7 @@ function oe({ className: e }) {
 }
 // src/ChatLauncher.tsx
 function se({ isOpen: e, onClick: t, position: n }) {
-	let { state: r } = k();
+	let { state: r } = A();
 	return /* @__PURE__ */ l("div", {
 		className: `acx:fixed acx:bottom-4 acx:sm:bottom-6 ${n === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999]`,
 		children: /* @__PURE__ */ l("button", {
@@ -571,30 +574,30 @@ function se({ isOpen: e, onClick: t, position: n }) {
 			children: e ? /* @__PURE__ */ l("span", {
 				className: "acx-launcher-icon-stroke",
 				children: /* @__PURE__ */ l(ie, { className: "acx:w-6 acx:h-6" })
-			}) : /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l(te, { className: "acx:w-7 acx:h-7" }), r.unreadCount > 0 && /* @__PURE__ */ l(A, { count: r.unreadCount })] })
+			}) : /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l(te, { className: "acx:w-7 acx:h-7" }), r.unreadCount > 0 && /* @__PURE__ */ l(j, { count: r.unreadCount })] })
 		})
 	});
 }
 // src/components/TabBar.tsx
-var P = {
+var F = {
 	id: "messages",
 	label: "Messages",
 	Icon: ee
-}, F = {
+}, I = {
 	id: "news",
 	label: "What's new",
-	Icon: j
-}, I = {
+	Icon: M
+}, L = {
 	id: "help",
 	label: "Help",
-	Icon: M
+	Icon: N
 };
-function L({ activeTab: e, onTabChange: t }) {
-	let { state: n, config: r } = k(), i = (r.whatsNew?.length ?? 0) > 0 ? [
-		P,
+function R({ activeTab: e, onTabChange: t }) {
+	let { state: n, config: r } = A(), i = (r.whatsNew?.length ?? 0) > 0 ? [
 		F,
-		I
-	] : [P, I];
+		I,
+		L
+	] : [F, L];
 	return /* @__PURE__ */ l("nav", {
 		className: "acx:flex acx:border-t acx:border-gray-200 acx:bg-white",
 		role: "tablist",
@@ -605,7 +608,7 @@ function L({ activeTab: e, onTabChange: t }) {
 			className: `acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${e === r ? "acx:text-primary-600" : "acx:text-gray-400 acx:hover:text-primary-600"}`,
 			children: [/* @__PURE__ */ u("div", {
 				className: "acx:relative",
-				children: [/* @__PURE__ */ l(a, { className: "acx:w-5 acx:h-5" }), r === "messages" && n.unreadCount > 0 && /* @__PURE__ */ l(A, { count: n.unreadCount })]
+				children: [/* @__PURE__ */ l(a, { className: "acx:w-5 acx:h-5" }), r === "messages" && n.unreadCount > 0 && /* @__PURE__ */ l(j, { count: n.unreadCount })]
 			}), /* @__PURE__ */ l("span", {
 				className: "acx:text-[10px] acx:font-medium",
 				children: i
@@ -614,9 +617,9 @@ function L({ activeTab: e, onTabChange: t }) {
 	});
 }
 // src/hooks/useLocalStorage.ts
-var R = "acrux_chat_";
-function z(e, n) {
-	let r = `${R}${e}`, [i, a] = s(() => {
+var z = "acrux_chat_";
+function B(e, n) {
+	let r = `${z}${e}`, [i, a] = s(() => {
 		try {
 			let e = window.localStorage.getItem(r);
 			return e ? JSON.parse(e) : n;
@@ -632,7 +635,7 @@ function z(e, n) {
 	}, [r])];
 }
 // src/utils/url.ts
-function B() {
+function V() {
 	let e = new URLSearchParams(window.location.search), t = "";
 	if (document.referrer) try {
 		let e = new URL(document.referrer);
@@ -646,7 +649,7 @@ function B() {
 		utm_campaign: e.get("utm_campaign") ?? void 0
 	};
 }
-function V(e) {
+function H(e) {
 	try {
 		let t = new URL(e);
 		return t.protocol === "http:" || t.protocol === "https:";
@@ -655,14 +658,14 @@ function V(e) {
 	}
 }
 // src/hooks/useChatSession.ts
-var H = "acrux_chat_chat_access_token", U = "https://challenges.cloudflare.com/turnstile/v0/api.js", W = 5e3;
-function G() {
+var U = "acrux_chat_chat_access_token", W = "https://challenges.cloudflare.com/turnstile/v0/api.js", G = 5e3;
+function K() {
 	return new Promise((e) => {
 		let t = !1, n, r = document.createElement("div");
 		r.style.display = "none", document.body.appendChild(r);
 		let i = (i) => {
 			t || (t = !0, clearTimeout(a), n !== void 0 && clearInterval(n), r.remove(), e(i));
-		}, a = setTimeout(() => i(null), W), o = () => {
+		}, a = setTimeout(() => i(null), G), o = () => {
 			if (!t) try {
 				let e = window.turnstile;
 				if (!e) {
@@ -682,7 +685,7 @@ function G() {
 		try {
 			if (!document.getElementById("cf-turnstile-script")) {
 				let e = document.createElement("script");
-				e.id = "cf-turnstile-script", e.src = U, e.async = !0, e.onerror = () => i(null), document.head.appendChild(e);
+				e.id = "cf-turnstile-script", e.src = W, e.async = !0, e.onerror = () => i(null), document.head.appendChild(e);
 			}
 			window.turnstile ? o() : n = window.setInterval(() => {
 				window.turnstile && (n !== void 0 && clearInterval(n), o());
@@ -692,29 +695,29 @@ function G() {
 		}
 	});
 }
-function K() {
+function ce() {
 	try {
-		return window.sessionStorage.getItem(H);
+		return window.sessionStorage.getItem(U);
 	} catch {
 		return null;
 	}
 }
-function ce(e) {
+function le(e) {
 	try {
-		e === null ? window.sessionStorage.removeItem(H) : window.sessionStorage.setItem(H, e);
+		e === null ? window.sessionStorage.removeItem(U) : window.sessionStorage.setItem(U, e);
 	} catch {}
 }
-function le() {
-	let { state: e, dispatch: n, config: i } = k(), [a, c] = z("session_key", null), [l, u] = s(() => (localStorage.removeItem(H), K())), d = o(void 0), f = o(null), p = t((e) => {
-		ce(e), u(e);
+function ue() {
+	let { state: e, dispatch: n, config: i } = A(), [a, c] = B("session_key", null), [l, u] = s(() => (localStorage.removeItem(U), ce())), d = o(void 0), f = o(null), p = t((e) => {
+		le(e), u(e);
 	}, []);
-	d.current || (d.current = new y({
+	d.current || (d.current = new b({
 		baseUrl: i.apiUrl,
 		token: i.token,
 		region: i.region
 	}), l && d.current.setChatToken(l));
 	let m = d.current, h = t(async (t) => {
-		let r = i.mode === "lead" ? B() : void 0, a = await G();
+		let r = i.mode === "lead" ? V() : void 0, a = await K();
 		try {
 			n({
 				type: "SET_LOADING",
@@ -818,7 +821,7 @@ function le() {
 	};
 }
 // src/services/websocket.ts
-var ue = [
+var de = [
 	"history",
 	"message",
 	"message_ack",
@@ -827,10 +830,10 @@ var ue = [
 	"heartbeat_ack",
 	"error"
 ];
-function de(e) {
-	return typeof e == "object" && !!e && typeof e.type == "string" && ue.includes(e.type);
+function fe(e) {
+	return typeof e == "object" && !!e && typeof e.type == "string" && de.includes(e.type);
 }
-var fe = class {
+var pe = class {
 	ws = null;
 	url;
 	token;
@@ -861,7 +864,7 @@ var fe = class {
 			}, this.ws.onerror = () => {}, this.ws.onmessage = (e) => {
 				try {
 					let t = JSON.parse(e.data);
-					de(t) && this.onMessage(t);
+					fe(t) && this.onMessage(t);
 				} catch {}
 			};
 		}
@@ -895,18 +898,18 @@ var fe = class {
 	}
 };
 // src/utils/uuid.ts
-function pe() {
+function me() {
 	return typeof crypto < "u" && typeof crypto.randomUUID == "function" ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
 		let t = Math.random() * 16 | 0;
 		return (e === "x" ? t : t & 3 | 8).toString(16);
 	});
 }
 // src/hooks/useChatWebSocket.ts
-function me(e, n) {
-	let { state: i, dispatch: a, config: s } = k(), c = o(null), l = o(/* @__PURE__ */ new Map()), u = o(null);
+function he(e, n) {
+	let { state: i, dispatch: a, config: s } = A(), c = o(null), l = o(/* @__PURE__ */ new Map()), u = o(null);
 	r(() => {
 		if (!e) return;
-		let t = new fe({
+		let t = new pe({
 			url: `${s.apiUrl.startsWith("https") ? "wss" : "ws"}://${s.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}${p(e)}`,
 			token: n ?? void 0,
 			onStatusChange: (e, t) => {
@@ -985,7 +988,7 @@ function me(e, n) {
 	]);
 	let d = t((e) => {
 		if (!e || e.length > g.MAX_MESSAGE_LENGTH || !c.current) return;
-		let t = pe(), n = {
+		let t = me(), n = {
 			id: t,
 			session: 0,
 			sender_type: s.mode === "lead" ? "visitor" : "user",
@@ -1030,7 +1033,7 @@ function me(e, n) {
 	};
 }
 // src/components/AgentAvatar.tsx
-function he(e) {
+function ge(e) {
 	return e.split(" ").slice(0, 2).map((e) => e[0] ?? "").join("").toUpperCase();
 }
 var q = [
@@ -1041,7 +1044,7 @@ var q = [
 	"acx:bg-pink-500",
 	"acx:bg-teal-500"
 ];
-function ge(e) {
+function _e(e) {
 	let t = 0;
 	for (let n = 0; n < e.length; n++) t = e.charCodeAt(n) + ((t << 5) - t);
 	return q[Math.abs(t) % q.length];
@@ -1052,8 +1055,8 @@ function J({ name: e, avatarUrl: t }) {
 		alt: e,
 		className: "acx:w-8 acx:h-8 acx:rounded-full acx:object-cover acx:flex-shrink-0"
 	}) : /* @__PURE__ */ l("div", {
-		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${ge(e)}`,
-		children: he(e)
+		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${_e(e)}`,
+		children: ge(e)
 	});
 }
 // src/utils/time.ts
@@ -1064,7 +1067,7 @@ function Y(e) {
 		day: "numeric"
 	});
 }
-function _e(e) {
+function ve(e) {
 	let t = new Date(e), n = /* @__PURE__ */ new Date(), r = new Date(n.getFullYear(), n.getMonth(), n.getDate()), i = new Date(t.getFullYear(), t.getMonth(), t.getDate()), a = Math.floor((r.getTime() - i.getTime()) / 864e5);
 	return a === 0 ? "Today" : a === 1 ? "Yesterday" : t.toLocaleDateString(void 0, {
 		weekday: "long",
@@ -1072,16 +1075,16 @@ function _e(e) {
 		day: "numeric"
 	});
 }
-function ve(e, t) {
+function ye(e, t) {
 	let n = new Date(e), r = new Date(t);
 	return n.getFullYear() === r.getFullYear() && n.getMonth() === r.getMonth() && n.getDate() === r.getDate();
 }
 // src/utils/sanitize.ts
-function ye(e) {
-	let t = be(e);
+function be(e) {
+	let t = xe(e);
 	return t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"), t = t.replace(/__(.+?)__/g, "<strong>$1</strong>"), t = t.replace(/\*(.+?)\*/g, "<em>$1</em>"), t = t.replace(/(?<!\w)_(.+?)_(?!\w)/g, "<em>$1</em>"), t = t.replace(/`(.+?)`/g, "<code>$1</code>"), t = t.replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, "<a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">$1</a>"), t = t.replace(/\n/g, "<br />"), t;
 }
-function be(e) {
+function xe(e) {
 	let t = {
 		"&": "&amp;",
 		"<": "&lt;",
@@ -1092,7 +1095,7 @@ function be(e) {
 	return e.replace(/[&<>"']/g, (e) => t[e] ?? e);
 }
 // src/components/MessageBubble.tsx
-function xe({ message: e }) {
+function Se({ message: e }) {
 	let t = e.sender_type === "visitor" || e.sender_type === "user", n = e.sender_type === "system";
 	return n && e.content_type === "auto_response" ? /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:gap-2 acx:mb-3 acx:justify-start",
@@ -1135,7 +1138,7 @@ function xe({ message: e }) {
 					className: `acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed ${t ? "acx:bg-primary-600 acx:text-white acx:rounded-br-md" : (e.sender_type, "acx:bg-gray-100 acx:text-gray-800 acx:rounded-bl-md")}`,
 					children: e.content_type === "markdown" ? /* @__PURE__ */ l("div", {
 						className: "acx:prose acx:prose-sm",
-						dangerouslySetInnerHTML: { __html: ye(e.content) }
+						dangerouslySetInnerHTML: { __html: be(e.content) }
 					}) : /* @__PURE__ */ l("p", {
 						className: "acx:whitespace-pre-wrap",
 						children: e.content
@@ -1173,7 +1176,7 @@ function xe({ message: e }) {
 	});
 }
 // src/components/TypingIndicator.tsx
-function Se({ agentName: e }) {
+function Ce({ agentName: e }) {
 	return /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:items-center acx:gap-2 acx:mb-3",
 		children: [/* @__PURE__ */ l(J, { name: e ?? "Agent" }), /* @__PURE__ */ l("div", {
@@ -1190,7 +1193,7 @@ function Se({ agentName: e }) {
 	});
 }
 // src/components/MessageList.tsx
-function Ce({ messages: e, agentTyping: t }) {
+function we({ messages: e, agentTyping: t }) {
 	let n = o(null), i = o(null);
 	return r(() => {
 		n.current?.scrollIntoView({ behavior: "smooth" });
@@ -1199,22 +1202,22 @@ function Ce({ messages: e, agentTyping: t }) {
 		className: "acx:flex-1 acx:overflow-y-auto acx:px-4 acx:py-3 acx:space-y-1",
 		children: [
 			e.map((t, n) => {
-				let r = e[n - 1], i = !r || !ve(r.created_at, t.created_at);
+				let r = e[n - 1], i = !r || !ye(r.created_at, t.created_at);
 				return /* @__PURE__ */ u("div", { children: [i && /* @__PURE__ */ l("div", {
 					className: "acx:flex acx:items-center acx:justify-center acx:py-3",
 					children: /* @__PURE__ */ l("span", {
 						className: "acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full",
-						children: _e(t.created_at)
+						children: ve(t.created_at)
 					})
-				}), /* @__PURE__ */ l(xe, { message: t })] }, t.temp_id ?? t.id);
+				}), /* @__PURE__ */ l(Se, { message: t })] }, t.temp_id ?? t.id);
 			}),
-			t.is_typing && /* @__PURE__ */ l(Se, { agentName: t.agent_name }),
+			t.is_typing && /* @__PURE__ */ l(Ce, { agentName: t.agent_name }),
 			/* @__PURE__ */ l("div", { ref: n })
 		]
 	});
 }
 // src/components/MessageInput.tsx
-function we({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
+function Te({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
 	let [f, p] = s(""), m = o(null), h = o(void 0), _ = t(() => {
 		let t = f.trim();
 		t && !a && (e(t), p(""), n?.(!1));
@@ -1341,7 +1344,7 @@ function Z({ isConnected: e, retryCount: t }) {
 	});
 }
 // src/components/LeadCaptureForm.tsx
-function Te({ onSubmit: e, loading: t }) {
+function Ee({ onSubmit: e, loading: t }) {
 	let [n, r] = s(""), [i, a] = s("");
 	return /* @__PURE__ */ u("form", {
 		onSubmit: (t) => {
@@ -1396,8 +1399,8 @@ function Te({ onSubmit: e, loading: t }) {
 	});
 }
 // src/tabs/MessagesTab.tsx
-function Ee() {
-	let { state: e, dispatch: n, config: i } = k(), { session: a, sessionKey: d, accessToken: f, createSession: p } = le(), { sendMessage: m, sendTyping: h, isConnected: g } = me(d, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = s(!1), S = o(null);
+function De() {
+	let { state: e, dispatch: n, config: i } = A(), { session: a, sessionKey: d, accessToken: f, createSession: p } = ue(), { sendMessage: m, sendTyping: h, isConnected: g } = he(d, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = s(!1), S = o(null);
 	r(() => {
 		g && S.current && (m(S.current), S.current = null);
 	}, [g, m]);
@@ -1452,7 +1455,7 @@ function Ee() {
 				offlineMessage: v,
 				responseTime: y
 			}),
-			/* @__PURE__ */ l(Te, {
+			/* @__PURE__ */ l(Ee, {
 				onSubmit: w,
 				loading: e.loading
 			})
@@ -1506,11 +1509,11 @@ function Ee() {
 						]
 					})
 				] })
-			}) : /* @__PURE__ */ l(Ce, {
+			}) : /* @__PURE__ */ l(we, {
 				messages: e.messages,
 				agentTyping: e.agentTyping
 			}),
-			/* @__PURE__ */ l(we, {
+			/* @__PURE__ */ l(Te, {
 				onSend: C,
 				onTyping: h,
 				mode: i.mode,
@@ -1521,25 +1524,25 @@ function Ee() {
 	});
 }
 // src/components/WhatsNewCard.tsx
-var De = {
+var Oe = {
 	update: "acx:bg-green-100 acx:text-green-700",
 	notice: "acx:bg-orange-100 acx:text-orange-700",
 	digest: "acx:bg-blue-100 acx:text-blue-700"
-}, Oe = {
+}, ke = {
 	update: "New",
 	notice: "Service notice",
 	digest: "Round-up"
 };
-function Q({ entry: e }) {
-	let t = e.read_more_url && V(e.read_more_url) ? e.read_more_url : null;
+function Ae({ entry: e }) {
+	let t = e.read_more_url && H(e.read_more_url) ? e.read_more_url : null;
 	return /* @__PURE__ */ u("article", {
 		className: "acx:p-4 acx:border acx:border-gray-200 acx:rounded-xl",
 		children: [
 			/* @__PURE__ */ u("div", {
 				className: "acx:flex acx:items-center acx:gap-2 acx:mb-2",
 				children: [/* @__PURE__ */ l("span", {
-					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${De[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
-					children: Oe[e.category] ?? e.category
+					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${Oe[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
+					children: ke[e.category] ?? e.category
 				}), /* @__PURE__ */ l("span", {
 					className: "acx:text-[10px] acx:text-gray-400",
 					children: Y(e.sent_at)
@@ -1564,8 +1567,8 @@ function Q({ entry: e }) {
 	});
 }
 // src/tabs/NewsTab.tsx
-function ke() {
-	let { config: e } = k(), t = e.whatsNew ?? [];
+function je() {
+	let { config: e } = A(), t = e.whatsNew ?? [];
 	return /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
 		children: [/* @__PURE__ */ u("div", {
@@ -1585,14 +1588,14 @@ function ke() {
 					className: "acx:text-sm acx:text-gray-400",
 					children: "Nothing new right now"
 				})
-			}) : t.map((e) => /* @__PURE__ */ l(Q, { entry: e }, e.id))
+			}) : t.map((e) => /* @__PURE__ */ l(Ae, { entry: e }, e.id))
 		})]
 	});
 }
 // src/hooks/useKBSearch.ts
-function Ae() {
-	let { dispatch: e, config: n } = k(), i = o(void 0), a = o(void 0);
-	i.current ||= new y({
+function Q() {
+	let { dispatch: e, config: n } = A(), i = o(void 0), a = o(void 0);
+	i.current ||= new b({
 		baseUrl: n.apiUrl,
 		token: n.token
 	});
@@ -1623,7 +1626,7 @@ function Ae() {
 	}, []), { search: s };
 }
 // src/components/SearchInput.tsx
-function je({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
+function Me({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
 	let [i, a] = s(""), c = o(void 0);
 	return r(() => (c.current && clearTimeout(c.current), c.current = setTimeout(() => {
 		e(i.trim());
@@ -1657,51 +1660,51 @@ function $({ article: e, onClick: t }) {
 				className: "acx:text-xs acx:text-gray-500 acx:mt-0.5 acx:line-clamp-2",
 				children: e.summary
 			})]
-		}), /* @__PURE__ */ l(N, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
+		}), /* @__PURE__ */ l(P, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
 	});
 }
 // src/tabs/HelpTab.tsx
-function Me() {
-	let { state: e, dispatch: n, config: i } = k(), { search: a } = Ae(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [_, v] = s(null), [b, x] = s(!1), S = o(void 0);
-	S.current ||= new y({
+function Ne() {
+	let { state: e, dispatch: n, config: i } = A(), { search: a } = Q(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [v, y] = s(null), [x, S] = s(!1), C = o(void 0);
+	C.current ||= new b({
 		baseUrl: i.apiUrl,
 		token: i.token
 	});
-	let C = t((e) => {
-		e || v(null), a(e);
-	}, [a]), w = t(async (t) => {
-		x(!0), v(null);
+	let w = t((e) => {
+		e || y(null), a(e);
+	}, [a]), T = t(async (t) => {
+		S(!0), y(null);
 		try {
-			let r = await S.current.askKB(t, e.session?.session_key);
-			v(r), r.fallback && r.results.length > 0 && n({
+			let r = await C.current.askKB(t, e.session?.session_key);
+			y(r), r.fallback && r.results.length > 0 && n({
 				type: "SET_KB_RESULTS",
 				payload: r.results
 			});
 		} catch {
-			v(null);
+			y(null);
 		} finally {
-			x(!1);
+			S(!1);
 		}
 	}, [n, e.session?.session_key]);
 	r(() => {
-		e.kbTopics?.length > 0 || S.current.getKBTopics().then((e) => n({
+		e.kbTopics?.length > 0 || C.current.getKBTopics().then((e) => n({
 			type: "SET_KB_TOPICS",
 			payload: Array.isArray(e) ? e : []
 		})).catch(() => {});
 	}, [e.kbTopics?.length, n]);
-	let T = t(async (e) => {
+	let E = t(async (e) => {
 		f(e), g(!0);
 		try {
-			let t = await S.current.getKBTopicArticles(e.slug);
+			let t = await C.current.getKBTopicArticles(e.slug);
 			m(t);
 		} catch {
 			m([]);
 		} finally {
 			g(!1);
 		}
-	}, []), E = t((e) => {
+	}, []), D = t((e) => {
 		e.url && window.open(e.url, "_blank", "noopener,noreferrer");
-	}, []), D = t(() => {
+	}, []), O = t(() => {
 		f(null), m([]);
 	}, []);
 	if (d) return /* @__PURE__ */ u("div", {
@@ -1710,7 +1713,7 @@ function Me() {
 			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
 			children: [
 				/* @__PURE__ */ u("button", {
-					onClick: D,
+					onClick: O,
 					className: "acx:flex acx:items-center acx:gap-1 acx:text-sm acx:text-primary-600 acx:mb-2 acx:hover:text-primary-700",
 					children: [/* @__PURE__ */ l(oe, { className: "acx:w-4 acx:h-4" }), "Back"]
 				}),
@@ -1737,11 +1740,11 @@ function Me() {
 				children: "No articles found"
 			}) : p.map((e) => /* @__PURE__ */ l($, {
 				article: e,
-				onClick: E
+				onClick: D
 			}, e.id))
 		})]
 	});
-	let O = e.kbLoading || e.kbResults.length > 0;
+	let k = e.kbLoading || e.kbResults.length > 0;
 	return /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
 		children: [/* @__PURE__ */ u("div", {
@@ -1755,45 +1758,55 @@ function Me() {
 					className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
 					children: "Ask a question or browse topics"
 				}),
-				/* @__PURE__ */ l("div", {
+				/* @__PURE__ */ u("div", {
 					className: "acx:mt-3",
-					children: /* @__PURE__ */ l(je, {
-						onSearch: C,
-						onSubmit: w,
+					children: [/* @__PURE__ */ l(Me, {
+						onSearch: w,
+						onSubmit: T,
 						placeholder: "Ask a question or search..."
-					})
+					}), /* @__PURE__ */ l("p", {
+						className: "acx:mt-2 acx:text-xs acx:text-gray-500",
+						children: _.line
+					})]
 				}),
-				b && /* @__PURE__ */ l("div", {
+				x && /* @__PURE__ */ l("div", {
 					className: "acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400",
 					children: "Finding an answer..."
 				}),
-				!b && _?.answer && /* @__PURE__ */ u("div", {
+				!x && v?.answer && /* @__PURE__ */ u("div", {
 					className: "acx:mt-3 acx:rounded-lg acx:bg-primary-50 acx:border acx:border-primary-100 acx:p-3",
-					children: [/* @__PURE__ */ l("p", {
-						className: "acx:text-sm acx:text-gray-800 acx:whitespace-pre-line",
-						children: _.answer
-					}), _.sources.length > 0 && /* @__PURE__ */ l("div", {
-						className: "acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1",
-						children: _.sources.map((e) => /* @__PURE__ */ u("button", {
-							onClick: () => E(e),
-							className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
-							children: [e.title, " →"]
-						}, e.id))
-					})]
+					children: [
+						/* @__PURE__ */ l("span", {
+							className: "acx:inline-block acx:mb-2 acx:rounded-full acx:bg-primary-600 acx:px-2.5 acx:py-0.5 acx:text-xs acx:font-semibold acx:text-white",
+							children: _.label
+						}),
+						/* @__PURE__ */ l("p", {
+							className: "acx:text-sm acx:text-gray-800 acx:whitespace-pre-line",
+							children: v.answer
+						}),
+						v.sources.length > 0 && /* @__PURE__ */ l("div", {
+							className: "acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1",
+							children: v.sources.map((e) => /* @__PURE__ */ u("button", {
+								onClick: () => D(e),
+								className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
+								children: [e.title, " →"]
+							}, e.id))
+						})
+					]
 				}),
-				!b && _?.fallback && /* @__PURE__ */ l("p", {
+				!x && v?.fallback && /* @__PURE__ */ l("p", {
 					className: "acx:mt-3 acx:text-xs acx:text-gray-500",
 					children: "We couldn't find a direct answer — try these articles, or send us a message."
 				})
 			]
-		}), O ? /* @__PURE__ */ l("div", {
+		}), k ? /* @__PURE__ */ l("div", {
 			className: "acx:p-4 acx:space-y-1",
 			children: e.kbLoading ? /* @__PURE__ */ l("div", {
 				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "Searching..."
 			}) : e.kbResults.slice(0, 5).map((e) => /* @__PURE__ */ l($, {
 				article: e,
-				onClick: E
+				onClick: D
 			}, e.id))
 		}) : /* @__PURE__ */ l("div", {
 			className: "acx:p-4 acx:space-y-1",
@@ -1804,7 +1817,7 @@ function Me() {
 					children: "No help topics available"
 				})
 			}) : c.map((e) => /* @__PURE__ */ u("button", {
-				onClick: () => T(e),
+				onClick: () => E(e),
 				className: "acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors",
 				children: [/* @__PURE__ */ u("div", { children: [/* @__PURE__ */ l("h4", {
 					className: "acx:text-sm acx:font-medium acx:text-gray-900",
@@ -1816,20 +1829,20 @@ function Me() {
 						" article",
 						e.article_count === 1 ? "" : "s"
 					]
-				})] }), /* @__PURE__ */ l(N, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
+				})] }), /* @__PURE__ */ l(P, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
 			}, e.id))
 		})]
 	});
 }
 // src/ChatWidget.tsx
-function Ne(e) {
-	return /* @__PURE__ */ l(E, {
+function Pe(e) {
+	return /* @__PURE__ */ l(D, {
 		...e,
-		children: /* @__PURE__ */ l(Pe, { position: e.position ?? m.POSITION })
+		children: /* @__PURE__ */ l(Fe, { position: e.position ?? m.POSITION })
 	});
 }
-function Pe({ position: e }) {
-	let { state: t, dispatch: n } = k(), [r, i] = s(!1);
+function Fe({ position: e }) {
+	let { state: t, dispatch: n } = A(), [r, i] = s(!1);
 	return /* @__PURE__ */ u("div", {
 		className: "acrux-chat-widget",
 		children: [r && /* @__PURE__ */ u("div", {
@@ -1875,12 +1888,12 @@ function Pe({ position: e }) {
 				/* @__PURE__ */ u("div", {
 					className: "acx:flex-1 acx:overflow-hidden",
 					children: [
-						t.activeTab === "messages" && /* @__PURE__ */ l(Ee, {}),
-						t.activeTab === "news" && /* @__PURE__ */ l(ke, {}),
-						t.activeTab === "help" && /* @__PURE__ */ l(Me, {})
+						t.activeTab === "messages" && /* @__PURE__ */ l(De, {}),
+						t.activeTab === "news" && /* @__PURE__ */ l(je, {}),
+						t.activeTab === "help" && /* @__PURE__ */ l(Ne, {})
 					]
 				}),
-				/* @__PURE__ */ l(L, {
+				/* @__PURE__ */ l(R, {
 					activeTab: t.activeTab,
 					onTabChange: (e) => n({
 						type: "SET_TAB",
@@ -1895,4 +1908,4 @@ function Pe({ position: e }) {
 		})]
 	});
 }
-export { Ne as ChatWidget };
+export { Pe as ChatWidget };

@@ -50,3 +50,11 @@ export const LIMITS = {
     'application/pdf',
   ],
 } as const
+
+// PLATDEV-1589 (ST4S 2026.1): the help answer box says its answers are
+// AI-generated and asks people to keep personal information out of it.
+// The wording is Leanne's, settled 19 Nov 2026.
+export const AI_ANSWER_TEXT = {
+  label: 'AI-generated answer',
+  line: "Answers are written by AI. Please don't type personal or student information here.",
+} as const
