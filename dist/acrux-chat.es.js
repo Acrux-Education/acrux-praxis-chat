@@ -695,21 +695,29 @@ function K() {
 		}
 	});
 }
-function ce() {
+async function ce(e) {
+	if (e) try {
+		let t = await e();
+		return typeof t == "string" && t !== "" ? t : void 0;
+	} catch {
+		return;
+	}
+}
+function le() {
 	try {
 		return window.sessionStorage.getItem(U);
 	} catch {
 		return null;
 	}
 }
-function le(e) {
+function ue(e) {
 	try {
 		e === null ? window.sessionStorage.removeItem(U) : window.sessionStorage.setItem(U, e);
 	} catch {}
 }
-function ue() {
-	let { state: e, dispatch: n, config: i } = A(), [a, c] = B("session_key", null), [l, u] = s(() => (localStorage.removeItem(U), ce())), d = o(void 0), f = o(null), p = t((e) => {
-		le(e), u(e);
+function de() {
+	let { state: e, dispatch: n, config: i } = A(), [a, c] = B("session_key", null), [l, u] = s(() => (localStorage.removeItem(U), le())), d = o(void 0), f = o(null), p = t((e) => {
+		ue(e), u(e);
 	}, []);
 	d.current || (d.current = new b({
 		baseUrl: i.apiUrl,
@@ -717,26 +725,27 @@ function ue() {
 		region: i.region
 	}), l && d.current.setChatToken(l));
 	let m = d.current, h = t(async (t) => {
-		let r = i.mode === "lead" ? V() : void 0, a = await K();
+		let r = i.mode === "lead" ? V() : void 0, a = await K(), o = await ce(i.getIdentityToken);
 		try {
 			n({
 				type: "SET_LOADING",
 				payload: !0
 			});
-			let o = await m.createSession({
+			let s = await m.createSession({
 				source: i.mode === "lead" ? "lead_bot" : "user_bot",
 				visitor_name: t?.name || e.visitorName || i.userName,
 				visitor_email: t?.email || e.visitorEmail || i.userEmail,
 				visitor_metadata: r,
-				turnstile_token: a ?? void 0
+				turnstile_token: a ?? void 0,
+				identity_token: o
 			});
-			return o.access_token && (m.setChatToken(o.access_token), p(o.access_token)), f.current = o.session_key, n({
+			return s.access_token && (m.setChatToken(s.access_token), p(s.access_token)), f.current = s.session_key, n({
 				type: "SET_SESSION",
-				payload: o
-			}), c(o.session_key), i.onSessionCreated?.(o.session_key), n({
+				payload: s
+			}), c(s.session_key), i.onSessionCreated?.(s.session_key), n({
 				type: "SET_LOADING",
 				payload: !1
-			}), o;
+			}), s;
 		} catch (e) {
 			throw n({
 				type: "SET_ERROR",
@@ -821,7 +830,7 @@ function ue() {
 	};
 }
 // src/services/websocket.ts
-var de = [
+var fe = [
 	"history",
 	"message",
 	"message_ack",
@@ -830,10 +839,10 @@ var de = [
 	"heartbeat_ack",
 	"error"
 ];
-function fe(e) {
-	return typeof e == "object" && !!e && typeof e.type == "string" && de.includes(e.type);
+function pe(e) {
+	return typeof e == "object" && !!e && typeof e.type == "string" && fe.includes(e.type);
 }
-var pe = class {
+var me = class {
 	ws = null;
 	url;
 	token;
@@ -864,7 +873,7 @@ var pe = class {
 			}, this.ws.onerror = () => {}, this.ws.onmessage = (e) => {
 				try {
 					let t = JSON.parse(e.data);
-					fe(t) && this.onMessage(t);
+					pe(t) && this.onMessage(t);
 				} catch {}
 			};
 		}
@@ -898,18 +907,18 @@ var pe = class {
 	}
 };
 // src/utils/uuid.ts
-function me() {
+function he() {
 	return typeof crypto < "u" && typeof crypto.randomUUID == "function" ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
 		let t = Math.random() * 16 | 0;
 		return (e === "x" ? t : t & 3 | 8).toString(16);
 	});
 }
 // src/hooks/useChatWebSocket.ts
-function he(e, n) {
+function ge(e, n) {
 	let { state: i, dispatch: a, config: s } = A(), c = o(null), l = o(/* @__PURE__ */ new Map()), u = o(null);
 	r(() => {
 		if (!e) return;
-		let t = new pe({
+		let t = new me({
 			url: `${s.apiUrl.startsWith("https") ? "wss" : "ws"}://${s.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}${p(e)}`,
 			token: n ?? void 0,
 			onStatusChange: (e, t) => {
@@ -988,7 +997,7 @@ function he(e, n) {
 	]);
 	let d = t((e) => {
 		if (!e || e.length > g.MAX_MESSAGE_LENGTH || !c.current) return;
-		let t = me(), n = {
+		let t = he(), n = {
 			id: t,
 			session: 0,
 			sender_type: s.mode === "lead" ? "visitor" : "user",
@@ -1033,7 +1042,7 @@ function he(e, n) {
 	};
 }
 // src/components/AgentAvatar.tsx
-function ge(e) {
+function _e(e) {
 	return e.split(" ").slice(0, 2).map((e) => e[0] ?? "").join("").toUpperCase();
 }
 var q = [
@@ -1044,7 +1053,7 @@ var q = [
 	"acx:bg-pink-500",
 	"acx:bg-teal-500"
 ];
-function _e(e) {
+function ve(e) {
 	let t = 0;
 	for (let n = 0; n < e.length; n++) t = e.charCodeAt(n) + ((t << 5) - t);
 	return q[Math.abs(t) % q.length];
@@ -1055,8 +1064,8 @@ function J({ name: e, avatarUrl: t }) {
 		alt: e,
 		className: "acx:w-8 acx:h-8 acx:rounded-full acx:object-cover acx:flex-shrink-0"
 	}) : /* @__PURE__ */ l("div", {
-		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${_e(e)}`,
-		children: ge(e)
+		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${ve(e)}`,
+		children: _e(e)
 	});
 }
 // src/utils/time.ts
@@ -1067,7 +1076,7 @@ function Y(e) {
 		day: "numeric"
 	});
 }
-function ve(e) {
+function ye(e) {
 	let t = new Date(e), n = /* @__PURE__ */ new Date(), r = new Date(n.getFullYear(), n.getMonth(), n.getDate()), i = new Date(t.getFullYear(), t.getMonth(), t.getDate()), a = Math.floor((r.getTime() - i.getTime()) / 864e5);
 	return a === 0 ? "Today" : a === 1 ? "Yesterday" : t.toLocaleDateString(void 0, {
 		weekday: "long",
@@ -1075,16 +1084,16 @@ function ve(e) {
 		day: "numeric"
 	});
 }
-function ye(e, t) {
+function be(e, t) {
 	let n = new Date(e), r = new Date(t);
 	return n.getFullYear() === r.getFullYear() && n.getMonth() === r.getMonth() && n.getDate() === r.getDate();
 }
 // src/utils/sanitize.ts
-function be(e) {
-	let t = xe(e);
+function xe(e) {
+	let t = Se(e);
 	return t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"), t = t.replace(/__(.+?)__/g, "<strong>$1</strong>"), t = t.replace(/\*(.+?)\*/g, "<em>$1</em>"), t = t.replace(/(?<!\w)_(.+?)_(?!\w)/g, "<em>$1</em>"), t = t.replace(/`(.+?)`/g, "<code>$1</code>"), t = t.replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, "<a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">$1</a>"), t = t.replace(/\n/g, "<br />"), t;
 }
-function xe(e) {
+function Se(e) {
 	let t = {
 		"&": "&amp;",
 		"<": "&lt;",
@@ -1095,7 +1104,7 @@ function xe(e) {
 	return e.replace(/[&<>"']/g, (e) => t[e] ?? e);
 }
 // src/components/MessageBubble.tsx
-function Se({ message: e }) {
+function Ce({ message: e }) {
 	let t = e.sender_type === "visitor" || e.sender_type === "user", n = e.sender_type === "system";
 	return n && e.content_type === "auto_response" ? /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:gap-2 acx:mb-3 acx:justify-start",
@@ -1138,7 +1147,7 @@ function Se({ message: e }) {
 					className: `acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed ${t ? "acx:bg-primary-600 acx:text-white acx:rounded-br-md" : (e.sender_type, "acx:bg-gray-100 acx:text-gray-800 acx:rounded-bl-md")}`,
 					children: e.content_type === "markdown" ? /* @__PURE__ */ l("div", {
 						className: "acx:prose acx:prose-sm",
-						dangerouslySetInnerHTML: { __html: be(e.content) }
+						dangerouslySetInnerHTML: { __html: xe(e.content) }
 					}) : /* @__PURE__ */ l("p", {
 						className: "acx:whitespace-pre-wrap",
 						children: e.content
@@ -1176,7 +1185,7 @@ function Se({ message: e }) {
 	});
 }
 // src/components/TypingIndicator.tsx
-function Ce({ agentName: e }) {
+function we({ agentName: e }) {
 	return /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:items-center acx:gap-2 acx:mb-3",
 		children: [/* @__PURE__ */ l(J, { name: e ?? "Agent" }), /* @__PURE__ */ l("div", {
@@ -1193,7 +1202,7 @@ function Ce({ agentName: e }) {
 	});
 }
 // src/components/MessageList.tsx
-function we({ messages: e, agentTyping: t }) {
+function Te({ messages: e, agentTyping: t }) {
 	let n = o(null), i = o(null);
 	return r(() => {
 		n.current?.scrollIntoView({ behavior: "smooth" });
@@ -1202,22 +1211,22 @@ function we({ messages: e, agentTyping: t }) {
 		className: "acx:flex-1 acx:overflow-y-auto acx:px-4 acx:py-3 acx:space-y-1",
 		children: [
 			e.map((t, n) => {
-				let r = e[n - 1], i = !r || !ye(r.created_at, t.created_at);
+				let r = e[n - 1], i = !r || !be(r.created_at, t.created_at);
 				return /* @__PURE__ */ u("div", { children: [i && /* @__PURE__ */ l("div", {
 					className: "acx:flex acx:items-center acx:justify-center acx:py-3",
 					children: /* @__PURE__ */ l("span", {
 						className: "acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full",
-						children: ve(t.created_at)
+						children: ye(t.created_at)
 					})
-				}), /* @__PURE__ */ l(Se, { message: t })] }, t.temp_id ?? t.id);
+				}), /* @__PURE__ */ l(Ce, { message: t })] }, t.temp_id ?? t.id);
 			}),
-			t.is_typing && /* @__PURE__ */ l(Ce, { agentName: t.agent_name }),
+			t.is_typing && /* @__PURE__ */ l(we, { agentName: t.agent_name }),
 			/* @__PURE__ */ l("div", { ref: n })
 		]
 	});
 }
 // src/components/MessageInput.tsx
-function Te({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
+function Ee({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
 	let [f, p] = s(""), m = o(null), h = o(void 0), _ = t(() => {
 		let t = f.trim();
 		t && !a && (e(t), p(""), n?.(!1));
@@ -1344,7 +1353,7 @@ function Z({ isConnected: e, retryCount: t }) {
 	});
 }
 // src/components/LeadCaptureForm.tsx
-function Ee({ onSubmit: e, loading: t }) {
+function De({ onSubmit: e, loading: t }) {
 	let [n, r] = s(""), [i, a] = s("");
 	return /* @__PURE__ */ u("form", {
 		onSubmit: (t) => {
@@ -1399,8 +1408,8 @@ function Ee({ onSubmit: e, loading: t }) {
 	});
 }
 // src/tabs/MessagesTab.tsx
-function De() {
-	let { state: e, dispatch: n, config: i } = A(), { session: a, sessionKey: d, accessToken: f, createSession: p } = ue(), { sendMessage: m, sendTyping: h, isConnected: g } = he(d, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = s(!1), S = o(null);
+function Oe() {
+	let { state: e, dispatch: n, config: i } = A(), { session: a, sessionKey: d, accessToken: f, createSession: p } = de(), { sendMessage: m, sendTyping: h, isConnected: g } = ge(d, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = s(!1), S = o(null);
 	r(() => {
 		g && S.current && (m(S.current), S.current = null);
 	}, [g, m]);
@@ -1455,7 +1464,7 @@ function De() {
 				offlineMessage: v,
 				responseTime: y
 			}),
-			/* @__PURE__ */ l(Ee, {
+			/* @__PURE__ */ l(De, {
 				onSubmit: w,
 				loading: e.loading
 			})
@@ -1509,11 +1518,11 @@ function De() {
 						]
 					})
 				] })
-			}) : /* @__PURE__ */ l(we, {
+			}) : /* @__PURE__ */ l(Te, {
 				messages: e.messages,
 				agentTyping: e.agentTyping
 			}),
-			/* @__PURE__ */ l(Te, {
+			/* @__PURE__ */ l(Ee, {
 				onSend: C,
 				onTyping: h,
 				mode: i.mode,
@@ -1524,16 +1533,16 @@ function De() {
 	});
 }
 // src/components/WhatsNewCard.tsx
-var Oe = {
+var ke = {
 	update: "acx:bg-green-100 acx:text-green-700",
 	notice: "acx:bg-orange-100 acx:text-orange-700",
 	digest: "acx:bg-blue-100 acx:text-blue-700"
-}, ke = {
+}, Ae = {
 	update: "New",
 	notice: "Service notice",
 	digest: "Round-up"
 };
-function Ae({ entry: e }) {
+function je({ entry: e }) {
 	let t = e.read_more_url && H(e.read_more_url) ? e.read_more_url : null;
 	return /* @__PURE__ */ u("article", {
 		className: "acx:p-4 acx:border acx:border-gray-200 acx:rounded-xl",
@@ -1541,8 +1550,8 @@ function Ae({ entry: e }) {
 			/* @__PURE__ */ u("div", {
 				className: "acx:flex acx:items-center acx:gap-2 acx:mb-2",
 				children: [/* @__PURE__ */ l("span", {
-					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${Oe[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
-					children: ke[e.category] ?? e.category
+					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${ke[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
+					children: Ae[e.category] ?? e.category
 				}), /* @__PURE__ */ l("span", {
 					className: "acx:text-[10px] acx:text-gray-400",
 					children: Y(e.sent_at)
@@ -1567,7 +1576,7 @@ function Ae({ entry: e }) {
 	});
 }
 // src/tabs/NewsTab.tsx
-function je() {
+function Q() {
 	let { config: e } = A(), t = e.whatsNew ?? [];
 	return /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
@@ -1588,12 +1597,12 @@ function je() {
 					className: "acx:text-sm acx:text-gray-400",
 					children: "Nothing new right now"
 				})
-			}) : t.map((e) => /* @__PURE__ */ l(Ae, { entry: e }, e.id))
+			}) : t.map((e) => /* @__PURE__ */ l(je, { entry: e }, e.id))
 		})]
 	});
 }
 // src/hooks/useKBSearch.ts
-function Q() {
+function Me() {
 	let { dispatch: e, config: n } = A(), i = o(void 0), a = o(void 0);
 	i.current ||= new b({
 		baseUrl: n.apiUrl,
@@ -1626,7 +1635,7 @@ function Q() {
 	}, []), { search: s };
 }
 // src/components/SearchInput.tsx
-function Me({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
+function Ne({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
 	let [i, a] = s(""), c = o(void 0);
 	return r(() => (c.current && clearTimeout(c.current), c.current = setTimeout(() => {
 		e(i.trim());
@@ -1664,8 +1673,8 @@ function $({ article: e, onClick: t }) {
 	});
 }
 // src/tabs/HelpTab.tsx
-function Ne() {
-	let { state: e, dispatch: n, config: i } = A(), { search: a } = Q(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [v, y] = s(null), [x, S] = s(!1), C = o(void 0);
+function Pe() {
+	let { state: e, dispatch: n, config: i } = A(), { search: a } = Me(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [v, y] = s(null), [x, S] = s(!1), C = o(void 0);
 	C.current ||= new b({
 		baseUrl: i.apiUrl,
 		token: i.token
@@ -1760,7 +1769,7 @@ function Ne() {
 				}),
 				/* @__PURE__ */ u("div", {
 					className: "acx:mt-3",
-					children: [/* @__PURE__ */ l(Me, {
+					children: [/* @__PURE__ */ l(Ne, {
 						onSearch: w,
 						onSubmit: T,
 						placeholder: "Ask a question or search..."
@@ -1835,13 +1844,13 @@ function Ne() {
 	});
 }
 // src/ChatWidget.tsx
-function Pe(e) {
+function Fe(e) {
 	return /* @__PURE__ */ l(D, {
 		...e,
-		children: /* @__PURE__ */ l(Fe, { position: e.position ?? m.POSITION })
+		children: /* @__PURE__ */ l(Ie, { position: e.position ?? m.POSITION })
 	});
 }
-function Fe({ position: e }) {
+function Ie({ position: e }) {
 	let { state: t, dispatch: n } = A(), [r, i] = s(!1);
 	return /* @__PURE__ */ u("div", {
 		className: "acrux-chat-widget",
@@ -1888,9 +1897,9 @@ function Fe({ position: e }) {
 				/* @__PURE__ */ u("div", {
 					className: "acx:flex-1 acx:overflow-hidden",
 					children: [
-						t.activeTab === "messages" && /* @__PURE__ */ l(De, {}),
-						t.activeTab === "news" && /* @__PURE__ */ l(je, {}),
-						t.activeTab === "help" && /* @__PURE__ */ l(Ne, {})
+						t.activeTab === "messages" && /* @__PURE__ */ l(Oe, {}),
+						t.activeTab === "news" && /* @__PURE__ */ l(Q, {}),
+						t.activeTab === "help" && /* @__PURE__ */ l(Pe, {})
 					]
 				}),
 				/* @__PURE__ */ l(R, {
@@ -1908,4 +1917,4 @@ function Fe({ position: e }) {
 		})]
 	});
 }
-export { Pe as ChatWidget };
+export { Fe as ChatWidget };

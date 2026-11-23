@@ -18,6 +18,15 @@ export interface ChatWidgetProps {
    */
   whatsNew?: WhatsNewEntry[]
   token?: string
+  /**
+   * PLATDEV-1647: returns a short-lived signed identity for the signed-in
+   * user, fetched by the host from its own backend (Pnyx asks Agora). Called
+   * once per new chat session; the token goes to Praxis as `identity_token`
+   * so the support team can see the chat really comes from that school user
+   * rather than someone typing their name and email. A rejection or null
+   * starts the session unverified.
+   */
+  getIdentityToken?: () => Promise<string | null>
   region?: ChatRegion
   userName?: string
   userEmail?: string

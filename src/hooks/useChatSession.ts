@@ -86,6 +86,21 @@ export function getTurnstileToken(): Promise<string | null> {
   })
 }
 
+// PLATDEV-1647: asks the host for a signed identity token. Fails open like
+// Turnstile: no getter, a throw, a rejection, null or an empty string all
+// give undefined, and the session starts unverified.
+export async function getIdentityTokenFromHost(
+  getIdentityToken?: () => Promise<string | null>,
+): Promise<string | undefined> {
+  if (!getIdentityToken) return undefined
+  try {
+    const token = await getIdentityToken()
+    return typeof token === 'string' && token !== '' ? token : undefined
+  } catch {
+    return undefined
+  }
+}
+
 function readSessionToken(): string | null {
   try {
     return window.sessionStorage.getItem(SESSION_TOKEN_KEY)
@@ -140,6 +155,8 @@ export function useChatSession() {
 
     // Obtain a Turnstile token; fail open if unavailable
     const turnstileToken = await getTurnstileToken()
+    // Fetched fresh for every session: the token is short-lived and single-use.
+    const identityToken = await getIdentityTokenFromHost(config.getIdentityToken)
 
     try {
       dispatch({ type: 'SET_LOADING', payload: true })
@@ -149,6 +166,7 @@ export function useChatSession() {
         visitor_email: visitorOverrides?.email || state.visitorEmail || config.userEmail,
         visitor_metadata: metadata,
         turnstile_token: turnstileToken ?? undefined,
+        identity_token: identityToken,
       })
 
       // Store the chat access token for subsequent requests

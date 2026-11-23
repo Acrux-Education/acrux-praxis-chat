@@ -68,6 +68,7 @@ export class ApiClient {
     visitor_email?: string
     visitor_metadata?: VisitorMetadata
     turnstile_token?: string
+    identity_token?: string
   }): Promise<ChatSession> {
     return this.request<ChatSession>(API_PATHS.SESSIONS, {
       method: 'POST',

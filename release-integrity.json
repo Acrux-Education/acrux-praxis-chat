@@ -57,5 +57,10 @@
     "js": "sha384-wm2asmpBLWQbjJoLfKXFl7ftKclSN1GJQgaqTI9Msp6RnMCGwZy20dL1pmOUY1YM",
     "es": "sha384-+k2k+4YphRFw5scFg3apzTH/9Y8CEksmJoHLpRtpK+JI8pvT9WgtcXgQqB7SBKvq",
     "css": "sha384-iny2MDz56/FckiEvH+9uwdWlCW+AAcJUMbTA4r089WVcJHBvyr4B7o6j21D9yryo"
+  },
+  "0.1.20": {
+    "js": "sha384-o9juKwi6kdiVBLFFkl7yNMPBftq8hGC8LR5Ivld0BtPXjpE0dgOeo/Qn07Ht4vcT",
+    "es": "sha384-a3un1gIE2BZXACKBlAyTjyY+CkfG7T83FOvWm8TTnz40pY515RYZYjOW6R8ZQA5l",
+    "css": "sha384-iny2MDz56/FckiEvH+9uwdWlCW+AAcJUMbTA4r089WVcJHBvyr4B7o6j21D9yryo"
   }
 }

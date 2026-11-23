@@ -52,6 +52,7 @@ Include the built files and initialise:
 | `mode` | `'lead' \| 'user'` | Yes | `lead` for anonymous visitors, `user` for authenticated users |
 | `apiUrl` | `string` | Yes | Backend URL |
 | `token` | `string` | No | JWT auth token (required for `user` mode) |
+| `getIdentityToken` | `() => Promise<string \| null>` | No | Returns a short-lived signed identity from the host's backend; sent once per new session as `identity_token`. Null or a failure starts the session unverified (PLATDEV-1647) |
 | `userName` | `string` | No | Display name for the current user |
 | `userEmail` | `string` | No | Email for the current user |
 | `schoolId` | `string` | No | School identifier |
