@@ -1,7 +1,7 @@
-import { createContext as e, useCallback as t, useContext as n, useEffect as r, useMemo as i, useReducer as a, useRef as o, useState as s } from "react";
-import { Fragment as c, jsx as l, jsxs as u } from "react/jsx-runtime";
+import { createContext as e, useCallback as t, useContext as n, useEffect as r, useId as i, useMemo as a, useReducer as o, useRef as s, useState as c } from "react";
+import { Fragment as l, jsx as u, jsxs as d } from "react/jsx-runtime";
 // src/constants.ts
-var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
+var f = "0x4AAAAAADHbxC4Cc2tAgr_N", p = {
 	SESSIONS: "/api/chat/sessions/",
 	SESSION: (e) => `/api/chat/sessions/${e}/`,
 	SESSION_MESSAGES: (e) => `/api/chat/sessions/${e}/messages/`,
@@ -13,13 +13,13 @@ var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 	KB_TOPICS: "/api/kb/topics/",
 	KB_TOPIC_ARTICLES: (e) => `/api/kb/topics/${e}/articles/`,
 	OPERATING_HOURS: "/api/chat/operating-hours/status/"
-}, p = (e) => `/ws/chat/${e}/`, m = {
+}, m = (e) => `/ws/chat/${e}/`, h = {
 	POSITION: "bottom-right",
 	GREETING: "Hi there! How can we help?",
 	WIDGET_WIDTH: 380,
 	WIDGET_HEIGHT: 600,
 	LAUNCHER_SIZE: 60
-}, h = {
+}, g = {
 	AVAILABILITY_POLL: 6e4,
 	AVAILABILITY_BOUNDARY_SKEW: 250,
 	MAX_TIMER_DELAY: 2147483647,
@@ -30,7 +30,7 @@ var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 	SEARCH_DEBOUNCE: 300,
 	TYPING_DEBOUNCE: 1e3,
 	TYPING_TIMEOUT: 3e3
-}, g = {
+}, _ = {
 	MAX_FILE_SIZE_MB: 5,
 	MAX_FILES_PER_MESSAGE: 3,
 	MAX_MESSAGE_LENGTH: 5e3,
@@ -42,10 +42,10 @@ var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 		"image/webp",
 		"application/pdf"
 	]
-}, _ = {
+}, v = {
 	label: "AI-generated answer",
 	line: "Answers are written by AI. Please don't type personal or student information here."
-}, v = {
+}, y = {
 	session: null,
 	messages: [],
 	isConnected: !1,
@@ -66,7 +66,7 @@ var d = "0x4AAAAAADHbxC4Cc2tAgr_N", f = {
 	loading: !1,
 	error: null
 };
-function y(e, t) {
+function b(e, t) {
 	switch (t.type) {
 		case "SET_SESSION": return {
 			...e,
@@ -173,7 +173,7 @@ function y(e, t) {
 	}
 }
 // src/services/api.ts
-var b = class {
+var x = class {
 	baseUrl;
 	token;
 	chatToken;
@@ -202,12 +202,12 @@ var b = class {
 		});
 		if (!r.ok) {
 			let e = await r.text().catch(() => "");
-			throw new x(r.status, r.statusText, e);
+			throw new S(r.status, r.statusText, e);
 		}
 		if (r.status !== 204) return r.json();
 	}
 	async createSession(e) {
-		return this.request(f.SESSIONS, {
+		return this.request(p.SESSIONS, {
 			method: "POST",
 			body: JSON.stringify({
 				...e,
@@ -216,32 +216,32 @@ var b = class {
 		});
 	}
 	async getSession(e) {
-		return this.request(f.SESSION(e));
+		return this.request(p.SESSION(e));
 	}
 	async sendMessage(e, t) {
-		return this.request(f.SESSION_MESSAGES(e), {
+		return this.request(p.SESSION_MESSAGES(e), {
 			method: "POST",
 			body: JSON.stringify(t)
 		});
 	}
 	async updateVisitor(e, t) {
-		return this.request(f.SESSION_VISITOR(e), {
+		return this.request(p.SESSION_VISITOR(e), {
 			method: "PATCH",
 			body: JSON.stringify(t)
 		});
 	}
 	async getAnnouncements() {
-		return this.request(f.ANNOUNCEMENTS);
+		return this.request(p.ANNOUNCEMENTS);
 	}
 	async getRoadmapItems() {
-		return this.request(f.ROADMAP);
+		return this.request(p.ROADMAP);
 	}
 	async searchKB(e) {
 		let t = new URLSearchParams({ q: e });
-		return this.request(`${f.KB_SEARCH}?${t}`);
+		return this.request(`${p.KB_SEARCH}?${t}`);
 	}
 	async askKB(e, t) {
-		return this.request(f.KB_ANSWER, {
+		return this.request(p.KB_ANSWER, {
 			method: "POST",
 			body: JSON.stringify({
 				question: e,
@@ -250,16 +250,16 @@ var b = class {
 		});
 	}
 	async getKBTopics() {
-		return this.request(f.KB_TOPICS);
+		return this.request(p.KB_TOPICS);
 	}
 	async getKBTopicArticles(e) {
-		return this.request(f.KB_TOPIC_ARTICLES(e));
+		return this.request(p.KB_TOPIC_ARTICLES(e));
 	}
 	async getOperatingHoursStatus() {
 		let e = this.region ? `?${new URLSearchParams({ region: this.region })}` : "";
-		return this.request(`${f.OPERATING_HOURS}${e}`);
+		return this.request(`${p.OPERATING_HOURS}${e}`);
 	}
-}, x = class extends Error {
+}, S = class extends Error {
 	status;
 	statusText;
 	body;
@@ -268,20 +268,20 @@ var b = class {
 	}
 };
 // src/utils/toArray.ts
-function S(e) {
+function C(e) {
 	return Array.isArray(e) ? e : e && typeof e == "object" && "results" in e ? e.results : [];
 }
 // src/hooks/useOperatingHours.ts
-var C = { is_online: !1 };
-function w(e, t = Date.now()) {
+var w = { is_online: !1 };
+function T(e, t = Date.now()) {
 	if (!e) return null;
 	let n = Date.parse(e);
-	return Number.isFinite(n) ? Math.min(Math.max(n - t + h.AVAILABILITY_BOUNDARY_SKEW, h.AVAILABILITY_BOUNDARY_SKEW), h.MAX_TIMER_DELAY) : null;
+	return Number.isFinite(n) ? Math.min(Math.max(n - t + g.AVAILABILITY_BOUNDARY_SKEW, g.AVAILABILITY_BOUNDARY_SKEW), g.MAX_TIMER_DELAY) : null;
 }
-function T() {
+function E() {
 	let { state: e, dispatch: t, config: n } = A();
 	return r(() => {
-		let e = new b({
+		let e = new x({
 			baseUrl: n.apiUrl,
 			token: n.token,
 			region: n.region
@@ -295,12 +295,12 @@ function T() {
 						type: "SET_OPERATING_HOURS",
 						payload: n
 					}), r && clearTimeout(r);
-					let a = w(n.next_status_change_at);
+					let a = T(n.next_status_change_at);
 					a !== null && (r = setTimeout(o, a));
 				} catch {
 					i || t({
 						type: "SET_OPERATING_HOURS",
-						payload: C
+						payload: w
 					});
 				} finally {
 					a = !1;
@@ -308,7 +308,7 @@ function T() {
 			}
 		};
 		o();
-		let s = setInterval(o, h.AVAILABILITY_POLL);
+		let s = setInterval(o, g.AVAILABILITY_POLL);
 		return () => {
 			i = !0, clearInterval(s), r && clearTimeout(r);
 		};
@@ -324,46 +324,46 @@ function T() {
 	};
 }
 // src/context/ChatContext.tsx
-var E = e(null);
-function D({ children: e, ...t }) {
-	let [n, r] = a(y, {
-		...v,
-		activeTab: t.defaultTab ?? v.activeTab,
+var D = e(null);
+function O({ children: e, ...t }) {
+	let [n, r] = o(b, {
+		...y,
+		activeTab: t.defaultTab ?? y.activeTab,
 		visitorName: t.userName ?? "",
 		visitorEmail: t.userEmail ?? ""
-	}), o = i(() => ({
+	}), i = a(() => ({
 		state: n,
 		dispatch: r,
 		config: t
 	}), [n, t]);
-	return /* @__PURE__ */ u(E.Provider, {
-		value: o,
+	return /* @__PURE__ */ d(D.Provider, {
+		value: i,
 		children: [
-			/* @__PURE__ */ l(O, {}),
-			/* @__PURE__ */ l(k, {}),
+			/* @__PURE__ */ u(k, {}),
+			/* @__PURE__ */ u(ee, {}),
 			e
 		]
 	});
 }
-function O() {
-	let { dispatch: e, config: t } = A(), n = o(!1);
+function k() {
+	let { dispatch: e, config: t } = A(), n = s(!1);
 	return r(() => {
 		if (n.current) return;
 		n.current = !0;
-		let r = new b({
+		let r = new x({
 			baseUrl: t.apiUrl,
 			token: t.token,
 			region: t.region
 		});
 		r.getAnnouncements().then((t) => e({
 			type: "SET_ANNOUNCEMENTS",
-			payload: S(t)
+			payload: C(t)
 		})).catch(() => {}), r.getRoadmapItems().then((t) => e({
 			type: "SET_ROADMAP_ITEMS",
-			payload: S(t)
+			payload: C(t)
 		})).catch(() => {}), r.getKBTopics().then((t) => e({
 			type: "SET_KB_TOPICS",
-			payload: S(t)
+			payload: C(t)
 		})).catch(() => {});
 	}, [
 		t.apiUrl,
@@ -372,50 +372,26 @@ function O() {
 		e
 	]), null;
 }
-function k() {
-	return T(), null;
+function ee() {
+	return E(), null;
 }
 function A() {
-	let e = n(E);
+	let e = n(D);
 	if (!e) throw Error("useChatContext must be used within a ChatProvider");
 	return e;
 }
 // src/components/Badge.tsx
 function j({ count: e }) {
-	return e <= 0 ? null : /* @__PURE__ */ l("span", {
+	return e <= 0 ? null : /* @__PURE__ */ u("span", {
 		className: "acx:absolute acx:-top-1.5 acx:-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
 		children: e > 99 ? "99+" : String(e)
 	});
 }
 // src/icons/index.tsx
-function ee({ className: e }) {
-	return /* @__PURE__ */ l("svg", {
-		className: e,
-		width: "24",
-		height: "24",
-		viewBox: "0 0 24 24",
-		fill: "none",
-		stroke: "currentColor",
-		strokeWidth: "2",
-		strokeLinecap: "round",
-		strokeLinejoin: "round",
-		children: /* @__PURE__ */ l("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
-	});
-}
-function te({ className: e }) {
-	return /* @__PURE__ */ l("svg", {
-		className: e,
-		width: "24",
-		height: "24",
-		viewBox: "0 0 24 24",
-		fill: "currentColor",
-		stroke: "none",
-		children: /* @__PURE__ */ l("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
-	});
-}
 function M({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -424,12 +400,40 @@ function M({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: [/* @__PURE__ */ l("path", { d: "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" }), /* @__PURE__ */ l("path", { d: "M13.73 21a2 2 0 0 1-3.46 0" })]
+		children: /* @__PURE__ */ u("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
 	});
 }
 function N({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
+		"aria-hidden": "true",
+		width: "24",
+		height: "24",
+		viewBox: "0 0 24 24",
+		fill: "currentColor",
+		stroke: "none",
+		children: /* @__PURE__ */ u("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
+	});
+}
+function P({ className: e }) {
+	return /* @__PURE__ */ d("svg", {
+		className: e,
+		"aria-hidden": "true",
+		width: "24",
+		height: "24",
+		viewBox: "0 0 24 24",
+		fill: "none",
+		stroke: "currentColor",
+		strokeWidth: "2",
+		strokeLinecap: "round",
+		strokeLinejoin: "round",
+		children: [/* @__PURE__ */ u("path", { d: "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" }), /* @__PURE__ */ u("path", { d: "M13.73 21a2 2 0 0 1-3.46 0" })]
+	});
+}
+function te({ className: e }) {
+	return /* @__PURE__ */ d("svg", {
+		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -439,13 +443,13 @@ function N({ className: e }) {
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
 		children: [
-			/* @__PURE__ */ l("circle", {
+			/* @__PURE__ */ u("circle", {
 				cx: "12",
 				cy: "12",
 				r: "10"
 			}),
-			/* @__PURE__ */ l("path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" }),
-			/* @__PURE__ */ l("line", {
+			/* @__PURE__ */ u("path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" }),
+			/* @__PURE__ */ u("line", {
 				x1: "12",
 				y1: "17",
 				x2: "12.01",
@@ -455,8 +459,9 @@ function N({ className: e }) {
 	});
 }
 function ne({ className: e }) {
-	return /* @__PURE__ */ u("svg", {
+	return /* @__PURE__ */ d("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -465,11 +470,11 @@ function ne({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: [/* @__PURE__ */ l("circle", {
+		children: [/* @__PURE__ */ u("circle", {
 			cx: "11",
 			cy: "11",
 			r: "8"
-		}), /* @__PURE__ */ l("line", {
+		}), /* @__PURE__ */ u("line", {
 			x1: "21",
 			y1: "21",
 			x2: "16.65",
@@ -478,8 +483,9 @@ function ne({ className: e }) {
 	});
 }
 function re({ className: e }) {
-	return /* @__PURE__ */ u("svg", {
+	return /* @__PURE__ */ d("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -488,17 +494,18 @@ function re({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: [/* @__PURE__ */ l("line", {
+		children: [/* @__PURE__ */ u("line", {
 			x1: "22",
 			y1: "2",
 			x2: "11",
 			y2: "13"
-		}), /* @__PURE__ */ l("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })]
+		}), /* @__PURE__ */ u("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })]
 	});
 }
 function ie({ className: e }) {
-	return /* @__PURE__ */ u("svg", {
+	return /* @__PURE__ */ d("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -507,12 +514,12 @@ function ie({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: [/* @__PURE__ */ l("line", {
+		children: [/* @__PURE__ */ u("line", {
 			x1: "18",
 			y1: "6",
 			x2: "6",
 			y2: "18"
-		}), /* @__PURE__ */ l("line", {
+		}), /* @__PURE__ */ u("line", {
 			x1: "6",
 			y1: "6",
 			x2: "18",
@@ -521,8 +528,9 @@ function ie({ className: e }) {
 	});
 }
 function ae({ className: e }) {
-	return /* @__PURE__ */ l("svg", {
+	return /* @__PURE__ */ u("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -531,12 +539,13 @@ function ae({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: /* @__PURE__ */ l("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" })
+		children: /* @__PURE__ */ u("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" })
 	});
 }
-function P({ className: e }) {
-	return /* @__PURE__ */ l("svg", {
+function F({ className: e }) {
+	return /* @__PURE__ */ u("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -545,12 +554,13 @@ function P({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: /* @__PURE__ */ l("polyline", { points: "9 18 15 12 9 6" })
+		children: /* @__PURE__ */ u("polyline", { points: "9 18 15 12 9 6" })
 	});
 }
 function oe({ className: e }) {
-	return /* @__PURE__ */ l("svg", {
+	return /* @__PURE__ */ u("svg", {
 		className: e,
+		"aria-hidden": "true",
 		width: "24",
 		height: "24",
 		viewBox: "0 0 24 24",
@@ -559,67 +569,109 @@ function oe({ className: e }) {
 		strokeWidth: "2",
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
-		children: /* @__PURE__ */ l("polyline", { points: "15 18 9 12 15 6" })
+		children: /* @__PURE__ */ u("polyline", { points: "15 18 9 12 15 6" })
 	});
 }
 // src/ChatLauncher.tsx
-function se({ isOpen: e, onClick: t, position: n }) {
-	let { state: r } = A();
-	return /* @__PURE__ */ l("div", {
+function se({ isOpen: e, onClick: t, position: n, buttonRef: r }) {
+	let { state: i } = A();
+	return /* @__PURE__ */ u("div", {
 		className: `acx:fixed acx:bottom-4 acx:sm:bottom-6 ${n === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999]`,
-		children: /* @__PURE__ */ l("button", {
+		children: /* @__PURE__ */ u("button", {
+			ref: r,
+			type: "button",
 			onClick: t,
 			className: "acx-launcher-btn acx:relative acx:w-14 acx:h-14 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center",
-			"aria-label": e ? "Close chat" : "Open chat",
-			children: e ? /* @__PURE__ */ l("span", {
+			"aria-label": e ? "Close chat" : I(i.unreadCount),
+			children: e ? /* @__PURE__ */ u("span", {
 				className: "acx-launcher-icon-stroke",
-				children: /* @__PURE__ */ l(ie, { className: "acx:w-6 acx:h-6" })
-			}) : /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l(te, { className: "acx:w-7 acx:h-7" }), r.unreadCount > 0 && /* @__PURE__ */ l(j, { count: r.unreadCount })] })
+				children: /* @__PURE__ */ u(ie, { className: "acx:w-6 acx:h-6" })
+			}) : /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u(N, { className: "acx:w-7 acx:h-7" }), i.unreadCount > 0 && /* @__PURE__ */ u(j, { count: i.unreadCount })] })
 		})
 	});
 }
+function I(e) {
+	return e <= 0 ? "Open chat" : `Open chat, ${e} unread ${e === 1 ? "message" : "messages"}`;
+}
+// src/utils/a11y.ts
+function L(e, t, n) {
+	if (n <= 0) return null;
+	switch (e) {
+		case "ArrowRight": return (t + 1) % n;
+		case "ArrowLeft": return (t - 1 + n) % n;
+		case "Home": return 0;
+		case "End": return n - 1;
+		default: return null;
+	}
+}
+function R(e) {
+	return e.sender_type === "visitor" || e.sender_type === "user";
+}
+function z(e) {
+	return e.sender_type === "system" && e.content_type !== "auto_response" ? e.content : e.sender_name ? `${e.sender_name}: ${e.content}` : e.content;
+}
+function B(e, t) {
+	if (e.length === 0) return null;
+	let n = new Map(e.map((e) => [e.id, e])), r = [];
+	t.some((e) => R(e) && e.status === "failed" && n.get(e.id)?.status !== "failed") && r.push("Message failed to send");
+	for (let e of t) !R(e) && !n.has(e.id) && r.push(z(e));
+	return r.length > 0 ? r.join(". ") : null;
+}
 // src/components/TabBar.tsx
-var F = {
+var V = {
 	id: "messages",
 	label: "Messages",
-	Icon: ee
-}, I = {
+	Icon: M
+}, H = {
 	id: "news",
 	label: "What's new",
-	Icon: M
-}, L = {
+	Icon: P
+}, U = {
 	id: "help",
 	label: "Help",
-	Icon: N
+	Icon: te
 };
-function R({ activeTab: e, onTabChange: t }) {
-	let { state: n, config: r } = A(), i = (r.whatsNew?.length ?? 0) > 0 ? [
-		F,
-		I,
-		L
-	] : [F, L];
-	return /* @__PURE__ */ l("nav", {
+function W({ activeTab: e, onTabChange: t, idBase: n, panelId: r }) {
+	let { state: i, config: a } = A(), o = s([]), c = (a.whatsNew?.length ?? 0) > 0 ? [
+		V,
+		H,
+		U
+	] : [V, U], l = c.findIndex((t) => t.id === e), f = l === -1 ? 0 : l;
+	return /* @__PURE__ */ u("nav", {
 		className: "acx:flex acx:border-t acx:border-gray-200 acx:bg-white",
 		role: "tablist",
-		children: i.map(({ id: r, label: i, Icon: a }) => /* @__PURE__ */ u("button", {
+		"aria-label": "Chat sections",
+		onKeyDown: (e) => {
+			let n = L(e.key, f, c.length);
+			n !== null && (e.preventDefault(), t(c[n].id), o.current[n]?.focus());
+		},
+		children: c.map(({ id: a, label: s, Icon: c }, l) => /* @__PURE__ */ d("button", {
+			ref: (e) => {
+				o.current[l] = e;
+			},
+			type: "button",
 			role: "tab",
-			"aria-selected": e === r,
-			onClick: () => t(r),
-			className: `acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${e === r ? "acx:text-primary-600" : "acx:text-gray-400 acx:hover:text-primary-600"}`,
-			children: [/* @__PURE__ */ u("div", {
+			id: `${n}-tab-${a}`,
+			"aria-selected": e === a,
+			"aria-controls": e === a ? r : void 0,
+			"aria-label": a === "messages" && i.unreadCount > 0 ? `${s}, ${i.unreadCount} unread` : void 0,
+			tabIndex: l === f ? 0 : -1,
+			onClick: () => t(a),
+			className: `acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${e === a ? "acx:text-primary-600" : "acx:text-gray-400 acx:hover:text-primary-600"}`,
+			children: [/* @__PURE__ */ d("div", {
 				className: "acx:relative",
-				children: [/* @__PURE__ */ l(a, { className: "acx:w-5 acx:h-5" }), r === "messages" && n.unreadCount > 0 && /* @__PURE__ */ l(j, { count: n.unreadCount })]
-			}), /* @__PURE__ */ l("span", {
+				children: [/* @__PURE__ */ u(c, { className: "acx:w-5 acx:h-5" }), a === "messages" && i.unreadCount > 0 && /* @__PURE__ */ u(j, { count: i.unreadCount })]
+			}), /* @__PURE__ */ u("span", {
 				className: "acx:text-[10px] acx:font-medium",
-				children: i
+				children: s
 			})]
-		}, r))
+		}, a))
 	});
 }
 // src/hooks/useLocalStorage.ts
-var z = "acrux_chat_";
-function B(e, n) {
-	let r = `${z}${e}`, [i, a] = s(() => {
+var G = "acrux_chat_";
+function K(e, n) {
+	let r = `${G}${e}`, [i, a] = c(() => {
 		try {
 			let e = window.localStorage.getItem(r);
 			return e ? JSON.parse(e) : n;
@@ -635,7 +687,7 @@ function B(e, n) {
 	}, [r])];
 }
 // src/utils/url.ts
-function V() {
+function ce() {
 	let e = new URLSearchParams(window.location.search), t = "";
 	if (document.referrer) try {
 		let e = new URL(document.referrer);
@@ -649,7 +701,7 @@ function V() {
 		utm_campaign: e.get("utm_campaign") ?? void 0
 	};
 }
-function H(e) {
+function le(e) {
 	try {
 		let t = new URL(e);
 		return t.protocol === "http:" || t.protocol === "https:";
@@ -658,14 +710,14 @@ function H(e) {
 	}
 }
 // src/hooks/useChatSession.ts
-var U = "acrux_chat_chat_access_token", W = "https://challenges.cloudflare.com/turnstile/v0/api.js", G = 5e3;
-function K() {
+var q = "acrux_chat_chat_access_token", ue = "https://challenges.cloudflare.com/turnstile/v0/api.js", de = 5e3;
+function fe() {
 	return new Promise((e) => {
 		let t = !1, n, r = document.createElement("div");
 		r.style.display = "none", document.body.appendChild(r);
 		let i = (i) => {
 			t || (t = !0, clearTimeout(a), n !== void 0 && clearInterval(n), r.remove(), e(i));
-		}, a = setTimeout(() => i(null), G), o = () => {
+		}, a = setTimeout(() => i(null), de), o = () => {
 			if (!t) try {
 				let e = window.turnstile;
 				if (!e) {
@@ -673,7 +725,7 @@ function K() {
 					return;
 				}
 				e.render(r, {
-					sitekey: d,
+					sitekey: f,
 					callback: (e) => i(e),
 					"error-callback": () => i(null),
 					"expired-callback": () => i(null)
@@ -685,7 +737,7 @@ function K() {
 		try {
 			if (!document.getElementById("cf-turnstile-script")) {
 				let e = document.createElement("script");
-				e.id = "cf-turnstile-script", e.src = W, e.async = !0, e.onerror = () => i(null), document.head.appendChild(e);
+				e.id = "cf-turnstile-script", e.src = ue, e.async = !0, e.onerror = () => i(null), document.head.appendChild(e);
 			}
 			window.turnstile ? o() : n = window.setInterval(() => {
 				window.turnstile && (n !== void 0 && clearInterval(n), o());
@@ -695,7 +747,7 @@ function K() {
 		}
 	});
 }
-async function ce(e) {
+async function pe(e) {
 	if (e) try {
 		let t = await e();
 		return typeof t == "string" && t !== "" ? t : void 0;
@@ -703,49 +755,49 @@ async function ce(e) {
 		return;
 	}
 }
-function le() {
+function me() {
 	try {
-		return window.sessionStorage.getItem(U);
+		return window.sessionStorage.getItem(q);
 	} catch {
 		return null;
 	}
 }
-function ue(e) {
+function he(e) {
 	try {
-		e === null ? window.sessionStorage.removeItem(U) : window.sessionStorage.setItem(U, e);
+		e === null ? window.sessionStorage.removeItem(q) : window.sessionStorage.setItem(q, e);
 	} catch {}
 }
-function de() {
-	let { state: e, dispatch: n, config: i } = A(), [a, c] = B("session_key", null), [l, u] = s(() => (localStorage.removeItem(U), le())), d = o(void 0), f = o(null), p = t((e) => {
-		ue(e), u(e);
+function ge() {
+	let { state: e, dispatch: n, config: i } = A(), [a, o] = K("session_key", null), [l, u] = c(() => (localStorage.removeItem(q), me())), d = s(void 0), f = s(null), p = t((e) => {
+		he(e), u(e);
 	}, []);
-	d.current || (d.current = new b({
+	d.current || (d.current = new x({
 		baseUrl: i.apiUrl,
 		token: i.token,
 		region: i.region
 	}), l && d.current.setChatToken(l));
 	let m = d.current, h = t(async (t) => {
-		let r = i.mode === "lead" ? V() : void 0, a = await K(), o = await ce(i.getIdentityToken);
+		let r = i.mode === "lead" ? ce() : void 0, a = await fe(), s = await pe(i.getIdentityToken);
 		try {
 			n({
 				type: "SET_LOADING",
 				payload: !0
 			});
-			let s = await m.createSession({
+			let c = await m.createSession({
 				source: i.mode === "lead" ? "lead_bot" : "user_bot",
 				visitor_name: t?.name || e.visitorName || i.userName,
 				visitor_email: t?.email || e.visitorEmail || i.userEmail,
 				visitor_metadata: r,
 				turnstile_token: a ?? void 0,
-				identity_token: o
+				identity_token: s
 			});
-			return s.access_token && (m.setChatToken(s.access_token), p(s.access_token)), f.current = s.session_key, n({
+			return c.access_token && (m.setChatToken(c.access_token), p(c.access_token)), f.current = c.session_key, n({
 				type: "SET_SESSION",
-				payload: s
-			}), c(s.session_key), i.onSessionCreated?.(s.session_key), n({
+				payload: c
+			}), o(c.session_key), i.onSessionCreated?.(c.session_key), n({
 				type: "SET_LOADING",
 				payload: !1
-			}), s;
+			}), c;
 		} catch (e) {
 			throw n({
 				type: "SET_ERROR",
@@ -761,7 +813,7 @@ function de() {
 		e.visitorName,
 		e.visitorEmail,
 		n,
-		c,
+		o,
 		p
 	]), g = t(async (e) => {
 		try {
@@ -786,7 +838,7 @@ function de() {
 				payload: !1
 			}), i;
 		} catch {
-			return c(null), p(null), m.setChatToken(""), n({
+			return o(null), p(null), m.setChatToken(""), n({
 				type: "SET_LOADING",
 				payload: !1
 			}), null;
@@ -794,7 +846,7 @@ function de() {
 	}, [
 		m,
 		n,
-		c,
+		o,
 		p
 	]), _ = t(async (t, r) => {
 		if (e.session) {
@@ -830,7 +882,7 @@ function de() {
 	};
 }
 // src/services/websocket.ts
-var fe = [
+var _e = [
 	"history",
 	"message",
 	"message_ack",
@@ -839,10 +891,10 @@ var fe = [
 	"heartbeat_ack",
 	"error"
 ];
-function pe(e) {
-	return typeof e == "object" && !!e && typeof e.type == "string" && fe.includes(e.type);
+function ve(e) {
+	return typeof e == "object" && !!e && typeof e.type == "string" && _e.includes(e.type);
 }
-var me = class {
+var ye = class {
 	ws = null;
 	url;
 	token;
@@ -873,7 +925,7 @@ var me = class {
 			}, this.ws.onerror = () => {}, this.ws.onmessage = (e) => {
 				try {
 					let t = JSON.parse(e.data);
-					pe(t) && this.onMessage(t);
+					ve(t) && this.onMessage(t);
 				} catch {}
 			};
 		}
@@ -892,7 +944,7 @@ var me = class {
 	}
 	scheduleReconnect() {
 		if (this.reconnectTimer) return;
-		let e = Math.min(h.WS_RECONNECT_BASE * 2 ** this.retryCount, h.WS_RECONNECT_MAX);
+		let e = Math.min(g.WS_RECONNECT_BASE * 2 ** this.retryCount, g.WS_RECONNECT_MAX);
 		this.reconnectTimer = setTimeout(() => {
 			this.reconnectTimer = null, this.retryCount++, this.connect();
 		}, e);
@@ -900,26 +952,26 @@ var me = class {
 	startHeartbeat() {
 		this.stopHeartbeat(), this.heartbeatTimer = setInterval(() => {
 			this.send({ type: "heartbeat" });
-		}, h.WS_HEARTBEAT_INTERVAL);
+		}, g.WS_HEARTBEAT_INTERVAL);
 	}
 	stopHeartbeat() {
 		this.heartbeatTimer &&= (clearInterval(this.heartbeatTimer), null);
 	}
 };
 // src/utils/uuid.ts
-function he() {
+function be() {
 	return typeof crypto < "u" && typeof crypto.randomUUID == "function" ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
 		let t = Math.random() * 16 | 0;
 		return (e === "x" ? t : t & 3 | 8).toString(16);
 	});
 }
 // src/hooks/useChatWebSocket.ts
-function ge(e, n) {
-	let { state: i, dispatch: a, config: s } = A(), c = o(null), l = o(/* @__PURE__ */ new Map()), u = o(null);
+function xe(e, n) {
+	let { state: i, dispatch: a, config: o } = A(), c = s(null), l = s(/* @__PURE__ */ new Map()), u = s(null);
 	r(() => {
 		if (!e) return;
-		let t = new me({
-			url: `${s.apiUrl.startsWith("https") ? "wss" : "ws"}://${s.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}${p(e)}`,
+		let t = new ye({
+			url: `${o.apiUrl.startsWith("https") ? "wss" : "ws"}://${o.apiUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}${m(e)}`,
 			token: n ?? void 0,
 			onStatusChange: (e, t) => {
 				a({
@@ -975,7 +1027,7 @@ function ge(e, n) {
 								type: "SET_AGENT_TYPING",
 								payload: { is_typing: !1 }
 							}), u.current = null;
-						}, h.TYPING_TIMEOUT));
+						}, g.TYPING_TIMEOUT));
 						break;
 					case "heartbeat_ack": break;
 					case "error": a({
@@ -993,14 +1045,14 @@ function ge(e, n) {
 	}, [
 		e,
 		n,
-		s.apiUrl
+		o.apiUrl
 	]);
 	let d = t((e) => {
-		if (!e || e.length > g.MAX_MESSAGE_LENGTH || !c.current) return;
-		let t = he(), n = {
+		if (!e || e.length > _.MAX_MESSAGE_LENGTH || !c.current) return;
+		let t = be(), n = {
 			id: t,
 			session: 0,
-			sender_type: s.mode === "lead" ? "visitor" : "user",
+			sender_type: o.mode === "lead" ? "visitor" : "user",
 			sender_name: i.visitorName || "You",
 			content: e,
 			content_type: "text",
@@ -1023,10 +1075,10 @@ function ge(e, n) {
 				type: "FAIL_MESSAGE",
 				payload: { temp_id: t }
 			}), l.current.delete(t);
-		}, h.MESSAGE_ACK_TIMEOUT);
+		}, g.MESSAGE_ACK_TIMEOUT);
 		l.current.set(t, r);
 	}, [
-		s.mode,
+		o.mode,
 		i.visitorName,
 		a
 	]), f = t((e) => {
@@ -1042,10 +1094,10 @@ function ge(e, n) {
 	};
 }
 // src/components/AgentAvatar.tsx
-function _e(e) {
+function Se(e) {
 	return e.split(" ").slice(0, 2).map((e) => e[0] ?? "").join("").toUpperCase();
 }
-var q = [
+var J = [
 	"acx:bg-blue-500",
 	"acx:bg-green-500",
 	"acx:bg-purple-500",
@@ -1053,30 +1105,31 @@ var q = [
 	"acx:bg-pink-500",
 	"acx:bg-teal-500"
 ];
-function ve(e) {
+function Ce(e) {
 	let t = 0;
 	for (let n = 0; n < e.length; n++) t = e.charCodeAt(n) + ((t << 5) - t);
-	return q[Math.abs(t) % q.length];
+	return J[Math.abs(t) % J.length];
 }
-function J({ name: e, avatarUrl: t }) {
-	return t ? /* @__PURE__ */ l("img", {
+function Y({ name: e, avatarUrl: t }) {
+	return t ? /* @__PURE__ */ u("img", {
 		src: t,
-		alt: e,
+		alt: "",
 		className: "acx:w-8 acx:h-8 acx:rounded-full acx:object-cover acx:flex-shrink-0"
-	}) : /* @__PURE__ */ l("div", {
-		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${ve(e)}`,
-		children: _e(e)
+	}) : /* @__PURE__ */ u("div", {
+		"aria-hidden": "true",
+		className: `acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${Ce(e)}`,
+		children: Se(e)
 	});
 }
 // src/utils/time.ts
-function Y(e) {
+function X(e) {
 	let t = new Date(e), n = (/* @__PURE__ */ new Date()).getTime() - t.getTime(), r = Math.floor(n / 1e3), i = Math.floor(r / 60), a = Math.floor(i / 60), o = Math.floor(a / 24);
 	return r < 60 ? "Just now" : i < 60 ? `${i}m ago` : a < 24 ? `${a}h ago` : o < 7 ? `${o}d ago` : t.toLocaleDateString(void 0, {
 		month: "short",
 		day: "numeric"
 	});
 }
-function ye(e) {
+function we(e) {
 	let t = new Date(e), n = /* @__PURE__ */ new Date(), r = new Date(n.getFullYear(), n.getMonth(), n.getDate()), i = new Date(t.getFullYear(), t.getMonth(), t.getDate()), a = Math.floor((r.getTime() - i.getTime()) / 864e5);
 	return a === 0 ? "Today" : a === 1 ? "Yesterday" : t.toLocaleDateString(void 0, {
 		weekday: "long",
@@ -1084,16 +1137,16 @@ function ye(e) {
 		day: "numeric"
 	});
 }
-function be(e, t) {
+function Te(e, t) {
 	let n = new Date(e), r = new Date(t);
 	return n.getFullYear() === r.getFullYear() && n.getMonth() === r.getMonth() && n.getDate() === r.getDate();
 }
 // src/utils/sanitize.ts
-function xe(e) {
-	let t = Se(e);
+function Ee(e) {
+	let t = De(e);
 	return t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"), t = t.replace(/__(.+?)__/g, "<strong>$1</strong>"), t = t.replace(/\*(.+?)\*/g, "<em>$1</em>"), t = t.replace(/(?<!\w)_(.+?)_(?!\w)/g, "<em>$1</em>"), t = t.replace(/`(.+?)`/g, "<code>$1</code>"), t = t.replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, "<a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">$1</a>"), t = t.replace(/\n/g, "<br />"), t;
 }
-function Se(e) {
+function De(e) {
 	let t = {
 		"&": "&amp;",
 		"<": "&lt;",
@@ -1104,58 +1157,58 @@ function Se(e) {
 	return e.replace(/[&<>"']/g, (e) => t[e] ?? e);
 }
 // src/components/MessageBubble.tsx
-function Ce({ message: e }) {
+function Oe({ message: e }) {
 	let t = e.sender_type === "visitor" || e.sender_type === "user", n = e.sender_type === "system";
-	return n && e.content_type === "auto_response" ? /* @__PURE__ */ u("div", {
+	return n && e.content_type === "auto_response" ? /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:gap-2 acx:mb-3 acx:justify-start",
-		children: [/* @__PURE__ */ l(J, { name: e.sender_name }), /* @__PURE__ */ u("div", {
+		children: [/* @__PURE__ */ u(Y, { name: e.sender_name }), /* @__PURE__ */ d("div", {
 			className: "acx:max-w-[75%]",
 			children: [
-				e.sender_name && /* @__PURE__ */ l("span", {
+				e.sender_name && /* @__PURE__ */ u("span", {
 					className: "acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block",
 					children: e.sender_name
 				}),
-				/* @__PURE__ */ l("div", {
+				/* @__PURE__ */ u("div", {
 					className: "acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed acx:bg-amber-50 acx:text-gray-800 acx:rounded-bl-md acx:border acx:border-amber-200",
-					children: /* @__PURE__ */ l("p", {
+					children: /* @__PURE__ */ u("p", {
 						className: "acx:whitespace-pre-wrap",
 						children: e.content
 					})
 				}),
-				/* @__PURE__ */ l("span", {
+				/* @__PURE__ */ u("span", {
 					className: "acx:text-[10px] acx:text-gray-400 acx:mt-0.5 acx:block",
-					children: Y(e.created_at)
+					children: X(e.created_at)
 				})
 			]
 		})]
-	}) : n ? /* @__PURE__ */ l("div", {
+	}) : n ? /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:justify-center acx:py-2",
-		children: /* @__PURE__ */ l("span", {
+		children: /* @__PURE__ */ u("span", {
 			className: "acx:text-xs acx:text-gray-400 acx:italic",
 			children: e.content
 		})
-	}) : /* @__PURE__ */ u("div", {
+	}) : /* @__PURE__ */ d("div", {
 		className: `acx:flex acx:gap-2 acx:mb-3 ${t ? "acx:justify-end" : "acx:justify-start"}`,
-		children: [!t && /* @__PURE__ */ l(J, { name: e.sender_name }), /* @__PURE__ */ u("div", {
+		children: [!t && /* @__PURE__ */ u(Y, { name: e.sender_name }), /* @__PURE__ */ d("div", {
 			className: `acx:max-w-[75%] ${t ? "acx:order-1" : ""}`,
 			children: [
-				!t && e.sender_name && /* @__PURE__ */ l("span", {
+				!t && e.sender_name && /* @__PURE__ */ u("span", {
 					className: "acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block",
 					children: e.sender_name
 				}),
-				/* @__PURE__ */ l("div", {
+				/* @__PURE__ */ u("div", {
 					className: `acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed ${t ? "acx:bg-primary-600 acx:text-white acx:rounded-br-md" : (e.sender_type, "acx:bg-gray-100 acx:text-gray-800 acx:rounded-bl-md")}`,
-					children: e.content_type === "markdown" ? /* @__PURE__ */ l("div", {
+					children: e.content_type === "markdown" ? /* @__PURE__ */ u("div", {
 						className: "acx:prose acx:prose-sm",
-						dangerouslySetInnerHTML: { __html: xe(e.content) }
-					}) : /* @__PURE__ */ l("p", {
+						dangerouslySetInnerHTML: { __html: Ee(e.content) }
+					}) : /* @__PURE__ */ u("p", {
 						className: "acx:whitespace-pre-wrap",
 						children: e.content
 					})
 				}),
-				e.attachments?.length > 0 && /* @__PURE__ */ l("div", {
+				e.attachments?.length > 0 && /* @__PURE__ */ u("div", {
 					className: "acx:mt-1 acx:space-y-1",
-					children: e.attachments.map((e, t) => /* @__PURE__ */ l("a", {
+					children: e.attachments.map((e, t) => /* @__PURE__ */ u("a", {
 						href: e.url,
 						target: "_blank",
 						rel: "noopener noreferrer",
@@ -1163,18 +1216,18 @@ function Ce({ message: e }) {
 						children: e.name
 					}, t))
 				}),
-				/* @__PURE__ */ u("div", {
+				/* @__PURE__ */ d("div", {
 					className: `acx:flex acx:items-center acx:gap-1 acx:mt-0.5 ${t ? "acx:justify-end" : ""}`,
 					children: [
-						/* @__PURE__ */ l("span", {
+						/* @__PURE__ */ u("span", {
 							className: "acx:text-[10px] acx:text-gray-400",
-							children: Y(e.created_at)
+							children: X(e.created_at)
 						}),
-						t && e.status === "sending" && /* @__PURE__ */ l("span", {
+						t && e.status === "sending" && /* @__PURE__ */ u("span", {
 							className: "acx:text-[10px] acx:text-gray-400",
 							children: "Sending..."
 						}),
-						t && e.status === "failed" && /* @__PURE__ */ l("span", {
+						t && e.status === "failed" && /* @__PURE__ */ u("span", {
 							className: "acx:text-[10px] acx:text-red-500",
 							children: "Failed"
 						})
@@ -1185,49 +1238,67 @@ function Ce({ message: e }) {
 	});
 }
 // src/components/TypingIndicator.tsx
-function we({ agentName: e }) {
-	return /* @__PURE__ */ u("div", {
+function ke({ agentName: e }) {
+	return /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:items-center acx:gap-2 acx:mb-3",
-		children: [/* @__PURE__ */ l(J, { name: e ?? "Agent" }), /* @__PURE__ */ l("div", {
+		"aria-hidden": "true",
+		children: [/* @__PURE__ */ u(Y, { name: e ?? "Agent" }), /* @__PURE__ */ u("div", {
 			className: "acx:bg-gray-100 acx:rounded-2xl acx:rounded-bl-md acx:px-4 acx:py-3",
-			children: /* @__PURE__ */ u("div", {
+			children: /* @__PURE__ */ d("div", {
 				className: "acx:flex acx:gap-1",
 				children: [
-					/* @__PURE__ */ l("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
-					/* @__PURE__ */ l("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
-					/* @__PURE__ */ l("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" })
+					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
+					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
+					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" })
 				]
 			})
 		})]
 	});
 }
 // src/components/MessageList.tsx
-function Te({ messages: e, agentTyping: t }) {
-	let n = o(null), i = o(null);
+function Ae({ messages: e, agentTyping: t }) {
+	let n = s(null), i = s(null), a = s(e), [o, f] = c({
+		text: "",
+		count: 0
+	});
 	return r(() => {
+		let t = B(a.current, e);
+		a.current = e, t && f((e) => ({
+			text: t,
+			count: e.count + 1
+		}));
+	}, [e]), r(() => {
 		n.current?.scrollIntoView({ behavior: "smooth" });
-	}, [e.length, t.is_typing]), /* @__PURE__ */ u("div", {
+	}, [e.length, t.is_typing]), /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u("div", {
+		className: "acx:sr-only",
+		"aria-live": "polite",
+		"aria-atomic": "true",
+		children: /* @__PURE__ */ u("span", { children: o.text }, o.count)
+	}), /* @__PURE__ */ d("div", {
 		ref: i,
 		className: "acx:flex-1 acx:overflow-y-auto acx:px-4 acx:py-3 acx:space-y-1",
+		role: "log",
+		"aria-live": "off",
+		"aria-label": "Conversation",
 		children: [
 			e.map((t, n) => {
-				let r = e[n - 1], i = !r || !be(r.created_at, t.created_at);
-				return /* @__PURE__ */ u("div", { children: [i && /* @__PURE__ */ l("div", {
+				let r = e[n - 1], i = !r || !Te(r.created_at, t.created_at);
+				return /* @__PURE__ */ d("div", { children: [i && /* @__PURE__ */ u("div", {
 					className: "acx:flex acx:items-center acx:justify-center acx:py-3",
-					children: /* @__PURE__ */ l("span", {
+					children: /* @__PURE__ */ u("span", {
 						className: "acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full",
-						children: ye(t.created_at)
+						children: we(t.created_at)
 					})
-				}), /* @__PURE__ */ l(Ce, { message: t })] }, t.temp_id ?? t.id);
+				}), /* @__PURE__ */ u(Oe, { message: t })] }, t.temp_id ?? t.id);
 			}),
-			t.is_typing && /* @__PURE__ */ l(we, { agentName: t.agent_name }),
-			/* @__PURE__ */ l("div", { ref: n })
+			t.is_typing && /* @__PURE__ */ u(ke, { agentName: t.agent_name }),
+			/* @__PURE__ */ u("div", { ref: n })
 		]
-	});
+	})] });
 }
 // src/components/MessageInput.tsx
-function Ee({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: d }) {
-	let [f, p] = s(""), m = o(null), h = o(void 0), _ = t(() => {
+function je({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: o }) {
+	let [f, p] = c(""), m = s(null), h = s(void 0), g = t(() => {
 		let t = f.trim();
 		t && !a && (e(t), p(""), n?.(!1));
 	}, [
@@ -1236,65 +1307,66 @@ function Ee({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, pla
 		e,
 		n
 	]);
-	return /* @__PURE__ */ l("div", {
+	return /* @__PURE__ */ u("div", {
 		className: "acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2",
-		children: /* @__PURE__ */ u("div", {
-			className: "acx:flex acx:items-end acx:gap-2",
+		children: /* @__PURE__ */ d("div", {
+			className: "acx:flex acx:items-end acx:gap-2 acx:rounded-lg acx:has-[textarea:focus-visible]:ring-2 acx:has-[textarea:focus-visible]:ring-[#006383] acx:has-[textarea:focus-visible]:ring-offset-2",
 			children: [
-				i === "user" && r && /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l("button", {
+				i === "user" && r && /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u("button", {
 					onClick: () => {
 						m.current?.click();
 					},
 					className: "acx:p-1.5 acx:text-gray-400 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0",
 					"aria-label": "Attach file",
 					type: "button",
-					children: /* @__PURE__ */ l(ae, { className: "acx:w-5 acx:h-5" })
-				}), /* @__PURE__ */ l("input", {
+					children: /* @__PURE__ */ u(ae, { className: "acx:w-5 acx:h-5" })
+				}), /* @__PURE__ */ u("input", {
 					ref: m,
 					type: "file",
 					className: "acx:hidden",
-					accept: g.ALLOWED_FILE_TYPES.join(","),
+					accept: _.ALLOWED_FILE_TYPES.join(","),
 					multiple: !0,
 					onChange: (e) => {
 						e.target.files && e.target.files.length > 0 && (r?.(e.target.files), e.target.value = "");
 					}
 				})] }),
-				/* @__PURE__ */ l("textarea", {
+				/* @__PURE__ */ u("textarea", {
 					value: f,
 					onChange: (e) => {
 						let t = e.target.value;
-						t.length > g.MAX_MESSAGE_LENGTH || (p(t), n?.(!0), h.current && clearTimeout(h.current), h.current = setTimeout(() => n?.(!1), 2e3));
+						t.length > _.MAX_MESSAGE_LENGTH || (p(t), n?.(!0), h.current && clearTimeout(h.current), h.current = setTimeout(() => n?.(!1), 2e3));
 					},
 					onKeyDown: (e) => {
-						e.key === "Enter" && !e.shiftKey && (e.preventDefault(), _());
+						e.key === "Enter" && !e.shiftKey && (e.preventDefault(), g());
 					},
-					placeholder: d ?? "Type a message...",
+					placeholder: o ?? "Type a message...",
+					"aria-label": "Message",
 					disabled: a,
 					rows: 1,
 					className: "acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400",
 					style: { fieldSizing: "content" }
 				}),
-				/* @__PURE__ */ l("button", {
-					onClick: _,
+				/* @__PURE__ */ u("button", {
+					onClick: g,
 					disabled: !f.trim() || a,
 					className: "acx:p-1.5 acx:text-primary-600 acx:transition-colors acx:flex-shrink-0 acx:enabled:hover:text-primary-700 acx:disabled:text-gray-300 acx:disabled:cursor-not-allowed",
 					"aria-label": "Send message",
 					type: "button",
-					children: /* @__PURE__ */ l(re, { className: "acx:w-5 acx:h-5" })
+					children: /* @__PURE__ */ u(re, { className: "acx:w-5 acx:h-5" })
 				})
 			]
 		})
 	});
 }
 // src/components/StatusBanner.tsx
-function X({ isOnline: e, offlineMessage: t, responseTime: n }) {
-	return e ? null : /* @__PURE__ */ l("div", {
+function Me({ isOnline: e, offlineMessage: t, responseTime: n }) {
+	return e ? null : /* @__PURE__ */ u("div", {
 		className: "acx:bg-amber-50 acx:border-b acx:border-amber-200 acx:px-4 acx:py-2.5",
-		children: /* @__PURE__ */ u("div", {
+		children: /* @__PURE__ */ d("div", {
 			className: "acx:flex acx:items-center acx:gap-2",
-			children: [/* @__PURE__ */ l("div", { className: "acx:w-2 acx:h-2 acx:rounded-full acx:bg-amber-400 acx:flex-shrink-0" }), /* @__PURE__ */ u("p", {
+			children: [/* @__PURE__ */ u("div", { className: "acx:w-2 acx:h-2 acx:rounded-full acx:bg-amber-400 acx:flex-shrink-0" }), /* @__PURE__ */ d("p", {
 				className: "acx:text-xs acx:text-amber-800",
-				children: [t ?? "We're currently offline.", n && /* @__PURE__ */ u("span", {
+				children: [t ?? "We're currently offline.", n && /* @__PURE__ */ d("span", {
 					className: "acx:font-medium",
 					children: [
 						" We typically respond ",
@@ -1307,45 +1379,46 @@ function X({ isOnline: e, offlineMessage: t, responseTime: n }) {
 	});
 }
 // src/components/ConnectionBanner.tsx
-function Z({ isConnected: e, retryCount: t }) {
-	return e || t === 0 ? null : t >= 5 ? /* @__PURE__ */ l("div", {
+function Ne({ isConnected: e, retryCount: t }) {
+	return e || t === 0 ? null : t >= 5 ? /* @__PURE__ */ u("div", {
 		className: "acx:bg-red-50 acx:border-b acx:border-red-200 acx:px-4 acx:py-2.5",
-		children: /* @__PURE__ */ u("div", {
+		children: /* @__PURE__ */ d("div", {
 			className: "acx:flex acx:items-center acx:justify-between acx:gap-2",
-			children: [/* @__PURE__ */ u("div", {
+			children: [/* @__PURE__ */ d("div", {
 				className: "acx:flex acx:items-center acx:gap-2",
-				children: [/* @__PURE__ */ l("div", { className: "acx:w-2 acx:h-2 acx:rounded-full acx:bg-red-400 acx:flex-shrink-0" }), /* @__PURE__ */ l("p", {
+				children: [/* @__PURE__ */ u("div", { className: "acx:w-2 acx:h-2 acx:rounded-full acx:bg-red-400 acx:flex-shrink-0" }), /* @__PURE__ */ u("p", {
 					className: "acx:text-xs acx:text-red-800",
 					children: "Connection lost. Please refresh."
 				})]
-			}), /* @__PURE__ */ l("button", {
+			}), /* @__PURE__ */ u("button", {
 				type: "button",
 				onClick: () => window.location.reload(),
 				className: "acx:text-xs acx:font-medium acx:text-red-700 acx:bg-red-100 acx:px-2 acx:py-0.5 acx:rounded acx:hover:bg-red-200 acx:flex-shrink-0",
 				children: "Refresh"
 			})]
 		})
-	}) : /* @__PURE__ */ l("div", {
+	}) : /* @__PURE__ */ u("div", {
 		className: "acx:bg-amber-50 acx:border-b acx:border-amber-200 acx:px-4 acx:py-2.5",
-		children: /* @__PURE__ */ u("div", {
+		children: /* @__PURE__ */ d("div", {
 			className: "acx:flex acx:items-center acx:gap-2",
-			children: [/* @__PURE__ */ u("svg", {
+			children: [/* @__PURE__ */ d("svg", {
 				className: "acx:w-3 acx:h-3 acx:text-amber-500 acx:animate-spin acx:flex-shrink-0",
 				viewBox: "0 0 24 24",
 				fill: "none",
-				children: [/* @__PURE__ */ l("circle", {
+				"aria-hidden": "true",
+				children: [/* @__PURE__ */ u("circle", {
 					className: "acx:opacity-25",
 					cx: "12",
 					cy: "12",
 					r: "10",
 					stroke: "currentColor",
 					strokeWidth: "4"
-				}), /* @__PURE__ */ l("path", {
+				}), /* @__PURE__ */ u("path", {
 					className: "acx:opacity-75",
 					fill: "currentColor",
 					d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
 				})]
-			}), /* @__PURE__ */ l("p", {
+			}), /* @__PURE__ */ u("p", {
 				className: "acx:text-xs acx:text-amber-800",
 				children: "Reconnecting..."
 			})]
@@ -1353,9 +1426,9 @@ function Z({ isConnected: e, retryCount: t }) {
 	});
 }
 // src/components/LeadCaptureForm.tsx
-function De({ onSubmit: e, loading: t }) {
-	let [n, r] = s(""), [i, a] = s("");
-	return /* @__PURE__ */ u("form", {
+function Pe({ onSubmit: e, loading: t }) {
+	let [n, r] = c(""), [i, a] = c("");
+	return /* @__PURE__ */ d("form", {
 		onSubmit: (t) => {
 			t.preventDefault(), i.trim() && e({
 				name: n.trim(),
@@ -1364,31 +1437,35 @@ function De({ onSubmit: e, loading: t }) {
 		},
 		className: "acx:p-4 acx:space-y-3",
 		children: [
-			/* @__PURE__ */ l("p", {
+			/* @__PURE__ */ u("p", {
 				className: "acx:text-sm acx:text-gray-600 acx:mb-1",
 				children: "Before we start, could you share your details?"
 			}),
-			/* @__PURE__ */ l("input", {
+			/* @__PURE__ */ u("input", {
 				type: "text",
 				value: n,
 				onChange: (e) => r(e.target.value),
 				placeholder: "Your name",
+				"aria-label": "Your name",
+				autoComplete: "name",
 				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
 			}),
-			/* @__PURE__ */ l("input", {
+			/* @__PURE__ */ u("input", {
 				type: "email",
 				value: i,
 				onChange: (e) => a(e.target.value),
 				placeholder: "Your email *",
+				"aria-label": "Your email",
+				autoComplete: "email",
 				required: !0,
 				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
 			}),
-			/* @__PURE__ */ u("p", {
+			/* @__PURE__ */ d("p", {
 				className: "acx:text-xs acx:text-gray-400 acx:leading-snug",
 				children: [
 					"By starting a chat, your details, messages, and the page you're on are shared with Acrux to respond to your enquiry — see our",
 					" ",
-					/* @__PURE__ */ l("a", {
+					/* @__PURE__ */ u("a", {
 						href: "https://www.acrux.education/legal/privacy-policy",
 						target: "_blank",
 						rel: "noopener noreferrer",
@@ -1398,7 +1475,7 @@ function De({ onSubmit: e, loading: t }) {
 					"."
 				]
 			}),
-			/* @__PURE__ */ l("button", {
+			/* @__PURE__ */ u("button", {
 				type: "submit",
 				disabled: !i.trim() || t,
 				className: "acx:w-full acx:bg-primary-600 acx:text-white acx:py-2.5 acx:rounded-lg acx:text-sm acx:font-medium acx:transition-colors acx:enabled:hover:bg-primary-700 acx:disabled:bg-gray-200 acx:disabled:text-gray-500 acx:disabled:cursor-not-allowed",
@@ -1408,8 +1485,8 @@ function De({ onSubmit: e, loading: t }) {
 	});
 }
 // src/tabs/MessagesTab.tsx
-function Oe() {
-	let { state: e, dispatch: n, config: i } = A(), { session: a, sessionKey: d, accessToken: f, createSession: p } = de(), { sendMessage: m, sendTyping: h, isConnected: g } = ge(d, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = s(!1), S = o(null);
+function Fe() {
+	let { state: e, dispatch: n, config: i } = A(), { session: a, sessionKey: o, accessToken: f, createSession: p } = ge(), { sendMessage: m, sendTyping: h, isConnected: g } = xe(o, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = c(!1), S = s(null);
 	r(() => {
 		g && S.current && (m(S.current), S.current = null);
 	}, [g, m]);
@@ -1452,64 +1529,58 @@ function Oe() {
 		e.unreadCount,
 		e.activeTab,
 		n
-	]), b && !a ? /* @__PURE__ */ u("div", {
+	]), b && !a ? /* @__PURE__ */ d("div", {
+		className: "acx:flex acx:flex-col acx:h-full",
+		children: [/* @__PURE__ */ u(Z, {
+			isConnected: g,
+			retryCount: e.wsRetryCount,
+			isOnline: _,
+			offlineMessage: v,
+			responseTime: y
+		}), /* @__PURE__ */ u(Pe, {
+			onSubmit: w,
+			loading: e.loading
+		})]
+	}) : /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:flex-col acx:h-full",
 		children: [
-			/* @__PURE__ */ l(Z, {
+			/* @__PURE__ */ u(Z, {
 				isConnected: g,
-				retryCount: e.wsRetryCount
-			}),
-			/* @__PURE__ */ l(X, {
+				retryCount: e.wsRetryCount,
 				isOnline: _,
 				offlineMessage: v,
 				responseTime: y
 			}),
-			/* @__PURE__ */ l(De, {
-				onSubmit: w,
-				loading: e.loading
-			})
-		]
-	}) : /* @__PURE__ */ u("div", {
-		className: "acx:flex acx:flex-col acx:h-full",
-		children: [
-			/* @__PURE__ */ l(Z, {
-				isConnected: g,
-				retryCount: e.wsRetryCount
-			}),
-			/* @__PURE__ */ l(X, {
-				isOnline: _,
-				offlineMessage: v,
-				responseTime: y
-			}),
-			e.messages.length === 0 && !a ? /* @__PURE__ */ l("div", {
+			e.messages.length === 0 && !a ? /* @__PURE__ */ u("div", {
 				className: "acx:flex-1 acx:flex acx:flex-col acx:items-center acx:justify-center acx:px-6 acx:text-center",
-				children: _ ? /* @__PURE__ */ u(c, { children: [/* @__PURE__ */ l("p", {
+				children: _ ? /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u("p", {
 					className: "acx:text-lg acx:font-semibold acx:text-gray-800 acx:mb-1",
 					children: i.greeting || "Hi there! How can we help?"
-				}), /* @__PURE__ */ l("p", {
+				}), /* @__PURE__ */ u("p", {
 					className: "acx:text-sm acx:text-gray-500",
 					children: "Send a message to start a conversation"
-				})] }) : /* @__PURE__ */ u(c, { children: [
-					/* @__PURE__ */ l("div", {
+				})] }) : /* @__PURE__ */ d(l, { children: [
+					/* @__PURE__ */ u("div", {
 						className: "acx:w-12 acx:h-12 acx:bg-amber-100 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:mb-3",
-						children: /* @__PURE__ */ u("svg", {
+						children: /* @__PURE__ */ d("svg", {
 							className: "acx:w-6 acx:h-6 acx:text-amber-600",
 							viewBox: "0 0 24 24",
 							fill: "none",
 							stroke: "currentColor",
 							strokeWidth: "2",
+							"aria-hidden": "true",
 							children: [
-								/* @__PURE__ */ l("path", { d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z" }),
-								/* @__PURE__ */ l("path", { d: "M12 11v1" }),
-								/* @__PURE__ */ l("path", { d: "M12 8h.01" })
+								/* @__PURE__ */ u("path", { d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z" }),
+								/* @__PURE__ */ u("path", { d: "M12 11v1" }),
+								/* @__PURE__ */ u("path", { d: "M12 8h.01" })
 							]
 						})
 					}),
-					/* @__PURE__ */ l("p", {
+					/* @__PURE__ */ u("p", {
 						className: "acx:text-sm acx:text-gray-600 acx:font-medium",
 						children: "Leave us a message"
 					}),
-					/* @__PURE__ */ u("p", {
+					/* @__PURE__ */ d("p", {
 						className: "acx:text-xs acx:text-gray-400 acx:mt-1",
 						children: [
 							"Our team is currently away. Leave a message and we'll get back to you",
@@ -1518,11 +1589,11 @@ function Oe() {
 						]
 					})
 				] })
-			}) : /* @__PURE__ */ l(Te, {
+			}) : /* @__PURE__ */ u(Ae, {
 				messages: e.messages,
 				agentTyping: e.agentTyping
 			}),
-			/* @__PURE__ */ l(Ee, {
+			/* @__PURE__ */ u(je, {
 				onSend: C,
 				onTyping: h,
 				mode: i.mode,
@@ -1532,40 +1603,53 @@ function Oe() {
 		]
 	});
 }
+function Z({ isConnected: e, retryCount: t, isOnline: n, offlineMessage: r, responseTime: i }) {
+	return /* @__PURE__ */ d("div", {
+		role: "status",
+		children: [/* @__PURE__ */ u(Ne, {
+			isConnected: e,
+			retryCount: t
+		}), /* @__PURE__ */ u(Me, {
+			isOnline: n,
+			offlineMessage: r,
+			responseTime: i
+		})]
+	});
+}
 // src/components/WhatsNewCard.tsx
-var ke = {
+var Q = {
 	update: "acx:bg-green-100 acx:text-green-700",
 	notice: "acx:bg-orange-100 acx:text-orange-700",
 	digest: "acx:bg-blue-100 acx:text-blue-700"
-}, Ae = {
+}, Ie = {
 	update: "New",
 	notice: "Service notice",
 	digest: "Round-up"
 };
-function je({ entry: e }) {
-	let t = e.read_more_url && H(e.read_more_url) ? e.read_more_url : null;
-	return /* @__PURE__ */ u("article", {
+function Le({ entry: e }) {
+	let t = e.read_more_url && le(e.read_more_url) ? e.read_more_url : null;
+	return /* @__PURE__ */ d("article", {
 		className: "acx:p-4 acx:border acx:border-gray-200 acx:rounded-xl",
 		children: [
-			/* @__PURE__ */ u("div", {
+			/* @__PURE__ */ d("div", {
 				className: "acx:flex acx:items-center acx:gap-2 acx:mb-2",
-				children: [/* @__PURE__ */ l("span", {
-					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${ke[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
-					children: Ae[e.category] ?? e.category
-				}), /* @__PURE__ */ l("span", {
+				children: [/* @__PURE__ */ u("span", {
+					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${Q[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
+					children: Ie[e.category] ?? e.category
+				}), /* @__PURE__ */ u("span", {
 					className: "acx:text-[10px] acx:text-gray-400",
-					children: Y(e.sent_at)
+					children: X(e.sent_at)
 				})]
 			}),
-			/* @__PURE__ */ l("h4", {
+			/* @__PURE__ */ u("h4", {
 				className: "acx:text-sm acx:font-semibold acx:text-gray-900 acx:mb-1",
 				children: e.title
 			}),
-			/* @__PURE__ */ l("p", {
+			/* @__PURE__ */ u("p", {
 				className: "acx:text-xs acx:text-gray-500",
 				children: e.summary
 			}),
-			t && /* @__PURE__ */ l("a", {
+			t && /* @__PURE__ */ u("a", {
 				href: t,
 				target: "_blank",
 				rel: "noopener noreferrer",
@@ -1576,39 +1660,39 @@ function je({ entry: e }) {
 	});
 }
 // src/tabs/NewsTab.tsx
-function Q() {
+function Re() {
 	let { config: e } = A(), t = e.whatsNew ?? [];
-	return /* @__PURE__ */ u("div", {
+	return /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
-		children: [/* @__PURE__ */ u("div", {
+		children: [/* @__PURE__ */ d("div", {
 			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
-			children: [/* @__PURE__ */ l("h2", {
+			children: [/* @__PURE__ */ u("h2", {
 				className: "acx:text-base acx:font-semibold acx:text-gray-900",
 				children: "What’s new"
-			}), /* @__PURE__ */ l("p", {
+			}), /* @__PURE__ */ u("p", {
 				className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
 				children: "Recent updates from the team"
 			})]
-		}), /* @__PURE__ */ l("div", {
+		}), /* @__PURE__ */ u("div", {
 			className: "acx:p-4 acx:space-y-3",
-			children: t.length === 0 ? /* @__PURE__ */ l("div", {
+			children: t.length === 0 ? /* @__PURE__ */ u("div", {
 				className: "acx:py-8 acx:text-center",
-				children: /* @__PURE__ */ l("p", {
+				children: /* @__PURE__ */ u("p", {
 					className: "acx:text-sm acx:text-gray-400",
 					children: "Nothing new right now"
 				})
-			}) : t.map((e) => /* @__PURE__ */ l(je, { entry: e }, e.id))
+			}) : t.map((e) => /* @__PURE__ */ u(Le, { entry: e }, e.id))
 		})]
 	});
 }
 // src/hooks/useKBSearch.ts
-function Me() {
-	let { dispatch: e, config: n } = A(), i = o(void 0), a = o(void 0);
-	i.current ||= new b({
+function ze() {
+	let { dispatch: e, config: n } = A(), i = s(void 0), a = s(void 0);
+	i.current ||= new x({
 		baseUrl: n.apiUrl,
 		token: n.token
 	});
-	let s = t((t) => {
+	let o = t((t) => {
 		a.current && clearTimeout(a.current), t.trim() ? (e({
 			type: "SET_KB_LOADING",
 			payload: !0
@@ -1625,25 +1709,25 @@ function Me() {
 					payload: []
 				});
 			}
-		}, h.SEARCH_DEBOUNCE)) : e({
+		}, g.SEARCH_DEBOUNCE)) : e({
 			type: "SET_KB_RESULTS",
 			payload: []
 		});
 	}, [e]);
 	return r(() => () => {
 		a.current && clearTimeout(a.current);
-	}, []), { search: s };
+	}, []), { search: o };
 }
 // src/components/SearchInput.tsx
-function Ne({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
-	let [i, a] = s(""), c = o(void 0);
-	return r(() => (c.current && clearTimeout(c.current), c.current = setTimeout(() => {
+function Be({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
+	let [i, a] = c(""), o = s(void 0);
+	return r(() => (o.current && clearTimeout(o.current), o.current = setTimeout(() => {
 		e(i.trim());
-	}, h.SEARCH_DEBOUNCE), () => {
-		c.current && clearTimeout(c.current);
-	}), [i, e]), /* @__PURE__ */ u("div", {
+	}, g.SEARCH_DEBOUNCE), () => {
+		o.current && clearTimeout(o.current);
+	}), [i, e]), /* @__PURE__ */ d("div", {
 		className: "acx:relative",
-		children: [/* @__PURE__ */ l(ne, { className: "acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ l("input", {
+		children: [/* @__PURE__ */ u(ne, { className: "acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ u("input", {
 			type: "text",
 			value: i,
 			onChange: (e) => a(e.target.value),
@@ -1651,31 +1735,32 @@ function Ne({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 				e.key === "Enter" && t && i.trim() && (e.preventDefault(), t(i.trim()));
 			},
 			placeholder: n,
+			"aria-label": n.replace(/\.+$/, ""),
 			className: "acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
 		})]
 	});
 }
 // src/components/ArticleCard.tsx
 function $({ article: e, onClick: t }) {
-	return /* @__PURE__ */ u("button", {
+	return /* @__PURE__ */ d("button", {
 		onClick: () => t(e),
 		className: "acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors acx:group",
-		children: [/* @__PURE__ */ u("div", {
+		children: [/* @__PURE__ */ d("div", {
 			className: "acx:flex-1 acx:min-w-0",
-			children: [/* @__PURE__ */ l("h4", {
+			children: [/* @__PURE__ */ u("h4", {
 				className: "acx:text-sm acx:font-medium acx:text-gray-900 acx:truncate acx:group-hover:text-primary-600 acx:transition-colors",
 				children: e.title
-			}), e.summary && /* @__PURE__ */ l("p", {
+			}), e.summary && /* @__PURE__ */ u("p", {
 				className: "acx:text-xs acx:text-gray-500 acx:mt-0.5 acx:line-clamp-2",
 				children: e.summary
 			})]
-		}), /* @__PURE__ */ l(P, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
+		}), /* @__PURE__ */ u(F, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
 	});
 }
 // src/tabs/HelpTab.tsx
-function Pe() {
-	let { state: e, dispatch: n, config: i } = A(), { search: a } = Me(), c = e.kbTopics, [d, f] = s(null), [p, m] = s([]), [h, g] = s(!1), [v, y] = s(null), [x, S] = s(!1), C = o(void 0);
-	C.current ||= new b({
+function Ve() {
+	let { state: e, dispatch: n, config: i } = A(), { search: a } = ze(), o = e.kbTopics, [l, f] = c(null), [p, m] = c([]), [h, g] = c(!1), [_, y] = c(null), [b, S] = c(!1), C = s(void 0);
+	C.current ||= new x({
 		baseUrl: i.apiUrl,
 		token: i.token
 	});
@@ -1716,173 +1801,198 @@ function Pe() {
 	}, []), O = t(() => {
 		f(null), m([]);
 	}, []);
-	if (d) return /* @__PURE__ */ u("div", {
+	if (l) return /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
-		children: [/* @__PURE__ */ u("div", {
+		children: [/* @__PURE__ */ d("div", {
 			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
 			children: [
-				/* @__PURE__ */ u("button", {
+				/* @__PURE__ */ d("button", {
 					onClick: O,
 					className: "acx:flex acx:items-center acx:gap-1 acx:text-sm acx:text-primary-600 acx:mb-2 acx:hover:text-primary-700",
-					children: [/* @__PURE__ */ l(oe, { className: "acx:w-4 acx:h-4" }), "Back"]
+					children: [/* @__PURE__ */ u(oe, { className: "acx:w-4 acx:h-4" }), "Back"]
 				}),
-				/* @__PURE__ */ l("h2", {
+				/* @__PURE__ */ u("h2", {
 					className: "acx:text-base acx:font-semibold acx:text-gray-900",
-					children: d.name
+					children: l.name
 				}),
-				/* @__PURE__ */ u("p", {
+				/* @__PURE__ */ d("p", {
 					className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
 					children: [
-						d.article_count,
+						l.article_count,
 						" article",
-						d.article_count === 1 ? "" : "s"
+						l.article_count === 1 ? "" : "s"
 					]
 				})
 			]
-		}), /* @__PURE__ */ l("div", {
+		}), /* @__PURE__ */ u("div", {
 			className: "acx:p-4 acx:space-y-1",
-			children: h ? /* @__PURE__ */ l("div", {
+			children: h ? /* @__PURE__ */ u("div", {
 				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "Loading..."
-			}) : p.length === 0 ? /* @__PURE__ */ l("div", {
+			}) : p.length === 0 ? /* @__PURE__ */ u("div", {
 				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "No articles found"
-			}) : p.map((e) => /* @__PURE__ */ l($, {
+			}) : p.map((e) => /* @__PURE__ */ u($, {
 				article: e,
 				onClick: D
 			}, e.id))
 		})]
 	});
 	let k = e.kbLoading || e.kbResults.length > 0;
-	return /* @__PURE__ */ u("div", {
+	return /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
-		children: [/* @__PURE__ */ u("div", {
+		children: [/* @__PURE__ */ d("div", {
 			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
 			children: [
-				/* @__PURE__ */ l("h2", {
+				/* @__PURE__ */ u("h2", {
 					className: "acx:text-base acx:font-semibold acx:text-gray-900",
 					children: "Help Centre"
 				}),
-				/* @__PURE__ */ l("p", {
+				/* @__PURE__ */ u("p", {
 					className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
 					children: "Ask a question or browse topics"
 				}),
-				/* @__PURE__ */ u("div", {
+				/* @__PURE__ */ d("div", {
 					className: "acx:mt-3",
-					children: [/* @__PURE__ */ l(Ne, {
+					children: [/* @__PURE__ */ u(Be, {
 						onSearch: w,
 						onSubmit: T,
 						placeholder: "Ask a question or search..."
-					}), /* @__PURE__ */ l("p", {
+					}), /* @__PURE__ */ u("p", {
 						className: "acx:mt-2 acx:text-xs acx:text-gray-500",
-						children: _.line
+						children: v.line
 					})]
 				}),
-				x && /* @__PURE__ */ l("div", {
-					className: "acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400",
-					children: "Finding an answer..."
-				}),
-				!x && v?.answer && /* @__PURE__ */ u("div", {
-					className: "acx:mt-3 acx:rounded-lg acx:bg-primary-50 acx:border acx:border-primary-100 acx:p-3",
+				/* @__PURE__ */ d("div", {
+					"aria-live": "polite",
 					children: [
-						/* @__PURE__ */ l("span", {
-							className: "acx:inline-block acx:mb-2 acx:rounded-full acx:bg-primary-600 acx:px-2.5 acx:py-0.5 acx:text-xs acx:font-semibold acx:text-white",
-							children: _.label
+						b && /* @__PURE__ */ u("div", {
+							className: "acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400",
+							children: "Finding an answer..."
 						}),
-						/* @__PURE__ */ l("p", {
-							className: "acx:text-sm acx:text-gray-800 acx:whitespace-pre-line",
-							children: v.answer
+						!b && _?.answer && /* @__PURE__ */ d("div", {
+							className: "acx:mt-3 acx:rounded-lg acx:bg-primary-50 acx:border acx:border-primary-100 acx:p-3",
+							children: [
+								/* @__PURE__ */ u("span", {
+									className: "acx:inline-block acx:mb-2 acx:rounded-full acx:bg-primary-600 acx:px-2.5 acx:py-0.5 acx:text-xs acx:font-semibold acx:text-white",
+									children: v.label
+								}),
+								/* @__PURE__ */ u("p", {
+									className: "acx:text-sm acx:text-gray-800 acx:whitespace-pre-line",
+									children: _.answer
+								}),
+								_.sources.length > 0 && /* @__PURE__ */ u("div", {
+									className: "acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1",
+									children: _.sources.map((e) => /* @__PURE__ */ d("button", {
+										onClick: () => D(e),
+										className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
+										children: [
+											e.title,
+											" ",
+											/* @__PURE__ */ u("span", {
+												"aria-hidden": "true",
+												children: "→"
+											})
+										]
+									}, e.id))
+								})
+							]
 						}),
-						v.sources.length > 0 && /* @__PURE__ */ l("div", {
-							className: "acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1",
-							children: v.sources.map((e) => /* @__PURE__ */ u("button", {
-								onClick: () => D(e),
-								className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
-								children: [e.title, " →"]
-							}, e.id))
+						!b && _?.fallback && /* @__PURE__ */ u("p", {
+							className: "acx:mt-3 acx:text-xs acx:text-gray-500",
+							children: "We couldn't find a direct answer — try these articles, or send us a message."
 						})
 					]
-				}),
-				!x && v?.fallback && /* @__PURE__ */ l("p", {
-					className: "acx:mt-3 acx:text-xs acx:text-gray-500",
-					children: "We couldn't find a direct answer — try these articles, or send us a message."
 				})
 			]
-		}), k ? /* @__PURE__ */ l("div", {
+		}), k ? /* @__PURE__ */ u("div", {
 			className: "acx:p-4 acx:space-y-1",
-			children: e.kbLoading ? /* @__PURE__ */ l("div", {
+			children: e.kbLoading ? /* @__PURE__ */ u("div", {
 				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
 				children: "Searching..."
-			}) : e.kbResults.slice(0, 5).map((e) => /* @__PURE__ */ l($, {
+			}) : e.kbResults.slice(0, 5).map((e) => /* @__PURE__ */ u($, {
 				article: e,
 				onClick: D
 			}, e.id))
-		}) : /* @__PURE__ */ l("div", {
+		}) : /* @__PURE__ */ u("div", {
 			className: "acx:p-4 acx:space-y-1",
-			children: c.length === 0 ? /* @__PURE__ */ l("div", {
+			children: o.length === 0 ? /* @__PURE__ */ u("div", {
 				className: "acx:py-8 acx:text-center",
-				children: /* @__PURE__ */ l("p", {
+				children: /* @__PURE__ */ u("p", {
 					className: "acx:text-sm acx:text-gray-400",
 					children: "No help topics available"
 				})
-			}) : c.map((e) => /* @__PURE__ */ u("button", {
+			}) : o.map((e) => /* @__PURE__ */ d("button", {
 				onClick: () => E(e),
 				className: "acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors",
-				children: [/* @__PURE__ */ u("div", { children: [/* @__PURE__ */ l("h4", {
+				children: [/* @__PURE__ */ d("div", { children: [/* @__PURE__ */ u("h4", {
 					className: "acx:text-sm acx:font-medium acx:text-gray-900",
 					children: e.name
-				}), /* @__PURE__ */ u("p", {
+				}), /* @__PURE__ */ d("p", {
 					className: "acx:text-xs acx:text-gray-500",
 					children: [
 						e.article_count,
 						" article",
 						e.article_count === 1 ? "" : "s"
 					]
-				})] }), /* @__PURE__ */ l(P, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
+				})] }), /* @__PURE__ */ u(F, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
 			}, e.id))
 		})]
 	});
 }
 // src/ChatWidget.tsx
-function Fe(e) {
-	return /* @__PURE__ */ l(D, {
+function He(e) {
+	return /* @__PURE__ */ u(O, {
 		...e,
-		children: /* @__PURE__ */ l(Ie, { position: e.position ?? m.POSITION })
+		children: /* @__PURE__ */ u(Ue, { position: e.position ?? h.POSITION })
 	});
 }
-function Ie({ position: e }) {
-	let { state: t, dispatch: n } = A(), [r, i] = s(!1);
-	return /* @__PURE__ */ u("div", {
+function Ue({ position: e }) {
+	let { state: t, dispatch: n } = A(), [a, o] = c(!1), l = s(null), f = s(null), p = i(), m = `${p}-panel`;
+	r(() => {
+		a && l.current?.focus({ preventScroll: !0 });
+	}, [a]);
+	let h = () => {
+		o(!1), f.current?.focus({ preventScroll: !0 });
+	};
+	return /* @__PURE__ */ d("div", {
 		className: "acrux-chat-widget",
-		children: [r && /* @__PURE__ */ u("div", {
-			className: `acx:fixed acx:bottom-20 ${e === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up`,
+		children: [a && /* @__PURE__ */ d("div", {
+			className: `acx:fixed acx:bottom-20 ${e === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up acx:outline-none`,
 			role: "dialog",
 			"aria-label": "Chat widget",
+			ref: l,
+			tabIndex: -1,
+			onKeyDown: (e) => {
+				e.key === "Escape" && !e.nativeEvent.isComposing && (e.stopPropagation(), h());
+			},
 			children: [
-				/* @__PURE__ */ u("div", {
+				/* @__PURE__ */ d("div", {
 					className: "acx:flex acx:items-center acx:justify-between acx:px-5 acx:py-4 acx:bg-primary-600 acx:text-white",
-					children: [/* @__PURE__ */ u("div", {
+					children: [/* @__PURE__ */ d("div", {
 						className: "acx:flex acx:items-center acx:gap-2.5",
-						children: [/* @__PURE__ */ l("svg", {
+						children: [/* @__PURE__ */ u("svg", {
 							xmlns: "http://www.w3.org/2000/svg",
 							width: "24",
 							height: "24",
 							viewBox: "0 0 375 375",
 							className: "acx:flex-shrink-0",
-							children: /* @__PURE__ */ l("path", {
+							"aria-hidden": "true",
+							children: /* @__PURE__ */ u("path", {
 								fill: "#ffde5a",
 								d: "M 366.039062 86.546875 L 209.414062 117.519531 L 156.304688 4.511719 L 132.847656 127.152344 L 8.957031 142.746094 L 120.160156 174.398438 L 91.242188 158.484375 L 154.742188 150.492188 L 166.765625 87.632812 L 193.984375 145.554688 L 282.449219 125.828125 L 210.808594 181.351562 L 238.035156 239.269531 L 181.964844 208.414062 L 14 374.972656 L 185.960938 240.164062 L 295.355469 300.371094 L 242.242188 187.359375 L 366.039062 86.546875",
 								fillRule: "nonzero"
 							})
-						}), /* @__PURE__ */ l("h2", {
+						}), /* @__PURE__ */ u("h2", {
 							className: "acx:text-lg acx:font-semibold",
 							children: "Acrux Chat"
 						})]
-					}), /* @__PURE__ */ l("button", {
-						onClick: () => i(!1),
+					}), /* @__PURE__ */ u("button", {
+						type: "button",
+						onClick: h,
 						className: "acx:p-1 acx:rounded-md acx:bg-white acx:transition-colors acx:hover:bg-gray-100",
 						"aria-label": "Close chat",
-						children: /* @__PURE__ */ l("svg", {
+						children: /* @__PURE__ */ u("svg", {
 							width: "20",
 							height: "20",
 							viewBox: "0 0 20 20",
@@ -1890,31 +2000,38 @@ function Ie({ position: e }) {
 							stroke: "#006383",
 							strokeWidth: "2",
 							strokeLinecap: "round",
-							children: /* @__PURE__ */ l("path", { d: "M15 5L5 15M5 5l10 10" })
+							"aria-hidden": "true",
+							children: /* @__PURE__ */ u("path", { d: "M15 5L5 15M5 5l10 10" })
 						})
 					})]
 				}),
-				/* @__PURE__ */ u("div", {
+				/* @__PURE__ */ d("div", {
 					className: "acx:flex-1 acx:overflow-hidden",
+					role: "tabpanel",
+					id: m,
+					"aria-labelledby": `${p}-tab-${t.activeTab}`,
 					children: [
-						t.activeTab === "messages" && /* @__PURE__ */ l(Oe, {}),
-						t.activeTab === "news" && /* @__PURE__ */ l(Q, {}),
-						t.activeTab === "help" && /* @__PURE__ */ l(Pe, {})
+						t.activeTab === "messages" && /* @__PURE__ */ u(Fe, {}),
+						t.activeTab === "news" && /* @__PURE__ */ u(Re, {}),
+						t.activeTab === "help" && /* @__PURE__ */ u(Ve, {})
 					]
 				}),
-				/* @__PURE__ */ l(R, {
+				/* @__PURE__ */ u(W, {
 					activeTab: t.activeTab,
+					idBase: p,
+					panelId: m,
 					onTabChange: (e) => n({
 						type: "SET_TAB",
 						payload: e
 					})
 				})
 			]
-		}), /* @__PURE__ */ l(se, {
-			isOpen: r,
-			onClick: () => i(!r),
-			position: e
+		}), /* @__PURE__ */ u(se, {
+			isOpen: a,
+			onClick: () => o(!a),
+			position: e,
+			buttonRef: f
 		})]
 	});
 }
-export { Fe as ChatWidget };
+export { He as ChatWidget };

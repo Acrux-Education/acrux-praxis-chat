@@ -62,5 +62,10 @@
     "js": "sha384-o9juKwi6kdiVBLFFkl7yNMPBftq8hGC8LR5Ivld0BtPXjpE0dgOeo/Qn07Ht4vcT",
     "es": "sha384-a3un1gIE2BZXACKBlAyTjyY+CkfG7T83FOvWm8TTnz40pY515RYZYjOW6R8ZQA5l",
     "css": "sha384-iny2MDz56/FckiEvH+9uwdWlCW+AAcJUMbTA4r089WVcJHBvyr4B7o6j21D9yryo"
+  },
+  "0.1.21": {
+    "js": "sha384-OmxliGx8eEd+a7pEGuly8jTGf9W0B1svwc/gMSinZVRFPh+cVjm532aa6LBqodQQ",
+    "es": "sha384-TsyUanf18rVI461QsS+Oz85AVvj9iigh7nUM7wEoSYOMZzcAlvb80bXgYTu2ONDy",
+    "css": "sha384-t3DexTp4s4TS1uXY4Wrt6KZomiVYByB6F4Efw50kMWXv+ySEzUs1hCp3I0HhhaFK"
   }
 }
