@@ -5,6 +5,7 @@ import { ApiClient } from '../services/api'
 import { SearchInput } from '../components/SearchInput'
 import { AI_ANSWER_TEXT } from '../constants'
 import { ArticleCard } from '../components/ArticleCard'
+import { LiveStatus } from '../components/LiveStatus'
 import { ChevronLeftIcon, ChevronRightIcon } from '../icons'
 import type { KBTopic, KBArticle, KBAnswer } from '../types'
 
@@ -98,8 +99,9 @@ export function HelpTab() {
   }, [selectedTopic])
 
   if (selectedTopic) {
-    // One always-mounted polite region carries the status text, so "No
-    // articles found" is announced (WCAG 4.1.3). With no status it is sr-only
+    // One polite region carries the status text (WCAG 4.1.3). It mounts with
+    // this view, empty, and takes "Loading..." after mount, so that is
+    // announced too, as is "No articles found". With no status it is sr-only
     // and empty, so the article list lays out as before.
     const topicStatus = loading ? 'Loading...' : articles.length === 0 ? 'No articles found' : ''
     return (
@@ -119,9 +121,7 @@ export function HelpTab() {
         </div>
 
         <div className="acx:p-4 acx:space-y-1">
-          <div aria-live="polite" className={topicStatus ? 'acx:py-4 acx:text-center acx:text-sm acx:text-gray-500' : 'acx:sr-only'}>
-            {topicStatus}
-          </div>
+          <LiveStatus text={topicStatus} className="acx:py-4 acx:text-center acx:text-sm acx:text-gray-500" />
           {!topicStatus && articles.map((article) => (
             <ArticleCard key={article.id} article={article} onClick={handleArticleClick} />
           ))}

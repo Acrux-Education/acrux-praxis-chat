@@ -11,6 +11,7 @@ import { MessageInput } from './MessageInput'
 import { MessageList } from './MessageList'
 import { LeadCaptureForm } from './LeadCaptureForm'
 import { SearchInput } from './SearchInput'
+import { LiveStatus } from './LiveStatus'
 
 // No DOM test environment is installed (see report), so these assert the
 // rendered accessibility markup; focus and key handling are covered by the
@@ -104,6 +105,16 @@ describe('HelpTab', () => {
 
     expect(tag(html, /<h2[^>]*>Help Centre<\/h2>/)).toContain('tabindex="-1"')
     expect(html).toContain('<div aria-live="polite" class="acx:sr-only"></div>')
+  })
+})
+
+describe('LiveStatus', () => {
+  // The server render is the first render, before any effect runs: what a
+  // newly mounted view (the Help topic view) inserts into the page.
+  it('test_LiveStatus_mounts_empty_and_sr_only_when_it_has_text_to_announce', () => {
+    const html = renderToStaticMarkup(<LiveStatus text="Loading..." className="acx:py-4" />)
+
+    expect(html).toBe('<div aria-live="polite" class="acx:sr-only"></div>')
   })
 })
 
