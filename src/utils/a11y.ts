@@ -24,31 +24,38 @@ function isOwnMessage(message: ChatMessage): boolean {
   return message.sender_type === 'visitor' || message.sender_type === 'user'
 }
 
+function spoken(message: ChatMessage): string {
+  if (message.sender_type === 'system' && message.content_type !== 'auto_response') {
+    return message.content
+  }
+  return message.sender_name ? `${message.sender_name}: ${message.content}` : message.content
+}
+
 /**
  * Text for the chat's polite live region when the message list changes from
  * `prev` to `next`, or null when nothing should be announced.
  *
- * Announces only a single message appended by someone else (ADD_MESSAGE from
- * the socket) and the person's own message failing to send. History loads
- * (SET_MESSAGES replaces the array), the person's own sends and send
- * acknowledgements stay silent, so a screen reader is not flooded.
+ * Announces every message from someone else whose id was not on screen
+ * before (including several landing in one render, or replies missed during
+ * a reconnect), and the person's own message failing to send. The first
+ * load into an empty list, the person's own sends and send acknowledgements
+ * stay silent, so a screen reader is not flooded.
  */
 export function chatAnnouncement(prev: readonly ChatMessage[], next: readonly ChatMessage[]): string | null {
-  if (next.length === prev.length + 1 && prev.every((message, i) => next[i] === message)) {
-    const added = next[next.length - 1]!
-    if (isOwnMessage(added)) return null
-    if (added.sender_type === 'system' && added.content_type !== 'auto_response') {
-      return added.content
-    }
-    return added.sender_name ? `${added.sender_name}: ${added.content}` : added.content
+  if (prev.length === 0) return null
+
+  const before = new Map(prev.map((message) => [message.id, message]))
+  const parts: string[] = []
+
+  if (next.some((message) =>
+    isOwnMessage(message) && message.status === 'failed' && before.get(message.id)?.status !== 'failed'
+  )) {
+    parts.push('Message failed to send')
   }
 
-  if (next.length === prev.length) {
-    const failed = next.some(
-      (message, i) => isOwnMessage(message) && message.status === 'failed' && prev[i]?.status !== 'failed'
-    )
-    if (failed) return 'Message failed to send'
+  for (const message of next) {
+    if (!isOwnMessage(message) && !before.has(message.id)) parts.push(spoken(message))
   }
 
-  return null
+  return parts.length > 0 ? parts.join('. ') : null
 }

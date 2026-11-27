@@ -29,13 +29,13 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
   // (WCAG 2.4.3). The panel itself takes focus: focusing the message box
   // would raise the on-screen keyboard on touch devices.
   useEffect(() => {
-    if (isOpen) panelRef.current?.focus()
+    if (isOpen) panelRef.current?.focus({ preventScroll: true })
   }, [isOpen])
 
   // Closing from inside the panel hands focus back to the launcher.
   const closeAndReturnFocus = () => {
     setIsOpen(false)
-    launcherRef.current?.focus()
+    launcherRef.current?.focus({ preventScroll: true })
   }
 
   const handlePanelKeyDown = (e: React.KeyboardEvent) => {

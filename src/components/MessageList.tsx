@@ -16,12 +16,13 @@ export function MessageList({ messages, agentTyping }: MessageListProps) {
   // What the list held at the previous render, so only a newly arrived reply
   // (not the history already on screen) reaches the live region.
   const prevMessagesRef = useRef(messages)
-  const [announcement, setAnnouncement] = useState('')
+  // The count keys the text node, so the same words twice are read twice.
+  const [announcement, setAnnouncement] = useState({ text: '', count: 0 })
 
   useEffect(() => {
     const text = chatAnnouncement(prevMessagesRef.current, messages)
     prevMessagesRef.current = messages
-    if (text) setAnnouncement(text)
+    if (text) setAnnouncement((prev) => ({ text, count: prev.count + 1 }))
   }, [messages])
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export function MessageList({ messages, agentTyping }: MessageListProps) {
     {/* Polite announcements of replies; the log itself stays silent so
         history loads and the person's own messages are not read out. */}
     <div className="acx:sr-only" aria-live="polite" aria-atomic="true">
-      {announcement}
+      <span key={announcement.count}>{announcement.text}</span>
     </div>
     <div
       ref={containerRef}

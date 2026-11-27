@@ -51,15 +51,32 @@ describe('chatAnnouncement', () => {
     expect(chatAnnouncement(prev, next)).toBeNull()
   })
 
-  it('test_chatAnnouncement_is_silent_when_history_replaces_the_list', () => {
-    const prev = [message({ id: 1 })]
-    const next = [message({ id: 1 }), message({ id: 2, content: 'Earlier reply' })]
+  it('test_chatAnnouncement_is_silent_when_history_reloads_messages_already_shown', () => {
+    const prev = [message({ id: 1 }), message({ id: 2 })]
+    const next = [message({ id: 1 }), message({ id: 2 })]
 
     expect(chatAnnouncement(prev, next)).toBeNull()
   })
 
+  it('test_chatAnnouncement_reads_reply_when_ack_and_reply_land_in_one_render', () => {
+    const prev = [message({ id: 't1', temp_id: 't1', sender_type: 'user', status: 'sending' })]
+    const next = [
+      { ...prev[0]!, id: 9, temp_id: undefined, status: 'sent' as const },
+      message({ id: 10, content: 'Thanks, looking now' }),
+    ]
+
+    expect(chatAnnouncement(prev, next)).toBe('Sam Lee: Thanks, looking now')
+  })
+
+  it('test_chatAnnouncement_reads_every_reply_when_two_arrive_in_one_render', () => {
+    const prev = [message({ id: 1, sender_type: 'user' })]
+    const next = [...prev, message({ id: 2, content: 'One' }), message({ id: 3, content: 'Two' })]
+
+    expect(chatAnnouncement(prev, next)).toBe('Sam Lee: One. Sam Lee: Two')
+  })
+
   it('test_chatAnnouncement_is_silent_when_history_loads_into_empty_list', () => {
-    const next = [message({ id: 1 }), message({ id: 2 })]
+    const next = [message({ id: 1 })]
 
     expect(chatAnnouncement([], next)).toBeNull()
   })
@@ -79,8 +96,9 @@ describe('chatAnnouncement', () => {
   })
 
   it('test_chatAnnouncement_reads_text_only_when_system_notice_appended', () => {
-    const next = [message({ sender_type: 'system', sender_name: 'System', content: 'Sam joined the chat' })]
+    const prev = [message({ id: 1, sender_type: 'user' })]
+    const next = [...prev, message({ id: 2, sender_type: 'system', sender_name: 'System', content: 'Sam joined the chat' })]
 
-    expect(chatAnnouncement([], next)).toBe('Sam joined the chat')
+    expect(chatAnnouncement(prev, next)).toBe('Sam joined the chat')
   })
 })
