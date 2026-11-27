@@ -15,6 +15,7 @@ interface MessageInputProps {
 export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, placeholder }: MessageInputProps) {
   const [text, setText] = useState('')
   const textareaId = useId()
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -24,6 +25,9 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
     onSend(trimmed)
     setText('')
     onTyping?.(false)
+    // Sending empties the box, which disables a focused Send button; keep
+    // focus in the message box for the next message (WCAG 2.4.3).
+    textareaRef.current?.focus()
   }, [text, disabled, onSend, onTyping])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -85,13 +89,17 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
           </>
         )}
 
+        {/* Read-only, not disabled, while a send is in flight: disabling the
+            focused box would drop focus to the page (WCAG 2.4.3). */}
         <textarea
+          ref={textareaRef}
           value={text}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           id={textareaId}
           placeholder={placeholder ?? 'Type a message...'}
-          disabled={disabled}
+          readOnly={disabled}
+          aria-disabled={disabled || undefined}
           rows={1}
           className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-500"
           style={{ fieldSizing: 'content' } as React.CSSProperties}

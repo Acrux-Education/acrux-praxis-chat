@@ -138,7 +138,7 @@ export function HelpTab() {
         <h2 ref={helpHeadingRef} tabIndex={-1} className="acx:text-base acx:font-semibold acx:text-gray-900 acx:outline-none">Help Centre</h2>
         <p className="acx:text-xs acx:text-gray-500 acx:mt-0.5">Ask a question or browse topics</p>
         <div className="acx:mt-3">
-          <SearchInput onSearch={handleSearch} onSubmit={ask} placeholder="Ask a question or search..." />
+          <SearchInput onSearch={handleSearch} onSubmit={ask} placeholder="Ask a question or search..." label="Search help" />
           <p className="acx:mt-2 acx:text-xs acx:text-gray-500">{AI_ANSWER_TEXT.line}</p>
         </div>
 

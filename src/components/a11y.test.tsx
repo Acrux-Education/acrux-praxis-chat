@@ -72,6 +72,16 @@ describe('ChatLauncher', () => {
 })
 
 describe('MessageInput', () => {
+  // Focus staying in the box after a send can only be checked live (no DOM
+  // environment); this checks the box is never disabled under focus.
+  it('test_MessageInput_textarea_is_read_only_not_disabled_while_a_send_is_in_flight', () => {
+    const textarea = tag(renderToStaticMarkup(<MessageInput onSend={() => {}} mode="user" disabled />), /<textarea[^>]*>/)
+
+    expect(textarea).toContain('readOnly=""')
+    expect(textarea).toContain('aria-disabled="true"')
+    expect(textarea).not.toMatch(/\sdisabled=""/)
+  })
+
   it('test_MessageInput_textarea_is_named_by_visible_label_when_rendered', () => {
     const html = renderToStaticMarkup(<MessageInput onSend={() => {}} mode="user" />)
 
@@ -161,6 +171,22 @@ describe('form fields', () => {
     const email = tag(html, /<input[^>]*type="email"[^>]*>/)
     expect(email).toContain('aria-label="Your email"')
     expect(email).toContain('autoComplete="email"')
+  })
+
+  it('test_SearchInput_is_named_by_its_visible_label_when_one_is_given', () => {
+    const html = renderToStaticMarkup(<SearchInput onSearch={() => {}} placeholder="Ask a question or search..." label="Search help" />)
+
+    const input = tag(html, /<input[^>]*>/)
+    const id = input.match(/id="([^"]+)"/)?.[1]
+    expect(id).toBeTruthy()
+    expect(html).toContain(`<label for="${id}" class="acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600">Search help</label>`)
+    expect(input).not.toContain('aria-label')
+  })
+
+  it('test_HelpTab_search_has_the_visible_label_Search_help_when_rendered', () => {
+    const html = render(<HelpTab />)
+
+    expect(html).toMatch(/<label for="[^"]+"[^>]*>Search help<\/label>/)
   })
 
   it('test_SearchInput_has_accessible_name_without_ellipsis_when_rendered', () => {
