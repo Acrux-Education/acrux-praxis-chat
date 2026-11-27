@@ -1298,9 +1298,9 @@ function Ae({ messages: e, agentTyping: t }) {
 }
 // src/components/MessageInput.tsx
 function je({ onSend: e, onTyping: n, onFileUpload: r, mode: a, disabled: o, placeholder: f }) {
-	let [p, m] = c(""), h = i(), g = s(null), v = s(void 0), y = t(() => {
+	let [p, m] = c(""), h = i(), g = s(null), v = s(null), y = s(void 0), b = t(() => {
 		let t = p.trim();
-		t && !o && (e(t), m(""), n?.(!1));
+		t && !o && (e(t), m(""), n?.(!1), g.current?.focus());
 	}, [
 		p,
 		o,
@@ -1318,14 +1318,14 @@ function je({ onSend: e, onTyping: n, onFileUpload: r, mode: a, disabled: o, pla
 			children: [
 				a === "user" && r && /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u("button", {
 					onClick: () => {
-						g.current?.click();
+						v.current?.click();
 					},
 					className: "acx:p-1.5 acx:text-gray-500 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0",
 					"aria-label": "Attach file",
 					type: "button",
 					children: /* @__PURE__ */ u(re, { className: "acx:w-5 acx:h-5" })
 				}), /* @__PURE__ */ u("input", {
-					ref: g,
+					ref: v,
 					type: "file",
 					className: "acx:hidden",
 					accept: _.ALLOWED_FILE_TYPES.join(","),
@@ -1335,23 +1335,25 @@ function je({ onSend: e, onTyping: n, onFileUpload: r, mode: a, disabled: o, pla
 					}
 				})] }),
 				/* @__PURE__ */ u("textarea", {
+					ref: g,
 					value: p,
 					onChange: (e) => {
 						let t = e.target.value;
-						t.length > _.MAX_MESSAGE_LENGTH || (m(t), n?.(!0), v.current && clearTimeout(v.current), v.current = setTimeout(() => n?.(!1), 2e3));
+						t.length > _.MAX_MESSAGE_LENGTH || (m(t), n?.(!0), y.current && clearTimeout(y.current), y.current = setTimeout(() => n?.(!1), 2e3));
 					},
 					onKeyDown: (e) => {
-						e.key === "Enter" && !e.shiftKey && (e.preventDefault(), y());
+						e.key === "Enter" && !e.shiftKey && (e.preventDefault(), b());
 					},
 					id: h,
 					placeholder: f ?? "Type a message...",
-					disabled: o,
+					readOnly: o,
+					"aria-disabled": o || void 0,
 					rows: 1,
 					className: "acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-500",
 					style: { fieldSizing: "content" }
 				}),
 				/* @__PURE__ */ u("button", {
-					onClick: y,
+					onClick: b,
 					disabled: !p.trim() || o,
 					className: "acx:p-1.5 acx:text-primary-600 acx:transition-colors acx:flex-shrink-0 acx:enabled:hover:text-primary-700 acx:disabled:text-gray-300 acx:disabled:cursor-not-allowed",
 					"aria-label": "Send message",
@@ -1723,26 +1725,31 @@ function ze() {
 	}, []), { search: o };
 }
 // src/components/SearchInput.tsx
-function Be({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." }) {
-	let [i, a] = c(""), o = s(void 0);
-	return r(() => (o.current && clearTimeout(o.current), o.current = setTimeout(() => {
-		e(i.trim());
+function Be({ onSearch: e, onSubmit: t, placeholder: n = "Search for help...", label: a }) {
+	let [o, f] = c(""), p = i(), m = s(void 0);
+	return r(() => (m.current && clearTimeout(m.current), m.current = setTimeout(() => {
+		e(o.trim());
 	}, g.SEARCH_DEBOUNCE), () => {
-		o.current && clearTimeout(o.current);
-	}), [i, e]), /* @__PURE__ */ d("div", {
+		m.current && clearTimeout(m.current);
+	}), [o, e]), /* @__PURE__ */ d(l, { children: [a && /* @__PURE__ */ u("label", {
+		htmlFor: p,
+		className: "acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600",
+		children: a
+	}), /* @__PURE__ */ d("div", {
 		className: "acx:relative",
 		children: [/* @__PURE__ */ u(F, { className: "acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ u("input", {
 			type: "text",
-			value: i,
-			onChange: (e) => a(e.target.value),
+			value: o,
+			onChange: (e) => f(e.target.value),
 			onKeyDown: (e) => {
-				e.key === "Enter" && t && i.trim() && (e.preventDefault(), t(i.trim()));
+				e.key === "Enter" && t && o.trim() && (e.preventDefault(), t(o.trim()));
 			},
+			id: p,
 			placeholder: n,
-			"aria-label": n.replace(/\.+$/, ""),
+			"aria-label": a ? void 0 : n.replace(/\.+$/, ""),
 			className: "acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
 		})]
-	});
+	})] });
 }
 // src/components/ArticleCard.tsx
 function $({ article: e, onClick: t }) {
@@ -1761,8 +1768,21 @@ function $({ article: e, onClick: t }) {
 		}), /* @__PURE__ */ u(L, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
 	});
 }
+// src/components/LiveStatus.tsx
+function Ve({ text: e, className: t }) {
+	let [n, i] = c(!1);
+	r(() => {
+		i(!0);
+	}, []);
+	let a = n ? e : "";
+	return /* @__PURE__ */ u("div", {
+		"aria-live": "polite",
+		className: a ? t : "acx:sr-only",
+		children: a
+	});
+}
 // src/tabs/HelpTab.tsx
-function Ve() {
+function He() {
 	let { state: e, dispatch: n, config: i } = j(), { search: a } = ze(), o = e.kbTopics, [l, f] = c(null), [p, m] = c([]), [h, g] = c(!1), [_, y] = c(null), [b, S] = c(!1), C = s(void 0);
 	C.current ||= new x({
 		baseUrl: i.apiUrl,
@@ -1841,10 +1861,9 @@ function Ve() {
 				]
 			}), /* @__PURE__ */ d("div", {
 				className: "acx:p-4 acx:space-y-1",
-				children: [/* @__PURE__ */ u("div", {
-					"aria-live": "polite",
-					className: e ? "acx:py-4 acx:text-center acx:text-sm acx:text-gray-500" : "acx:sr-only",
-					children: e
+				children: [/* @__PURE__ */ u(Ve, {
+					text: e,
+					className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-500"
 				}), !e && p.map((e) => /* @__PURE__ */ u($, {
 					article: e,
 					onClick: D
@@ -1873,7 +1892,8 @@ function Ve() {
 					children: [/* @__PURE__ */ u(Be, {
 						onSearch: w,
 						onSubmit: T,
-						placeholder: "Ask a question or search..."
+						placeholder: "Ask a question or search...",
+						label: "Search help"
 					}), /* @__PURE__ */ u("p", {
 						className: "acx:mt-2 acx:text-xs acx:text-gray-500",
 						children: v.line
@@ -1958,13 +1978,13 @@ function Ve() {
 	});
 }
 // src/ChatWidget.tsx
-function He(e) {
+function Ue(e) {
 	return /* @__PURE__ */ u(O, {
 		...e,
-		children: /* @__PURE__ */ u(Ue, { position: e.position ?? h.POSITION })
+		children: /* @__PURE__ */ u(We, { position: e.position ?? h.POSITION })
 	});
 }
-function Ue({ position: e }) {
+function We({ position: e }) {
 	let { state: t, dispatch: n } = j(), [a, o] = c(!1), l = s(null), f = s(null), p = i(), m = `${p}-panel`;
 	r(() => {
 		a && l.current?.focus({ preventScroll: !0 });
@@ -2030,7 +2050,7 @@ function Ue({ position: e }) {
 					children: [
 						t.activeTab === "messages" && /* @__PURE__ */ u(Fe, {}),
 						t.activeTab === "news" && /* @__PURE__ */ u(Re, {}),
-						t.activeTab === "help" && /* @__PURE__ */ u(Ve, {})
+						t.activeTab === "help" && /* @__PURE__ */ u(He, {})
 					]
 				}),
 				/* @__PURE__ */ u(W, {
@@ -2051,4 +2071,4 @@ function Ue({ position: e }) {
 		})]
 	});
 }
-export { He as ChatWidget };
+export { Ue as ChatWidget };
