@@ -51,7 +51,7 @@ export function MessageList({ messages, agentTyping }: MessageListProps) {
           <div key={message.temp_id ?? message.id}>
             {showDateSeparator && (
               <div className="acx:flex acx:items-center acx:justify-center acx:py-3">
-                <span className="acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full">
+                <span className="acx:text-xs acx:text-gray-500 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full">
                   {formatDateSeparator(message.created_at)}
                 </span>
               </div>

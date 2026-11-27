@@ -41,7 +41,7 @@ export function AnnouncementCard({ announcement, onClick }: AnnouncementCardProp
           {categoryLabels[announcement.category] ?? announcement.category}
         </span>
         {announcement.is_pinned && (
-          <span className="acx:text-[10px] acx:text-amber-600 acx:font-medium">Pinned</span>
+          <span className="acx:text-[10px] acx:text-amber-700 acx:font-medium">Pinned</span>
         )}
       </div>
 
@@ -61,7 +61,7 @@ export function AnnouncementCard({ announcement, onClick }: AnnouncementCardProp
         />
       )}
 
-      <span className="acx:text-[10px] acx:text-gray-400">
+      <span className="acx:text-[10px] acx:text-gray-500">
         {formatRelativeTime(announcement.published_at)}
       </span>
     </button>

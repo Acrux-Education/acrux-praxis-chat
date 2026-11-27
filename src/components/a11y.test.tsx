@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { ReactElement } from 'react'
 import { ChatProvider } from '../context/ChatContext'
-import type { ChatWidgetProps, TabId } from '../types'
+import type { ChatMessage, ChatWidgetProps, TabId } from '../types'
+import { HelpTab } from '../tabs/HelpTab'
+import { MessageBubble } from './MessageBubble'
 import { ChatLauncher } from '../ChatLauncher'
 import { TabBar } from './TabBar'
 import { MessageInput } from './MessageInput'
@@ -69,10 +71,53 @@ describe('ChatLauncher', () => {
 })
 
 describe('MessageInput', () => {
-  it('test_MessageInput_textarea_has_accessible_name_when_rendered', () => {
+  it('test_MessageInput_textarea_is_named_by_visible_label_when_rendered', () => {
     const html = renderToStaticMarkup(<MessageInput onSend={() => {}} mode="user" />)
 
-    expect(tag(html, /<textarea[^>]*>/)).toContain('aria-label="Message"')
+    const id = tag(html, /<textarea[^>]*>/).match(/id="([^"]+)"/)?.[1]
+    expect(id).toBeTruthy()
+    expect(html).toContain(`<label for="${id}" class="acx:block acx:text-xs acx:font-medium acx:text-gray-600">Message</label>`)
+  })
+})
+
+describe('TabBar selected cue', () => {
+  it('test_TabBar_selected_tab_has_bar_and_bold_label_when_rendered', () => {
+    const html = renderTabs('help')
+
+    const help = tag(html, /<button[^>]*id="w-tab-help"[^>]*>[\s\S]*?<\/button>/)
+    expect(help).toContain('acx:border-primary-600')
+    expect(help).toContain('acx:font-semibold')
+  })
+
+  it('test_TabBar_unselected_tab_has_no_bar_or_bold_label_when_rendered', () => {
+    const html = renderTabs('help')
+
+    const messages = tag(html, /<button[^>]*id="w-tab-messages"[^>]*>[\s\S]*?<\/button>/)
+    expect(messages).toContain('acx:border-transparent')
+    expect(messages).not.toContain('acx:font-semibold')
+  })
+})
+
+describe('HelpTab', () => {
+  it('test_HelpTab_headings_take_programmatic_focus_and_status_region_is_mounted_when_rendered', () => {
+    const html = render(<HelpTab />)
+
+    expect(tag(html, /<h2[^>]*>Help Centre<\/h2>/)).toContain('tabindex="-1"')
+    expect(html).toContain('<div aria-live="polite" class="acx:sr-only"></div>')
+  })
+})
+
+describe('MessageBubble', () => {
+  it('test_MessageBubble_attachment_link_is_24px_tall_when_message_has_attachment', () => {
+    const message: ChatMessage = {
+      id: 1, session: 1, sender_type: 'agent', sender_name: 'Sam', content: 'Hi', content_type: 'text',
+      attachments: [{ url: 'https://files.example.test/a.pdf', name: 'a.pdf', type: 'application/pdf' }],
+      is_read: true, created_at: '2026-11-27T00:00:00Z',
+    }
+
+    const html = renderToStaticMarkup(<MessageBubble message={message} />)
+
+    expect(tag(html, /<a [^>]*>/)).toContain('acx:leading-6')
   })
 })
 

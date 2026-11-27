@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useId } from 'react'
 import type { WidgetMode } from '../types'
 import { SendIcon, PaperclipIcon } from '../icons'
 import { LIMITS } from '../constants'
@@ -14,6 +14,7 @@ interface MessageInputProps {
 
 export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, placeholder }: MessageInputProps) {
   const [text, setText] = useState('')
+  const textareaId = useId()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -55,6 +56,10 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
 
   return (
     <div className="acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2">
+      {/* Visible label for the message box (WCAG 3.3.2, approved by Paul). */}
+      <label htmlFor={textareaId} className="acx:block acx:text-xs acx:font-medium acx:text-gray-600">
+        Message
+      </label>
       {/* The textarea draws no outline of its own, so the row carries the
           focus ring while the textarea has keyboard focus (PLATDEV-1684,
           approved by Paul). Buttons in the row keep their own focus cue. */}
@@ -63,7 +68,7 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
           <>
             <button
               onClick={handleFileClick}
-              className="acx:p-1.5 acx:text-gray-400 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0"
+              className="acx:p-1.5 acx:text-gray-500 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0"
               aria-label="Attach file"
               type="button"
             >
@@ -84,11 +89,11 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
           value={text}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          id={textareaId}
           placeholder={placeholder ?? 'Type a message...'}
-          aria-label="Message"
           disabled={disabled}
           rows={1}
-          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400"
+          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-500"
           style={{ fieldSizing: 'content' } as React.CSSProperties}
         />
 

@@ -92,7 +92,7 @@ export function MessagesTab() {
                 </svg>
               </div>
               <p className="acx:text-sm acx:text-gray-600 acx:font-medium">Leave us a message</p>
-              <p className="acx:text-xs acx:text-gray-400 acx:mt-1">
+              <p className="acx:text-xs acx:text-gray-500 acx:mt-1">
                 Our team is currently away. Leave a message and we'll get back to you
                 {responseTime ? ` ${responseTime}` : ' as soon as possible'}.
               </p>

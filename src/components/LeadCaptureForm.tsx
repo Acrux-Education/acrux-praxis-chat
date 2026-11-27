@@ -28,7 +28,7 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         placeholder="Your name"
         aria-label="Your name"
         autoComplete="name"
-        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
+        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
       />
 
       <input
@@ -39,10 +39,10 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         aria-label="Your email"
         autoComplete="email"
         required
-        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
+        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
       />
 
-      <p className="acx:text-xs acx:text-gray-400 acx:leading-snug">
+      <p className="acx:text-xs acx:text-gray-500 acx:leading-snug">
         By starting a chat, your details, messages, and the page you&apos;re on are shared with
         Acrux to respond to your enquiry &mdash; see our{' '}
         <a

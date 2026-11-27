@@ -57,10 +57,13 @@ export function TabBar({ activeTab, onTabChange, idBase, panelId }: TabBarProps)
           aria-label={id === 'messages' && state.unreadCount > 0 ? `${label}, ${state.unreadCount} unread` : undefined}
           tabIndex={index === focusIndex ? 0 : -1}
           onClick={() => onTabChange(id)}
-          className={`acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${
+          // The selected tab is marked by weight and a 2px bar as well as
+          // colour (WCAG 1.4.1, approved by Paul). Every tab carries the
+          // border, transparent when unselected, so nothing shifts.
+          className={`acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors acx:border-b-2 ${
             activeTab === id
-              ? 'acx:text-primary-600'
-              : 'acx:text-gray-400 acx:hover:text-primary-600'
+              ? 'acx:text-primary-600 acx:border-primary-600'
+              : 'acx:text-gray-500 acx:border-transparent acx:hover:text-primary-600'
           }`}
         >
           <div className="acx:relative">
@@ -69,7 +72,7 @@ export function TabBar({ activeTab, onTabChange, idBase, panelId }: TabBarProps)
               <Badge count={state.unreadCount} />
             )}
           </div>
-          <span className="acx:text-[10px] acx:font-medium">{label}</span>
+          <span className={`acx:text-[10px] ${activeTab === id ? 'acx:font-semibold' : 'acx:font-medium'}`}>{label}</span>
         </button>
       ))}
     </nav>

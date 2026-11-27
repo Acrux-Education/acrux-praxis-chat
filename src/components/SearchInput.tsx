@@ -39,7 +39,7 @@ export function SearchInput({ onSearch, onSubmit, placeholder = 'Search for help
         }}
         placeholder={placeholder}
         aria-label={placeholder.replace(/\.+$/, '')}
-        className="acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
+        className="acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
       />
     </div>
   )

@@ -72,12 +72,36 @@ export function HelpTab() {
     }
   }, [])
 
+  // Switching views replaces the content under focus (WCAG 2.4.3): opening a
+  // topic focuses its heading; Back returns focus to the topic chosen, or to
+  // the Help Centre heading if that topic is no longer listed.
+  const topicHeadingRef = useRef<HTMLHeadingElement>(null)
+  const helpHeadingRef = useRef<HTMLHeadingElement>(null)
+  const topicButtonRefs = useRef(new Map<number, HTMLButtonElement>())
+  const returnFocusTopicId = useRef<number | null>(null)
+
   const handleBack = useCallback(() => {
+    returnFocusTopicId.current = selectedTopic?.id ?? null
     setSelectedTopic(null)
     setArticles([])
-  }, [])
+  }, [selectedTopic])
+
+  useEffect(() => {
+    if (selectedTopic) {
+      topicHeadingRef.current?.focus()
+      return
+    }
+    const id = returnFocusTopicId.current
+    if (id === null) return
+    returnFocusTopicId.current = null
+    ;(topicButtonRefs.current.get(id) ?? helpHeadingRef.current)?.focus()
+  }, [selectedTopic])
 
   if (selectedTopic) {
+    // One always-mounted polite region carries the status text, so "No
+    // articles found" is announced (WCAG 4.1.3). With no status it is sr-only
+    // and empty, so the article list lays out as before.
+    const topicStatus = loading ? 'Loading...' : articles.length === 0 ? 'No articles found' : ''
     return (
       <div className="acx:flex acx:flex-col acx:h-full acx:overflow-y-auto">
         <div className="acx:px-5 acx:py-4 acx:border-b acx:border-gray-100">
@@ -88,22 +112,19 @@ export function HelpTab() {
             <ChevronLeftIcon className="acx:w-4 acx:h-4" />
             Back
           </button>
-          <h2 className="acx:text-base acx:font-semibold acx:text-gray-900">{selectedTopic.name}</h2>
+          <h2 ref={topicHeadingRef} tabIndex={-1} className="acx:text-base acx:font-semibold acx:text-gray-900 acx:outline-none">{selectedTopic.name}</h2>
           <p className="acx:text-xs acx:text-gray-500 acx:mt-0.5">
             {selectedTopic.article_count} article{selectedTopic.article_count !== 1 ? 's' : ''}
           </p>
         </div>
 
         <div className="acx:p-4 acx:space-y-1">
-          {loading ? (
-            <div className="acx:py-4 acx:text-center acx:text-sm acx:text-gray-400">Loading...</div>
-          ) : articles.length === 0 ? (
-            <div className="acx:py-4 acx:text-center acx:text-sm acx:text-gray-400">No articles found</div>
-          ) : (
-            articles.map((article) => (
-              <ArticleCard key={article.id} article={article} onClick={handleArticleClick} />
-            ))
-          )}
+          <div aria-live="polite" className={topicStatus ? 'acx:py-4 acx:text-center acx:text-sm acx:text-gray-500' : 'acx:sr-only'}>
+            {topicStatus}
+          </div>
+          {!topicStatus && articles.map((article) => (
+            <ArticleCard key={article.id} article={article} onClick={handleArticleClick} />
+          ))}
         </div>
       </div>
     )
@@ -114,7 +135,7 @@ export function HelpTab() {
   return (
     <div className="acx:flex acx:flex-col acx:h-full acx:overflow-y-auto">
       <div className="acx:px-5 acx:py-4 acx:border-b acx:border-gray-100">
-        <h2 className="acx:text-base acx:font-semibold acx:text-gray-900">Help Centre</h2>
+        <h2 ref={helpHeadingRef} tabIndex={-1} className="acx:text-base acx:font-semibold acx:text-gray-900 acx:outline-none">Help Centre</h2>
         <p className="acx:text-xs acx:text-gray-500 acx:mt-0.5">Ask a question or browse topics</p>
         <div className="acx:mt-3">
           <SearchInput onSearch={handleSearch} onSubmit={ask} placeholder="Ask a question or search..." />
@@ -125,7 +146,7 @@ export function HelpTab() {
             wrapper is unstyled, so the blocks inside lay out as before. */}
         <div aria-live="polite">
         {asking && (
-          <div className="acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400">
+          <div className="acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-500">
             Finding an answer...
           </div>
         )}
@@ -140,7 +161,7 @@ export function HelpTab() {
                   <button
                     key={article.id}
                     onClick={() => handleArticleClick(article)}
-                    className="acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left"
+                    className="acx:block acx:min-h-6 acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left"
                   >
                     {article.title} <span aria-hidden="true">→</span>
                   </button>
@@ -158,26 +179,30 @@ export function HelpTab() {
         </div>
       </div>
 
-      {searching ? (
-        <div className="acx:p-4 acx:space-y-1">
-          {state.kbLoading ? (
-            <div className="acx:py-4 acx:text-center acx:text-sm acx:text-gray-400">Searching...</div>
-          ) : (
-            state.kbResults.slice(0, 5).map((article) => (
-              <ArticleCard key={article.id} article={article} onClick={handleArticleClick} />
-            ))
-          )}
-        </div>
-      ) : (
+      {/* The search results and the topic list share this container, so the
+          polite region in it stays mounted and "Searching..." is announced
+          (WCAG 4.1.3). With no status it is sr-only and empty. */}
       <div className="acx:p-4 acx:space-y-1">
-        {topics.length === 0 ? (
+        <div aria-live="polite" className={state.kbLoading ? 'acx:py-4 acx:text-center acx:text-sm acx:text-gray-500' : 'acx:sr-only'}>
+          {state.kbLoading ? 'Searching...' : ''}
+        </div>
+      {searching ? (
+        !state.kbLoading && state.kbResults.slice(0, 5).map((article) => (
+          <ArticleCard key={article.id} article={article} onClick={handleArticleClick} />
+        ))
+      ) : (
+        topics.length === 0 ? (
           <div className="acx:py-8 acx:text-center">
-            <p className="acx:text-sm acx:text-gray-400">No help topics available</p>
+            <p className="acx:text-sm acx:text-gray-500">No help topics available</p>
           </div>
         ) : (
           topics.map((topic) => (
             <button
               key={topic.id}
+              ref={(el) => {
+                if (el) topicButtonRefs.current.set(topic.id, el)
+                else topicButtonRefs.current.delete(topic.id)
+              }}
               onClick={() => handleTopicClick(topic)}
               className="acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors"
             >
@@ -190,9 +215,9 @@ export function HelpTab() {
               <ChevronRightIcon className="acx:w-4 acx:h-4 acx:text-gray-400" />
             </button>
           ))
-        )}
-      </div>
+        )
       )}
+      </div>
     </div>
   )
 }

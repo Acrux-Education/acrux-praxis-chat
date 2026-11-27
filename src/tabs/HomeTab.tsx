@@ -76,7 +76,7 @@ export function HomeTab() {
           <p className="acx:mt-2 acx:text-xs acx:text-gray-500">{AI_ANSWER_TEXT.line}</p>
 
           {asking && (
-            <div className="acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400">
+            <div className="acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-500">
               Finding an answer...
             </div>
           )}
@@ -109,7 +109,7 @@ export function HomeTab() {
 
           <div className="acx:mt-3 acx:space-y-1">
             {state.kbLoading ? (
-              <div className="acx:py-4 acx:text-center acx:text-sm acx:text-gray-400">
+              <div className="acx:py-4 acx:text-center acx:text-sm acx:text-gray-500">
                 Searching...
               </div>
             ) : state.kbResults.length > 0 ? (
