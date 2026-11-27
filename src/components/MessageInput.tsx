@@ -55,7 +55,10 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
 
   return (
     <div className="acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2">
-      <div className="acx:flex acx:items-end acx:gap-2">
+      {/* The textarea draws no outline of its own, so the row carries the
+          focus ring while the textarea has keyboard focus (PLATDEV-1684,
+          approved by Paul). Buttons in the row keep their own focus cue. */}
+      <div className="acx:flex acx:items-end acx:gap-2 acx:rounded-lg acx:has-[textarea:focus-visible]:ring-2 acx:has-[textarea:focus-visible]:ring-[#006383] acx:has-[textarea:focus-visible]:ring-offset-2">
         {mode === 'user' && onFileUpload && (
           <>
             <button
