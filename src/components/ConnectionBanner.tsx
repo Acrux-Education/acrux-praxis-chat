@@ -31,7 +31,7 @@ export function ConnectionBanner({ isConnected, retryCount }: ConnectionBannerPr
   return (
     <div className="acx:bg-amber-50 acx:border-b acx:border-amber-200 acx:px-4 acx:py-2.5">
       <div className="acx:flex acx:items-center acx:gap-2">
-        <svg className="acx:w-3 acx:h-3 acx:text-amber-500 acx:animate-spin acx:flex-shrink-0" viewBox="0 0 24 24" fill="none">
+        <svg className="acx:w-3 acx:h-3 acx:text-amber-500 acx:animate-spin acx:flex-shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle className="acx:opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="acx:opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>

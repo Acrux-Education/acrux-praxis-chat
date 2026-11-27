@@ -65,8 +65,7 @@ export function MessagesTab() {
   if (showLeadCapture && !session) {
     return (
       <div className="acx:flex acx:flex-col acx:h-full">
-        <ConnectionBanner isConnected={isConnected} retryCount={state.wsRetryCount} />
-        <StatusBanner isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
+        <StatusBanners isConnected={isConnected} retryCount={state.wsRetryCount} isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
         <LeadCaptureForm onSubmit={handleLeadCapture} loading={state.loading} />
       </div>
     )
@@ -74,8 +73,7 @@ export function MessagesTab() {
 
   return (
     <div className="acx:flex acx:flex-col acx:h-full">
-      <ConnectionBanner isConnected={isConnected} retryCount={state.wsRetryCount} />
-      <StatusBanner isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
+      <StatusBanners isConnected={isConnected} retryCount={state.wsRetryCount} isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
 
       {state.messages.length === 0 && !session ? (
         <div className="acx:flex-1 acx:flex acx:flex-col acx:items-center acx:justify-center acx:px-6 acx:text-center">
@@ -87,7 +85,7 @@ export function MessagesTab() {
           ) : (
             <>
               <div className="acx:w-12 acx:h-12 acx:bg-amber-100 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:mb-3">
-                <svg className="acx:w-6 acx:h-6 acx:text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="acx:w-6 acx:h-6 acx:text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2z" />
                   <path d="M12 11v1" />
                   <path d="M12 8h.01" />
@@ -112,6 +110,26 @@ export function MessagesTab() {
         disabled={state.loading}
         placeholder={isOnline ? 'Type a message...' : 'Leave a message...'}
       />
+    </div>
+  )
+}
+
+interface StatusBannersProps {
+  isConnected: boolean
+  retryCount: number
+  isOnline: boolean
+  offlineMessage?: string
+  responseTime?: string
+}
+
+// One always-mounted status region, so a banner that appears later (offline,
+// reconnecting, connection lost) is announced; a region mounted together with
+// its text is not reliably read. The wrapper has no styles of its own.
+function StatusBanners({ isConnected, retryCount, isOnline, offlineMessage, responseTime }: StatusBannersProps) {
+  return (
+    <div role="status">
+      <ConnectionBanner isConnected={isConnected} retryCount={retryCount} />
+      <StatusBanner isOnline={isOnline} offlineMessage={offlineMessage} responseTime={responseTime} />
     </div>
   )
 }

@@ -6,7 +6,9 @@ interface TypingIndicatorProps {
 
 export function TypingIndicator({ agentName }: TypingIndicatorProps) {
   return (
-    <div className="acx:flex acx:items-center acx:gap-2 acx:mb-3">
+    // Hidden from assistive technology: a repeating "typing" announcement is
+    // noise, and the reply itself is announced when it arrives.
+    <div className="acx:flex acx:items-center acx:gap-2 acx:mb-3" aria-hidden="true">
       <AgentAvatar name={agentName ?? 'Agent'} />
       <div className="acx:bg-gray-100 acx:rounded-2xl acx:rounded-bl-md acx:px-4 acx:py-3">
         <div className="acx:flex acx:gap-1">

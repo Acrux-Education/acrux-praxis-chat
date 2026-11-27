@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ChatMessage } from '../types'
 import { MessageBubble } from './MessageBubble'
 import { TypingIndicator } from './TypingIndicator'
 import { formatDateSeparator, isSameDay } from '../utils/time'
+import { chatAnnouncement } from '../utils/a11y'
 
 interface MessageListProps {
   messages: ChatMessage[]
@@ -12,15 +13,34 @@ interface MessageListProps {
 export function MessageList({ messages, agentTyping }: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  // What the list held at the previous render, so only a newly arrived reply
+  // (not the history already on screen) reaches the live region.
+  const prevMessagesRef = useRef(messages)
+  const [announcement, setAnnouncement] = useState('')
+
+  useEffect(() => {
+    const text = chatAnnouncement(prevMessagesRef.current, messages)
+    prevMessagesRef.current = messages
+    if (text) setAnnouncement(text)
+  }, [messages])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages.length, agentTyping.is_typing])
 
   return (
+    <>
+    {/* Polite announcements of replies; the log itself stays silent so
+        history loads and the person's own messages are not read out. */}
+    <div className="acx:sr-only" aria-live="polite" aria-atomic="true">
+      {announcement}
+    </div>
     <div
       ref={containerRef}
       className="acx:flex-1 acx:overflow-y-auto acx:px-4 acx:py-3 acx:space-y-1"
+      role="log"
+      aria-live="off"
+      aria-label="Conversation"
     >
       {messages.map((message, index) => {
         const prevMessage = messages[index - 1]
@@ -46,5 +66,6 @@ export function MessageList({ messages, agentTyping }: MessageListProps) {
 
       <div ref={bottomRef} />
     </div>
+    </>
   )
 }

@@ -34,7 +34,7 @@ export function AgentAvatar({ name, avatarUrl }: AgentAvatarProps) {
     return (
       <img
         src={avatarUrl}
-        alt={name}
+        alt=""
         className="acx:w-8 acx:h-8 acx:rounded-full acx:object-cover acx:flex-shrink-0"
       />
     )
@@ -42,6 +42,7 @@ export function AgentAvatar({ name, avatarUrl }: AgentAvatarProps) {
 
   return (
     <div
+      aria-hidden="true"
       className={`acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${getColor(name)}`}
     >
       {getInitials(name)}

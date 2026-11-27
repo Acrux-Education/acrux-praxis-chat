@@ -26,6 +26,8 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Your name"
+        aria-label="Your name"
+        autoComplete="name"
         className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
       />
 
@@ -34,6 +36,8 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Your email *"
+        aria-label="Your email"
+        autoComplete="email"
         required
         className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
       />

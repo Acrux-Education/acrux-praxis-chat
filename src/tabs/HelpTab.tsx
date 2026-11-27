@@ -121,6 +121,9 @@ export function HelpTab() {
           <p className="acx:mt-2 acx:text-xs acx:text-gray-500">{AI_ANSWER_TEXT.line}</p>
         </div>
 
+        {/* The answer arrives after a wait; announce it (WCAG 4.1.3). The
+            wrapper is unstyled, so the blocks inside lay out as before. */}
+        <div aria-live="polite">
         {asking && (
           <div className="acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400">
             Finding an answer...
@@ -139,7 +142,7 @@ export function HelpTab() {
                     onClick={() => handleArticleClick(article)}
                     className="acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left"
                   >
-                    {article.title} →
+                    {article.title} <span aria-hidden="true">→</span>
                   </button>
                 ))}
               </div>
@@ -152,6 +155,7 @@ export function HelpTab() {
             We couldn't find a direct answer — try these articles, or send us a message.
           </p>
         )}
+        </div>
       </div>
 
       {searching ? (

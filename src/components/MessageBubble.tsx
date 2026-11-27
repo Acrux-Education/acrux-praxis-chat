@@ -50,6 +50,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       )}
 
       <div className={`acx:max-w-[75%] ${isVisitor ? 'acx:order-1' : ''}`}>
+        {isVisitor && <span className="acx:sr-only">You said:</span>}
         {!isVisitor && message.sender_name && (
           <span className="acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block">
             {message.sender_name}
