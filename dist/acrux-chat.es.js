@@ -279,7 +279,7 @@ function T(e, t = Date.now()) {
 	return Number.isFinite(n) ? Math.min(Math.max(n - t + g.AVAILABILITY_BOUNDARY_SKEW, g.AVAILABILITY_BOUNDARY_SKEW), g.MAX_TIMER_DELAY) : null;
 }
 function E() {
-	let { state: e, dispatch: t, config: n } = A();
+	let { state: e, dispatch: t, config: n } = j();
 	return r(() => {
 		let e = new x({
 			baseUrl: n.apiUrl,
@@ -340,13 +340,13 @@ function O({ children: e, ...t }) {
 		value: i,
 		children: [
 			/* @__PURE__ */ u(k, {}),
-			/* @__PURE__ */ u(ee, {}),
+			/* @__PURE__ */ u(A, {}),
 			e
 		]
 	});
 }
 function k() {
-	let { dispatch: e, config: t } = A(), n = s(!1);
+	let { dispatch: e, config: t } = j(), n = s(!1);
 	return r(() => {
 		if (n.current) return;
 		n.current = !0;
@@ -372,23 +372,23 @@ function k() {
 		e
 	]), null;
 }
-function ee() {
+function A() {
 	return E(), null;
 }
-function A() {
+function j() {
 	let e = n(D);
 	if (!e) throw Error("useChatContext must be used within a ChatProvider");
 	return e;
 }
 // src/components/Badge.tsx
-function j({ count: e }) {
+function M({ count: e }) {
 	return e <= 0 ? null : /* @__PURE__ */ u("span", {
-		className: "acx:absolute acx:-top-1.5 acx:-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-500 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
+		className: "acx:absolute acx:-top-1.5 acx:-right-1.5 acx:min-w-[18px] acx:h-[18px] acx:flex acx:items-center acx:justify-center acx:bg-red-600 acx:text-white acx:text-[10px] acx:font-bold acx:rounded-full acx:px-1 acx:leading-none",
 		children: e > 99 ? "99+" : String(e)
 	});
 }
 // src/icons/index.tsx
-function M({ className: e }) {
+function N({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -403,7 +403,7 @@ function M({ className: e }) {
 		children: /* @__PURE__ */ u("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
 	});
 }
-function N({ className: e }) {
+function P({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -415,7 +415,7 @@ function N({ className: e }) {
 		children: /* @__PURE__ */ u("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" })
 	});
 }
-function P({ className: e }) {
+function ee({ className: e }) {
 	return /* @__PURE__ */ d("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -458,7 +458,7 @@ function te({ className: e }) {
 		]
 	});
 }
-function ne({ className: e }) {
+function F({ className: e }) {
 	return /* @__PURE__ */ d("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -482,7 +482,7 @@ function ne({ className: e }) {
 		})]
 	});
 }
-function re({ className: e }) {
+function I({ className: e }) {
 	return /* @__PURE__ */ d("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -502,7 +502,7 @@ function re({ className: e }) {
 		}), /* @__PURE__ */ u("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })]
 	});
 }
-function ie({ className: e }) {
+function ne({ className: e }) {
 	return /* @__PURE__ */ d("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -527,7 +527,7 @@ function ie({ className: e }) {
 		})]
 	});
 }
-function ae({ className: e }) {
+function re({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -542,7 +542,7 @@ function ae({ className: e }) {
 		children: /* @__PURE__ */ u("path", { d: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" })
 	});
 }
-function F({ className: e }) {
+function L({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -557,7 +557,7 @@ function F({ className: e }) {
 		children: /* @__PURE__ */ u("polyline", { points: "9 18 15 12 9 6" })
 	});
 }
-function oe({ className: e }) {
+function ie({ className: e }) {
 	return /* @__PURE__ */ u("svg", {
 		className: e,
 		"aria-hidden": "true",
@@ -573,8 +573,8 @@ function oe({ className: e }) {
 	});
 }
 // src/ChatLauncher.tsx
-function se({ isOpen: e, onClick: t, position: n, buttonRef: r }) {
-	let { state: i } = A();
+function ae({ isOpen: e, onClick: t, position: n, buttonRef: r }) {
+	let { state: i } = j();
 	return /* @__PURE__ */ u("div", {
 		className: `acx:fixed acx:bottom-4 acx:sm:bottom-6 ${n === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999]`,
 		children: /* @__PURE__ */ u("button", {
@@ -582,19 +582,19 @@ function se({ isOpen: e, onClick: t, position: n, buttonRef: r }) {
 			type: "button",
 			onClick: t,
 			className: "acx-launcher-btn acx:relative acx:w-14 acx:h-14 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center",
-			"aria-label": e ? "Close chat" : I(i.unreadCount),
+			"aria-label": e ? "Close chat" : oe(i.unreadCount),
 			children: e ? /* @__PURE__ */ u("span", {
 				className: "acx-launcher-icon-stroke",
-				children: /* @__PURE__ */ u(ie, { className: "acx:w-6 acx:h-6" })
-			}) : /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u(N, { className: "acx:w-7 acx:h-7" }), i.unreadCount > 0 && /* @__PURE__ */ u(j, { count: i.unreadCount })] })
+				children: /* @__PURE__ */ u(ne, { className: "acx:w-6 acx:h-6" })
+			}) : /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u(P, { className: "acx:w-7 acx:h-7" }), i.unreadCount > 0 && /* @__PURE__ */ u(M, { count: i.unreadCount })] })
 		})
 	});
 }
-function I(e) {
+function oe(e) {
 	return e <= 0 ? "Open chat" : `Open chat, ${e} unread ${e === 1 ? "message" : "messages"}`;
 }
 // src/utils/a11y.ts
-function L(e, t, n) {
+function se(e, t, n) {
 	if (n <= 0) return null;
 	switch (e) {
 		case "ArrowRight": return (t + 1) % n;
@@ -621,18 +621,18 @@ function B(e, t) {
 var V = {
 	id: "messages",
 	label: "Messages",
-	Icon: M
+	Icon: N
 }, H = {
 	id: "news",
 	label: "What's new",
-	Icon: P
+	Icon: ee
 }, U = {
 	id: "help",
 	label: "Help",
 	Icon: te
 };
 function W({ activeTab: e, onTabChange: t, idBase: n, panelId: r }) {
-	let { state: i, config: a } = A(), o = s([]), c = (a.whatsNew?.length ?? 0) > 0 ? [
+	let { state: i, config: a } = j(), o = s([]), c = (a.whatsNew?.length ?? 0) > 0 ? [
 		V,
 		H,
 		U
@@ -642,7 +642,7 @@ function W({ activeTab: e, onTabChange: t, idBase: n, panelId: r }) {
 		role: "tablist",
 		"aria-label": "Chat sections",
 		onKeyDown: (e) => {
-			let n = L(e.key, f, c.length);
+			let n = se(e.key, f, c.length);
 			n !== null && (e.preventDefault(), t(c[n].id), o.current[n]?.focus());
 		},
 		children: c.map(({ id: a, label: s, Icon: c }, l) => /* @__PURE__ */ d("button", {
@@ -657,12 +657,12 @@ function W({ activeTab: e, onTabChange: t, idBase: n, panelId: r }) {
 			"aria-label": a === "messages" && i.unreadCount > 0 ? `${s}, ${i.unreadCount} unread` : void 0,
 			tabIndex: l === f ? 0 : -1,
 			onClick: () => t(a),
-			className: `acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${e === a ? "acx:text-primary-600" : "acx:text-gray-400 acx:hover:text-primary-600"}`,
+			className: `acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors acx:border-b-2 ${e === a ? "acx:text-primary-600 acx:border-primary-600" : "acx:text-gray-500 acx:border-transparent acx:hover:text-primary-600"}`,
 			children: [/* @__PURE__ */ d("div", {
 				className: "acx:relative",
-				children: [/* @__PURE__ */ u(c, { className: "acx:w-5 acx:h-5" }), a === "messages" && i.unreadCount > 0 && /* @__PURE__ */ u(j, { count: i.unreadCount })]
+				children: [/* @__PURE__ */ u(c, { className: "acx:w-5 acx:h-5" }), a === "messages" && i.unreadCount > 0 && /* @__PURE__ */ u(M, { count: i.unreadCount })]
 			}), /* @__PURE__ */ u("span", {
-				className: "acx:text-[10px] acx:font-medium",
+				className: `acx:text-[10px] ${e === a ? "acx:font-semibold" : "acx:font-medium"}`,
 				children: s
 			})]
 		}, a))
@@ -768,7 +768,7 @@ function he(e) {
 	} catch {}
 }
 function ge() {
-	let { state: e, dispatch: n, config: i } = A(), [a, o] = K("session_key", null), [l, u] = c(() => (localStorage.removeItem(q), me())), d = s(void 0), f = s(null), p = t((e) => {
+	let { state: e, dispatch: n, config: i } = j(), [a, o] = K("session_key", null), [l, u] = c(() => (localStorage.removeItem(q), me())), d = s(void 0), f = s(null), p = t((e) => {
 		he(e), u(e);
 	}, []);
 	d.current || (d.current = new x({
@@ -967,7 +967,7 @@ function be() {
 }
 // src/hooks/useChatWebSocket.ts
 function xe(e, n) {
-	let { state: i, dispatch: a, config: o } = A(), c = s(null), l = s(/* @__PURE__ */ new Map()), u = s(null);
+	let { state: i, dispatch: a, config: o } = j(), c = s(null), l = s(/* @__PURE__ */ new Map()), u = s(null);
 	r(() => {
 		if (!e) return;
 		let t = new ye({
@@ -1098,12 +1098,12 @@ function Se(e) {
 	return e.split(" ").slice(0, 2).map((e) => e[0] ?? "").join("").toUpperCase();
 }
 var J = [
-	"acx:bg-blue-500",
-	"acx:bg-green-500",
-	"acx:bg-purple-500",
-	"acx:bg-orange-500",
-	"acx:bg-pink-500",
-	"acx:bg-teal-500"
+	"acx:bg-blue-600",
+	"acx:bg-green-700",
+	"acx:bg-purple-600",
+	"acx:bg-orange-700",
+	"acx:bg-pink-600",
+	"acx:bg-teal-700"
 ];
 function Ce(e) {
 	let t = 0;
@@ -1176,7 +1176,7 @@ function Oe({ message: e }) {
 					})
 				}),
 				/* @__PURE__ */ u("span", {
-					className: "acx:text-[10px] acx:text-gray-400 acx:mt-0.5 acx:block",
+					className: "acx:text-[10px] acx:text-gray-500 acx:mt-0.5 acx:block",
 					children: X(e.created_at)
 				})
 			]
@@ -1184,7 +1184,7 @@ function Oe({ message: e }) {
 	}) : n ? /* @__PURE__ */ u("div", {
 		className: "acx:flex acx:justify-center acx:py-2",
 		children: /* @__PURE__ */ u("span", {
-			className: "acx:text-xs acx:text-gray-400 acx:italic",
+			className: "acx:text-xs acx:text-gray-500 acx:italic",
 			children: e.content
 		})
 	}) : /* @__PURE__ */ d("div", {
@@ -1212,7 +1212,7 @@ function Oe({ message: e }) {
 						href: e.url,
 						target: "_blank",
 						rel: "noopener noreferrer",
-						className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:underline acx:truncate",
+						className: "acx:block acx:leading-6 acx:text-xs acx:text-primary-600 acx:hover:underline acx:truncate",
 						children: e.name
 					}, t))
 				}),
@@ -1220,15 +1220,15 @@ function Oe({ message: e }) {
 					className: `acx:flex acx:items-center acx:gap-1 acx:mt-0.5 ${t ? "acx:justify-end" : ""}`,
 					children: [
 						/* @__PURE__ */ u("span", {
-							className: "acx:text-[10px] acx:text-gray-400",
+							className: "acx:text-[10px] acx:text-gray-500",
 							children: X(e.created_at)
 						}),
 						t && e.status === "sending" && /* @__PURE__ */ u("span", {
-							className: "acx:text-[10px] acx:text-gray-400",
+							className: "acx:text-[10px] acx:text-gray-500",
 							children: "Sending..."
 						}),
 						t && e.status === "failed" && /* @__PURE__ */ u("span", {
-							className: "acx:text-[10px] acx:text-red-500",
+							className: "acx:text-[10px] acx:text-red-600",
 							children: "Failed"
 						})
 					]
@@ -1247,9 +1247,9 @@ function ke({ agentName: e }) {
 			children: /* @__PURE__ */ d("div", {
 				className: "acx:flex acx:gap-1",
 				children: [
-					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
-					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" }),
-					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-400 acx:rounded-full acx-typing-dot" })
+					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-500 acx:rounded-full acx-typing-dot" }),
+					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-500 acx:rounded-full acx-typing-dot" }),
+					/* @__PURE__ */ u("span", { className: "acx:w-1.5 acx:h-1.5 acx:bg-gray-500 acx:rounded-full acx-typing-dot" })
 				]
 			})
 		})]
@@ -1286,7 +1286,7 @@ function Ae({ messages: e, agentTyping: t }) {
 				return /* @__PURE__ */ d("div", { children: [i && /* @__PURE__ */ u("div", {
 					className: "acx:flex acx:items-center acx:justify-center acx:py-3",
 					children: /* @__PURE__ */ u("span", {
-						className: "acx:text-xs acx:text-gray-400 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full",
+						className: "acx:text-xs acx:text-gray-500 acx:bg-gray-50 acx:px-3 acx:py-1 acx:rounded-full",
 						children: we(t.created_at)
 					})
 				}), /* @__PURE__ */ u(Oe, { message: t })] }, t.temp_id ?? t.id);
@@ -1297,31 +1297,35 @@ function Ae({ messages: e, agentTyping: t }) {
 	})] });
 }
 // src/components/MessageInput.tsx
-function je({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, placeholder: o }) {
-	let [f, p] = c(""), m = s(null), h = s(void 0), g = t(() => {
-		let t = f.trim();
-		t && !a && (e(t), p(""), n?.(!1));
+function je({ onSend: e, onTyping: n, onFileUpload: r, mode: a, disabled: o, placeholder: f }) {
+	let [p, m] = c(""), h = i(), g = s(null), v = s(void 0), y = t(() => {
+		let t = p.trim();
+		t && !o && (e(t), m(""), n?.(!1));
 	}, [
-		f,
-		a,
+		p,
+		o,
 		e,
 		n
 	]);
-	return /* @__PURE__ */ u("div", {
+	return /* @__PURE__ */ d("div", {
 		className: "acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2",
-		children: /* @__PURE__ */ d("div", {
+		children: [/* @__PURE__ */ u("label", {
+			htmlFor: h,
+			className: "acx:block acx:text-xs acx:font-medium acx:text-gray-600",
+			children: "Message"
+		}), /* @__PURE__ */ d("div", {
 			className: "acx:flex acx:items-end acx:gap-2 acx:rounded-lg acx:has-[textarea:focus-visible]:ring-2 acx:has-[textarea:focus-visible]:ring-[#006383] acx:has-[textarea:focus-visible]:ring-offset-2",
 			children: [
-				i === "user" && r && /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u("button", {
+				a === "user" && r && /* @__PURE__ */ d(l, { children: [/* @__PURE__ */ u("button", {
 					onClick: () => {
-						m.current?.click();
+						g.current?.click();
 					},
-					className: "acx:p-1.5 acx:text-gray-400 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0",
+					className: "acx:p-1.5 acx:text-gray-500 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0",
 					"aria-label": "Attach file",
 					type: "button",
-					children: /* @__PURE__ */ u(ae, { className: "acx:w-5 acx:h-5" })
+					children: /* @__PURE__ */ u(re, { className: "acx:w-5 acx:h-5" })
 				}), /* @__PURE__ */ u("input", {
-					ref: m,
+					ref: g,
 					type: "file",
 					className: "acx:hidden",
 					accept: _.ALLOWED_FILE_TYPES.join(","),
@@ -1331,31 +1335,31 @@ function je({ onSend: e, onTyping: n, onFileUpload: r, mode: i, disabled: a, pla
 					}
 				})] }),
 				/* @__PURE__ */ u("textarea", {
-					value: f,
+					value: p,
 					onChange: (e) => {
 						let t = e.target.value;
-						t.length > _.MAX_MESSAGE_LENGTH || (p(t), n?.(!0), h.current && clearTimeout(h.current), h.current = setTimeout(() => n?.(!1), 2e3));
+						t.length > _.MAX_MESSAGE_LENGTH || (m(t), n?.(!0), v.current && clearTimeout(v.current), v.current = setTimeout(() => n?.(!1), 2e3));
 					},
 					onKeyDown: (e) => {
-						e.key === "Enter" && !e.shiftKey && (e.preventDefault(), g());
+						e.key === "Enter" && !e.shiftKey && (e.preventDefault(), y());
 					},
-					placeholder: o ?? "Type a message...",
-					"aria-label": "Message",
-					disabled: a,
+					id: h,
+					placeholder: f ?? "Type a message...",
+					disabled: o,
 					rows: 1,
-					className: "acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400",
+					className: "acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-500",
 					style: { fieldSizing: "content" }
 				}),
 				/* @__PURE__ */ u("button", {
-					onClick: g,
-					disabled: !f.trim() || a,
+					onClick: y,
+					disabled: !p.trim() || o,
 					className: "acx:p-1.5 acx:text-primary-600 acx:transition-colors acx:flex-shrink-0 acx:enabled:hover:text-primary-700 acx:disabled:text-gray-300 acx:disabled:cursor-not-allowed",
 					"aria-label": "Send message",
 					type: "button",
-					children: /* @__PURE__ */ u(re, { className: "acx:w-5 acx:h-5" })
+					children: /* @__PURE__ */ u(I, { className: "acx:w-5 acx:h-5" })
 				})
 			]
-		})
+		})]
 	});
 }
 // src/components/StatusBanner.tsx
@@ -1448,7 +1452,7 @@ function Pe({ onSubmit: e, loading: t }) {
 				placeholder: "Your name",
 				"aria-label": "Your name",
 				autoComplete: "name",
-				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
+				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
 			}),
 			/* @__PURE__ */ u("input", {
 				type: "email",
@@ -1458,10 +1462,10 @@ function Pe({ onSubmit: e, loading: t }) {
 				"aria-label": "Your email",
 				autoComplete: "email",
 				required: !0,
-				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
+				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
 			}),
 			/* @__PURE__ */ d("p", {
-				className: "acx:text-xs acx:text-gray-400 acx:leading-snug",
+				className: "acx:text-xs acx:text-gray-500 acx:leading-snug",
 				children: [
 					"By starting a chat, your details, messages, and the page you're on are shared with Acrux to respond to your enquiry — see our",
 					" ",
@@ -1486,7 +1490,7 @@ function Pe({ onSubmit: e, loading: t }) {
 }
 // src/tabs/MessagesTab.tsx
 function Fe() {
-	let { state: e, dispatch: n, config: i } = A(), { session: a, sessionKey: o, accessToken: f, createSession: p } = ge(), { sendMessage: m, sendTyping: h, isConnected: g } = xe(o, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = c(!1), S = s(null);
+	let { state: e, dispatch: n, config: i } = j(), { session: a, sessionKey: o, accessToken: f, createSession: p } = ge(), { sendMessage: m, sendTyping: h, isConnected: g } = xe(o, f), _ = e.operatingHours?.is_online ?? !1, v = e.operatingHours?.offline_message, y = e.operatingHours?.response_time, [b, x] = c(!1), S = s(null);
 	r(() => {
 		g && S.current && (m(S.current), S.current = null);
 	}, [g, m]);
@@ -1581,7 +1585,7 @@ function Fe() {
 						children: "Leave us a message"
 					}),
 					/* @__PURE__ */ d("p", {
-						className: "acx:text-xs acx:text-gray-400 acx:mt-1",
+						className: "acx:text-xs acx:text-gray-500 acx:mt-1",
 						children: [
 							"Our team is currently away. Leave a message and we'll get back to you",
 							y ? ` ${y}` : " as soon as possible",
@@ -1637,7 +1641,7 @@ function Le({ entry: e }) {
 					className: `acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${Q[e.category] ?? "acx:bg-gray-100 acx:text-gray-700"}`,
 					children: Ie[e.category] ?? e.category
 				}), /* @__PURE__ */ u("span", {
-					className: "acx:text-[10px] acx:text-gray-400",
+					className: "acx:text-[10px] acx:text-gray-500",
 					children: X(e.sent_at)
 				})]
 			}),
@@ -1661,7 +1665,7 @@ function Le({ entry: e }) {
 }
 // src/tabs/NewsTab.tsx
 function Re() {
-	let { config: e } = A(), t = e.whatsNew ?? [];
+	let { config: e } = j(), t = e.whatsNew ?? [];
 	return /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
 		children: [/* @__PURE__ */ d("div", {
@@ -1678,7 +1682,7 @@ function Re() {
 			children: t.length === 0 ? /* @__PURE__ */ u("div", {
 				className: "acx:py-8 acx:text-center",
 				children: /* @__PURE__ */ u("p", {
-					className: "acx:text-sm acx:text-gray-400",
+					className: "acx:text-sm acx:text-gray-500",
 					children: "Nothing new right now"
 				})
 			}) : t.map((e) => /* @__PURE__ */ u(Le, { entry: e }, e.id))
@@ -1687,7 +1691,7 @@ function Re() {
 }
 // src/hooks/useKBSearch.ts
 function ze() {
-	let { dispatch: e, config: n } = A(), i = s(void 0), a = s(void 0);
+	let { dispatch: e, config: n } = j(), i = s(void 0), a = s(void 0);
 	i.current ||= new x({
 		baseUrl: n.apiUrl,
 		token: n.token
@@ -1727,7 +1731,7 @@ function Be({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 		o.current && clearTimeout(o.current);
 	}), [i, e]), /* @__PURE__ */ d("div", {
 		className: "acx:relative",
-		children: [/* @__PURE__ */ u(ne, { className: "acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ u("input", {
+		children: [/* @__PURE__ */ u(F, { className: "acx:absolute acx:left-3 acx:top-1/2 acx:-translate-y-1/2 acx:w-4 acx:h-4 acx:text-gray-400" }), /* @__PURE__ */ u("input", {
 			type: "text",
 			value: i,
 			onChange: (e) => a(e.target.value),
@@ -1736,7 +1740,7 @@ function Be({ onSearch: e, onSubmit: t, placeholder: n = "Search for help..." })
 			},
 			placeholder: n,
 			"aria-label": n.replace(/\.+$/, ""),
-			className: "acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
+			className: "acx:w-full acx:pl-9 acx:pr-4 acx:py-2.5 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500 acx:transition-colors acx:bg-white"
 		})]
 	});
 }
@@ -1754,12 +1758,12 @@ function $({ article: e, onClick: t }) {
 				className: "acx:text-xs acx:text-gray-500 acx:mt-0.5 acx:line-clamp-2",
 				children: e.summary
 			})]
-		}), /* @__PURE__ */ u(F, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
+		}), /* @__PURE__ */ u(L, { className: "acx:w-4 acx:h-4 acx:text-gray-400 acx:flex-shrink-0 acx:ml-2" })]
 	});
 }
 // src/tabs/HelpTab.tsx
 function Ve() {
-	let { state: e, dispatch: n, config: i } = A(), { search: a } = ze(), o = e.kbTopics, [l, f] = c(null), [p, m] = c([]), [h, g] = c(!1), [_, y] = c(null), [b, S] = c(!1), C = s(void 0);
+	let { state: e, dispatch: n, config: i } = j(), { search: a } = ze(), o = e.kbTopics, [l, f] = c(null), [p, m] = c([]), [h, g] = c(!1), [_, y] = c(null), [b, S] = c(!1), C = s(void 0);
 	C.current ||= new x({
 		baseUrl: i.apiUrl,
 		token: i.token
@@ -1798,54 +1802,66 @@ function Ve() {
 		}
 	}, []), D = t((e) => {
 		e.url && window.open(e.url, "_blank", "noopener,noreferrer");
-	}, []), O = t(() => {
-		f(null), m([]);
-	}, []);
-	if (l) return /* @__PURE__ */ d("div", {
-		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
-		children: [/* @__PURE__ */ d("div", {
-			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
-			children: [
-				/* @__PURE__ */ d("button", {
-					onClick: O,
-					className: "acx:flex acx:items-center acx:gap-1 acx:text-sm acx:text-primary-600 acx:mb-2 acx:hover:text-primary-700",
-					children: [/* @__PURE__ */ u(oe, { className: "acx:w-4 acx:h-4" }), "Back"]
-				}),
-				/* @__PURE__ */ u("h2", {
-					className: "acx:text-base acx:font-semibold acx:text-gray-900",
-					children: l.name
-				}),
-				/* @__PURE__ */ d("p", {
-					className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
-					children: [
-						l.article_count,
-						" article",
-						l.article_count === 1 ? "" : "s"
-					]
-				})
-			]
-		}), /* @__PURE__ */ u("div", {
-			className: "acx:p-4 acx:space-y-1",
-			children: h ? /* @__PURE__ */ u("div", {
-				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
-				children: "Loading..."
-			}) : p.length === 0 ? /* @__PURE__ */ u("div", {
-				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
-				children: "No articles found"
-			}) : p.map((e) => /* @__PURE__ */ u($, {
-				article: e,
-				onClick: D
-			}, e.id))
-		})]
-	});
-	let k = e.kbLoading || e.kbResults.length > 0;
+	}, []), O = s(null), k = s(null), A = s(/* @__PURE__ */ new Map()), M = s(null), N = t(() => {
+		M.current = l?.id ?? null, f(null), m([]);
+	}, [l]);
+	if (r(() => {
+		if (l) {
+			O.current?.focus();
+			return;
+		}
+		let e = M.current;
+		e !== null && (M.current = null, (A.current.get(e) ?? k.current)?.focus());
+	}, [l]), l) {
+		let e = h ? "Loading..." : p.length === 0 ? "No articles found" : "";
+		return /* @__PURE__ */ d("div", {
+			className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
+			children: [/* @__PURE__ */ d("div", {
+				className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
+				children: [
+					/* @__PURE__ */ d("button", {
+						onClick: N,
+						className: "acx:flex acx:items-center acx:gap-1 acx:text-sm acx:text-primary-600 acx:mb-2 acx:hover:text-primary-700",
+						children: [/* @__PURE__ */ u(ie, { className: "acx:w-4 acx:h-4" }), "Back"]
+					}),
+					/* @__PURE__ */ u("h2", {
+						ref: O,
+						tabIndex: -1,
+						className: "acx:text-base acx:font-semibold acx:text-gray-900 acx:outline-none",
+						children: l.name
+					}),
+					/* @__PURE__ */ d("p", {
+						className: "acx:text-xs acx:text-gray-500 acx:mt-0.5",
+						children: [
+							l.article_count,
+							" article",
+							l.article_count === 1 ? "" : "s"
+						]
+					})
+				]
+			}), /* @__PURE__ */ d("div", {
+				className: "acx:p-4 acx:space-y-1",
+				children: [/* @__PURE__ */ u("div", {
+					"aria-live": "polite",
+					className: e ? "acx:py-4 acx:text-center acx:text-sm acx:text-gray-500" : "acx:sr-only",
+					children: e
+				}), !e && p.map((e) => /* @__PURE__ */ u($, {
+					article: e,
+					onClick: D
+				}, e.id))]
+			})]
+		});
+	}
+	let P = e.kbLoading || e.kbResults.length > 0;
 	return /* @__PURE__ */ d("div", {
 		className: "acx:flex acx:flex-col acx:h-full acx:overflow-y-auto",
 		children: [/* @__PURE__ */ d("div", {
 			className: "acx:px-5 acx:py-4 acx:border-b acx:border-gray-100",
 			children: [
 				/* @__PURE__ */ u("h2", {
-					className: "acx:text-base acx:font-semibold acx:text-gray-900",
+					ref: k,
+					tabIndex: -1,
+					className: "acx:text-base acx:font-semibold acx:text-gray-900 acx:outline-none",
 					children: "Help Centre"
 				}),
 				/* @__PURE__ */ u("p", {
@@ -1867,7 +1883,7 @@ function Ve() {
 					"aria-live": "polite",
 					children: [
 						b && /* @__PURE__ */ u("div", {
-							className: "acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-400",
+							className: "acx:mt-3 acx:py-3 acx:text-center acx:text-sm acx:text-gray-500",
 							children: "Finding an answer..."
 						}),
 						!b && _?.answer && /* @__PURE__ */ d("div", {
@@ -1885,7 +1901,7 @@ function Ve() {
 									className: "acx:mt-2 acx:pt-2 acx:border-t acx:border-primary-100 acx:space-y-1",
 									children: _.sources.map((e) => /* @__PURE__ */ d("button", {
 										onClick: () => D(e),
-										className: "acx:block acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
+										className: "acx:block acx:min-h-6 acx:text-xs acx:text-primary-600 acx:hover:text-primary-700 acx:text-left",
 										children: [
 											e.title,
 											" ",
@@ -1905,24 +1921,25 @@ function Ve() {
 					]
 				})
 			]
-		}), k ? /* @__PURE__ */ u("div", {
+		}), /* @__PURE__ */ d("div", {
 			className: "acx:p-4 acx:space-y-1",
-			children: e.kbLoading ? /* @__PURE__ */ u("div", {
-				className: "acx:py-4 acx:text-center acx:text-sm acx:text-gray-400",
-				children: "Searching..."
-			}) : e.kbResults.slice(0, 5).map((e) => /* @__PURE__ */ u($, {
+			children: [/* @__PURE__ */ u("div", {
+				"aria-live": "polite",
+				className: e.kbLoading ? "acx:py-4 acx:text-center acx:text-sm acx:text-gray-500" : "acx:sr-only",
+				children: e.kbLoading ? "Searching..." : ""
+			}), P ? !e.kbLoading && e.kbResults.slice(0, 5).map((e) => /* @__PURE__ */ u($, {
 				article: e,
 				onClick: D
-			}, e.id))
-		}) : /* @__PURE__ */ u("div", {
-			className: "acx:p-4 acx:space-y-1",
-			children: o.length === 0 ? /* @__PURE__ */ u("div", {
+			}, e.id)) : o.length === 0 ? /* @__PURE__ */ u("div", {
 				className: "acx:py-8 acx:text-center",
 				children: /* @__PURE__ */ u("p", {
-					className: "acx:text-sm acx:text-gray-400",
+					className: "acx:text-sm acx:text-gray-500",
 					children: "No help topics available"
 				})
 			}) : o.map((e) => /* @__PURE__ */ d("button", {
+				ref: (t) => {
+					t ? A.current.set(e.id, t) : A.current.delete(e.id);
+				},
 				onClick: () => E(e),
 				className: "acx:w-full acx:flex acx:items-center acx:justify-between acx:p-3 acx:rounded-lg acx:text-left acx:hover:bg-gray-50 acx:transition-colors",
 				children: [/* @__PURE__ */ d("div", { children: [/* @__PURE__ */ u("h4", {
@@ -1935,8 +1952,8 @@ function Ve() {
 						" article",
 						e.article_count === 1 ? "" : "s"
 					]
-				})] }), /* @__PURE__ */ u(F, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
-			}, e.id))
+				})] }), /* @__PURE__ */ u(L, { className: "acx:w-4 acx:h-4 acx:text-gray-400" })]
+			}, e.id))]
 		})]
 	});
 }
@@ -1948,7 +1965,7 @@ function He(e) {
 	});
 }
 function Ue({ position: e }) {
-	let { state: t, dispatch: n } = A(), [a, o] = c(!1), l = s(null), f = s(null), p = i(), m = `${p}-panel`;
+	let { state: t, dispatch: n } = j(), [a, o] = c(!1), l = s(null), f = s(null), p = i(), m = `${p}-panel`;
 	r(() => {
 		a && l.current?.focus({ preventScroll: !0 });
 	}, [a]);
@@ -2026,7 +2043,7 @@ function Ue({ position: e }) {
 					})
 				})
 			]
-		}), /* @__PURE__ */ u(se, {
+		}), /* @__PURE__ */ u(ae, {
 			isOpen: a,
 			onClick: () => o(!a),
 			position: e,
