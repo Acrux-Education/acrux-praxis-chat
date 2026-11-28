@@ -1433,12 +1433,12 @@ function Ne({ isConnected: e, retryCount: t }) {
 }
 // src/components/LeadCaptureForm.tsx
 function Pe({ onSubmit: e, loading: t }) {
-	let [n, r] = c(""), [i, a] = c("");
+	let [n, r] = c(""), [a, o] = c(""), s = i(), l = i();
 	return /* @__PURE__ */ d("form", {
 		onSubmit: (t) => {
-			t.preventDefault(), i.trim() && e({
+			t.preventDefault(), a.trim() && e({
 				name: n.trim(),
-				email: i.trim()
+				email: a.trim()
 			});
 		},
 		className: "acx:p-4 acx:space-y-3",
@@ -1447,25 +1447,31 @@ function Pe({ onSubmit: e, loading: t }) {
 				className: "acx:text-sm acx:text-gray-600 acx:mb-1",
 				children: "Before we start, could you share your details?"
 			}),
-			/* @__PURE__ */ u("input", {
+			/* @__PURE__ */ d("div", { children: [/* @__PURE__ */ u("label", {
+				htmlFor: s,
+				className: "acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600",
+				children: "Your name"
+			}), /* @__PURE__ */ u("input", {
+				id: s,
 				type: "text",
 				value: n,
 				onChange: (e) => r(e.target.value),
-				placeholder: "Your name",
-				"aria-label": "Your name",
 				autoComplete: "name",
 				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
-			}),
-			/* @__PURE__ */ u("input", {
+			})] }),
+			/* @__PURE__ */ d("div", { children: [/* @__PURE__ */ u("label", {
+				htmlFor: l,
+				className: "acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600",
+				children: "Your email (required)"
+			}), /* @__PURE__ */ u("input", {
+				id: l,
 				type: "email",
-				value: i,
-				onChange: (e) => a(e.target.value),
-				placeholder: "Your email *",
-				"aria-label": "Your email",
+				value: a,
+				onChange: (e) => o(e.target.value),
 				autoComplete: "email",
 				required: !0,
 				className: "acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
-			}),
+			})] }),
 			/* @__PURE__ */ d("p", {
 				className: "acx:text-xs acx:text-gray-500 acx:leading-snug",
 				children: [
@@ -1483,7 +1489,7 @@ function Pe({ onSubmit: e, loading: t }) {
 			}),
 			/* @__PURE__ */ u("button", {
 				type: "submit",
-				disabled: !i.trim() || t,
+				disabled: !a.trim() || t,
 				className: "acx:w-full acx:bg-primary-600 acx:text-white acx:py-2.5 acx:rounded-lg acx:text-sm acx:font-medium acx:transition-colors acx:enabled:hover:bg-primary-700 acx:disabled:bg-gray-200 acx:disabled:text-gray-500 acx:disabled:cursor-not-allowed",
 				children: t ? "Starting..." : "Start conversation"
 			})
@@ -1624,7 +1630,7 @@ function Z({ isConnected: e, retryCount: t, isOnline: n, offlineMessage: r, resp
 }
 // src/components/WhatsNewCard.tsx
 var Q = {
-	update: "acx:bg-green-100 acx:text-green-700",
+	update: "acx:bg-green-100 acx:text-green-800",
 	notice: "acx:bg-orange-100 acx:text-orange-700",
 	digest: "acx:bg-blue-100 acx:text-blue-700"
 }, Ie = {
