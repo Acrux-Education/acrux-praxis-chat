@@ -28,7 +28,7 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
     <div className="acrux-chat-widget">
       {isOpen && (
         <div
-          className={`acx:fixed acx:bottom-20 ${positionClasses} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up`}
+          className={`acx:fixed acx:bottom-20 ${positionClasses} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up acx:[@media(max-height:499px)]:inset-0! acx:[@media(max-height:499px)]:h-auto! acx:[@media(max-height:499px)]:max-h-none! acx:[@media(max-height:499px)]:w-auto! acx:[@media(max-height:499px)]:max-w-none! acx:[@media(max-height:499px)]:rounded-none! acx:[@media(max-height:499px)]:overflow-y-auto!`}
           role="dialog"
           aria-label="Chat widget"
         >
@@ -50,7 +50,7 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
             </button>
           </div>
 
-          <div className="acx:flex-1 acx:overflow-hidden">
+          <div className="acx:flex-1 acx:overflow-hidden acx:[@media(max-height:499px)]:flex-none! acx:[@media(max-height:499px)]:min-h-[16rem]!">
             {state.activeTab === 'messages' && <MessagesTab />}
             {state.activeTab === 'news' && <NewsTab />}
           </div>

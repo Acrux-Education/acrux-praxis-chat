@@ -31,7 +31,7 @@ export function WhatsNewCard({ entry }: WhatsNewCardProps) {
         <span className={`acx:text-[10px] acx:font-semibold acx:px-2 acx:py-0.5 acx:rounded-full ${categoryStyles[entry.category] ?? 'acx:bg-gray-100 acx:text-gray-700'}`}>
           {categoryLabels[entry.category] ?? entry.category}
         </span>
-        <span className="acx:text-[10px] acx:text-gray-400">
+        <span className="acx:text-[10px] acx:text-gray-500">
           {formatRelativeTime(entry.sent_at)}
         </span>
       </div>

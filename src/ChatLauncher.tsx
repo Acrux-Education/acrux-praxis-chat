@@ -22,7 +22,7 @@ export function ChatLauncher({ isOpen, onClick, position }: ChatLauncherProps) {
         onClick={onClick}
         // PLATDEV-1685: 44px with a question mark, so it reads as help.
         className="acx-launcher-btn acx:relative acx:w-11 acx:h-11 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center"
-        aria-label={isOpen ? 'Close help' : 'Open help'}
+        aria-label={isOpen ? 'Close help' : openLabel(state.unreadCount)}
       >
         {isOpen ? (
           <span className="acx-launcher-icon-stroke">
@@ -41,4 +41,10 @@ export function ChatLauncher({ isOpen, onClick, position }: ChatLauncherProps) {
       </button>
     </div>
   )
+}
+
+// The badge is inside an aria-labelled button, so its count has to be in the label.
+function openLabel(unreadCount: number): string {
+  if (unreadCount <= 0) return 'Open help'
+  return `Open help, ${unreadCount} unread ${unreadCount === 1 ? 'message' : 'messages'}`
 }

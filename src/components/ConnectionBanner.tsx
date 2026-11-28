@@ -19,7 +19,7 @@ export function ConnectionBanner({ isConnected, retryCount }: ConnectionBannerPr
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="acx:text-xs acx:font-medium acx:text-red-700 acx:bg-red-100 acx:px-2 acx:py-0.5 acx:rounded acx:hover:bg-red-200 acx:flex-shrink-0"
+            className="acx:text-xs acx:font-medium acx:text-red-700 acx:bg-red-100 acx:px-2 acx:py-0.5 acx:rounded acx:hover:bg-red-200 acx:hover:text-red-800 acx:flex-shrink-0"
           >
             Refresh
           </button>

@@ -34,10 +34,10 @@ export function TabBar({ activeTab, onTabChange }: TabBarProps) {
           role="tab"
           aria-selected={activeTab === id}
           onClick={() => onTabChange(id)}
-          className={`acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors ${
+          className={`acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:relative acx:transition-colors acx:border-b-2 ${
             activeTab === id
-              ? 'acx:text-primary-600'
-              : 'acx:text-gray-400 acx:hover:text-primary-600'
+              ? 'acx:text-primary-600 acx:border-primary-600'
+              : 'acx:text-gray-500 acx:border-transparent acx:hover:text-primary-600'
           }`}
         >
           <div className="acx:relative">

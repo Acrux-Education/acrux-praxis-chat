@@ -84,7 +84,7 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
           placeholder={placeholder ?? 'Type a message...'}
           disabled={disabled}
           rows={1}
-          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400"
+          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-500"
           style={{ fieldSizing: 'content' } as React.CSSProperties}
         />
 

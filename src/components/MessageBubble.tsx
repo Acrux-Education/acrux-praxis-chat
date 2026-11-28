@@ -23,9 +23,10 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             </span>
           )}
           <div className="acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed acx:bg-amber-50 acx:text-gray-800 acx:rounded-bl-md acx:border acx:border-amber-200">
+            {!message.sender_name && <span className="acx:sr-only">Acrux: </span>}
             <p className="acx:whitespace-pre-wrap">{message.content}</p>
           </div>
-          <span className="acx:text-[10px] acx:text-gray-400 acx:mt-0.5 acx:block">
+          <span className="acx:text-[10px] acx:text-gray-500 acx:mt-0.5 acx:block">
             {formatRelativeTime(message.created_at)}
           </span>
         </div>
@@ -36,7 +37,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   if (isSystem) {
     return (
       <div className="acx:flex acx:justify-center acx:py-2">
-        <span className="acx:text-xs acx:text-gray-400 acx:italic">
+        <span className="acx:text-xs acx:text-gray-500 acx:italic">
           {message.content}
         </span>
       </div>
@@ -65,6 +66,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                 : 'acx:bg-gray-100 acx:text-gray-800 acx:rounded-bl-md'
           }`}
         >
+          {/* Who sent it, for screen readers: side and colour show it only
+              visually (WCAG 1.3.1). A named agent's name is shown above. */}
+          {isVisitor ? (
+            <span className="acx:sr-only">You: </span>
+          ) : !message.sender_name && (
+            <span className="acx:sr-only">Acrux: </span>
+          )}
           {message.content_type === 'markdown' ? (
             <div
               className="acx:prose acx:prose-sm"
@@ -91,15 +99,22 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           </div>
         )}
 
-        <div className={`acx:flex acx:items-center acx:gap-1 acx:mt-0.5 ${isVisitor ? 'acx:justify-end' : ''}`}>
-          <span className="acx:text-[10px] acx:text-gray-400">
+        <div className={`acx:flex acx:items-center acx:mt-0.5 ${isVisitor ? 'acx:justify-end' : ''}`}>
+          <span className="acx:text-[10px] acx:text-gray-500">
             {formatRelativeTime(message.created_at)}
           </span>
-          {isVisitor && message.status === 'sending' && (
-            <span className="acx:text-[10px] acx:text-gray-400">Sending...</span>
-          )}
-          {isVisitor && message.status === 'failed' && (
-            <span className="acx:text-[10px] acx:text-red-500">Failed</span>
+          {/* Always mounted, so Sending... and Failed are announced (WCAG 4.1.3).
+              The margin stands in for the row gap, which an empty span would
+              otherwise take. */}
+          {isVisitor && (
+            <span role="status" className="acx:text-[10px] acx:[&:not(:empty)]:ml-1">
+              {message.status === 'sending' && (
+                <span className="acx:text-[10px] acx:text-gray-500">Sending...</span>
+              )}
+              {message.status === 'failed' && (
+                <span className="acx:text-[10px] acx:text-red-600">Failed</span>
+              )}
+            </span>
           )}
         </div>
       </div>
