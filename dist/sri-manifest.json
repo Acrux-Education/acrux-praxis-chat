@@ -1,15 +1,15 @@
 {
-  "version": "0.1.26",
+  "version": "0.1.27",
   "js": {
-    "file": "acrux-chat.v0.1.26.iife.js",
-    "integrity": "sha384-kOSiPYQvHnfpXzfT8C8z/e1Q5USwjBha4ympXQPdCasr6hB3kH7YoPG1Y4pbNU+c"
+    "file": "acrux-chat.v0.1.27.iife.js",
+    "integrity": "sha384-gWOxBR9P1j4ekwiHxRvurhdL6a846nR/Muq8RFpucPtDASqXyPfjk2CZd3rjkum5"
   },
   "es": {
-    "file": "acrux-chat.v0.1.26.es.js",
-    "integrity": "sha384-jTl7FYxx+0MGWrYw/0fxkYaC6PmOvVNSCL0n86fu+OZkxGCSCrx9TToiehoGib8c"
+    "file": "acrux-chat.v0.1.27.es.js",
+    "integrity": "sha384-kqwCsDnRHsNvk4xHWI0mF3cWy2IzhRkYtQXsWp3kHVgreURMGoi2XIT26PHDvxQL"
   },
   "css": {
-    "file": "style.v0.1.26.css",
-    "integrity": "sha384-YT6O40DaOR73svst6WkShxDD/FqxGK/wOD3wxh74FhcS01eJt6Xh6BjBNHdONp2b"
+    "file": "style.v0.1.27.css",
+    "integrity": "sha384-nlSGgFHOhyhjmReDsMo1FGPDXJ1aQ47sejyukN2n2r+CkIKFve/o7/IO5PLu25zA"
   }
 }
