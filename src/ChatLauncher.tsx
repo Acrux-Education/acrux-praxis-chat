@@ -1,7 +1,7 @@
 import type { WidgetPosition } from './types'
 import { useChatContext } from './context/ChatContext'
 import { Badge } from './components/Badge'
-import { ChatBubbleFilledIcon, CloseIcon } from './icons'
+import { QuestionIcon, CloseIcon } from './icons'
 
 interface ChatLauncherProps {
   isOpen: boolean
@@ -24,16 +24,19 @@ export function ChatLauncher({ isOpen, onClick, position, buttonRef }: ChatLaunc
         ref={buttonRef}
         type="button"
         onClick={onClick}
-        className="acx-launcher-btn acx:relative acx:w-14 acx:h-14 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center"
-        aria-label={isOpen ? 'Close chat' : openLabel(state.unreadCount)}
+        // PLATDEV-1685: 44px with a question mark, so it reads as help.
+        className="acx-launcher-btn acx:relative acx:w-11 acx:h-11 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center"
+        aria-label={isOpen ? 'Close help' : openLabel(state.unreadCount)}
       >
         {isOpen ? (
           <span className="acx-launcher-icon-stroke">
-            <CloseIcon className="acx:w-6 acx:h-6" />
+            <CloseIcon className="acx:w-5 acx:h-5" />
           </span>
         ) : (
           <>
-            <ChatBubbleFilledIcon className="acx:w-7 acx:h-7" />
+            <span className="acx-launcher-icon-stroke">
+              <QuestionIcon className="acx:w-6 acx:h-6" />
+            </span>
             {state.unreadCount > 0 && (
               <Badge count={state.unreadCount} />
             )}
@@ -46,6 +49,6 @@ export function ChatLauncher({ isOpen, onClick, position, buttonRef }: ChatLaunc
 
 // The badge is inside an aria-labelled button, so its count has to be in the label.
 function openLabel(unreadCount: number): string {
-  if (unreadCount <= 0) return 'Open chat'
-  return `Open chat, ${unreadCount} unread ${unreadCount === 1 ? 'message' : 'messages'}`
+  if (unreadCount <= 0) return 'Open help'
+  return `Open help, ${unreadCount} unread ${unreadCount === 1 ? 'message' : 'messages'}`
 }

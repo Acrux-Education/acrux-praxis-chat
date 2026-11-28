@@ -7,10 +7,6 @@ export const API_PATHS = {
   SESSION_VISITOR: (key: string) => `/api/chat/sessions/${key}/visitor/`,
   ANNOUNCEMENTS: '/api/chat/announcements/',
   ROADMAP: '/api/chat/roadmap/',
-  KB_SEARCH: '/api/kb/chatbot/search/',
-  KB_ANSWER: '/api/kb/chatbot/answer/',
-  KB_TOPICS: '/api/kb/topics/',
-  KB_TOPIC_ARTICLES: (slug: string) => `/api/kb/topics/${slug}/articles/`,
   OPERATING_HOURS: '/api/chat/operating-hours/status/',
 } as const
 
@@ -51,10 +47,7 @@ export const LIMITS = {
   ],
 } as const
 
-// PLATDEV-1589 (ST4S 2026.1): the help answer box says its answers are
-// AI-generated and asks people to keep personal information out of it.
-// The wording is Leanne's, settled 19 Nov 2026.
-export const AI_ANSWER_TEXT = {
-  label: 'AI-generated answer',
-  line: "Answers are written by AI. Please don't type personal or student information here.",
-} as const
+// PLATDEV-1685: help articles live on the help site, which Help opens in a
+// new tab; the widget shows no AI-generated answers. Same address in every
+// environment, as Pnyx's other help links.
+export const HELP_CENTRE_URL = 'https://help.acrux.education'

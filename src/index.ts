@@ -11,5 +11,4 @@ export type {
   ContentType,
   Announcement,
   RoadmapItem,
-  KBArticle,
 } from './types'

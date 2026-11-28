@@ -1,6 +1,6 @@
 # @acrux-education/chat-widget
 
-Embeddable chat widget for Acrux Education. Provides live chat, knowledge base search, announcements, and product roadmap — packaged as both an ESM library (for React apps) and a standalone IIFE bundle (for non-React sites such as praxis-website).
+Embeddable chat widget for Acrux Education. Provides live chat with Acrux support staff, What's new and a link to the help site — packaged as both an ESM library (for React apps) and a standalone IIFE bundle (for non-React sites such as praxis-website).
 
 ## Installation
 
@@ -68,7 +68,7 @@ Tabs are **dynamic** — they only appear when the backend returns content for t
 - **Messages** — live chat with WebSocket messaging
 - **News** — announcements and updates
 - **Roadmap** — product roadmap items
-- **Help** — knowledge base articles
+- **Help** — a link that opens help.acrux.education in a new tab (PLATDEV-1685)
 
 ## Deployment — updating consumers
 

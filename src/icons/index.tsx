@@ -19,14 +19,6 @@ export function ChatBubbleIcon({ className }: IconProps) {
   )
 }
 
-export function ChatBubbleFilledIcon({ className }: IconProps) {
-  return (
-    <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
-  )
-}
-
 export function MegaphoneIcon({ className }: IconProps) {
   return (
     <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,15 +48,6 @@ export function QuestionIcon({ className }: IconProps) {
   )
 }
 
-export function SearchIcon({ className }: IconProps) {
-  return (
-    <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-    </svg>
-  )
-}
-
 export function SendIcon({ className }: IconProps) {
   return (
     <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -87,22 +70,6 @@ export function PaperclipIcon({ className }: IconProps) {
   return (
     <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-    </svg>
-  )
-}
-
-export function ChevronRightIcon({ className }: IconProps) {
-  return (
-    <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="9 18 15 12 9 6" />
-    </svg>
-  )
-}
-
-export function ChevronLeftIcon({ className }: IconProps) {
-  return (
-    <svg className={className} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="15 18 9 12 15 6" />
     </svg>
   )
 }

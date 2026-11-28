@@ -1,4 +1,4 @@
-import type { ChatSession, ChatMessage, Announcement, RoadmapItem, KBArticle, KBAnswer, KBTopic, OperatingHoursStatus, VisitorMetadata, ChatRegion } from '../types'
+import type { ChatSession, ChatMessage, Announcement, RoadmapItem, OperatingHoursStatus, VisitorMetadata, ChatRegion } from '../types'
 import { API_PATHS } from '../constants'
 
 interface ApiClientConfig {
@@ -111,26 +111,6 @@ export class ApiClient {
 
   async getRoadmapItems(): Promise<RoadmapItem[]> {
     return this.request<RoadmapItem[]>(API_PATHS.ROADMAP)
-  }
-
-  async searchKB(query: string): Promise<KBArticle[]> {
-    const params = new URLSearchParams({ q: query })
-    return this.request<KBArticle[]>(`${API_PATHS.KB_SEARCH}?${params}`)
-  }
-
-  async askKB(question: string, sessionId?: string): Promise<KBAnswer> {
-    return this.request<KBAnswer>(API_PATHS.KB_ANSWER, {
-      method: 'POST',
-      body: JSON.stringify({ question, session_id: sessionId ?? '' }),
-    })
-  }
-
-  async getKBTopics(): Promise<KBTopic[]> {
-    return this.request<KBTopic[]>(API_PATHS.KB_TOPICS)
-  }
-
-  async getKBTopicArticles(slug: string): Promise<KBArticle[]> {
-    return this.request<KBArticle[]>(API_PATHS.KB_TOPIC_ARTICLES(slug))
   }
 
   async getOperatingHoursStatus(): Promise<OperatingHoursStatus> {

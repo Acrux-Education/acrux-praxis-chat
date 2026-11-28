@@ -6,7 +6,6 @@ import { ChatLauncher } from './ChatLauncher'
 import { TabBar } from './components/TabBar'
 import { MessagesTab } from './tabs/MessagesTab'
 import { NewsTab } from './tabs/NewsTab'
-import { HelpTab } from './tabs/HelpTab'
 import { panelClasses, TABPANEL_CLASSES } from './components/panelLayout'
 import './styles/index.css'
 
@@ -84,7 +83,6 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
           >
             {state.activeTab === 'messages' && <MessagesTab />}
             {state.activeTab === 'news' && <NewsTab />}
-            {state.activeTab === 'help' && <HelpTab />}
           </div>
 
           <TabBar

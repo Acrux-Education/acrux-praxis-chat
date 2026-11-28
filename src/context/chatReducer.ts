@@ -1,4 +1,4 @@
-import type { ChatMessage, ChatSession, AgentInfo, Announcement, RoadmapItem, KBArticle, KBTopic, TabId, OperatingHoursStatus } from '../types'
+import type { ChatMessage, ChatSession, AgentInfo, Announcement, RoadmapItem, TabId, OperatingHoursStatus } from '../types'
 import type { ChatAction } from './chatActions'
 
 export interface ChatState {
@@ -12,9 +12,6 @@ export interface ChatState {
   currentAgent: AgentInfo | null
   announcements: Announcement[]
   roadmapItems: RoadmapItem[]
-  kbTopics: KBTopic[]
-  kbResults: KBArticle[]
-  kbLoading: boolean
   operatingHours: OperatingHoursStatus | null
   visitorName: string
   visitorEmail: string
@@ -34,9 +31,6 @@ export const initialState: ChatState = {
   currentAgent: null,
   announcements: [],
   roadmapItems: [],
-  kbTopics: [],
-  kbResults: [],
-  kbLoading: false,
   operatingHours: null,
   visitorName: '',
   visitorEmail: '',
@@ -114,15 +108,6 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
 
     case 'SET_ROADMAP_ITEMS':
       return { ...state, roadmapItems: action.payload }
-
-    case 'SET_KB_TOPICS':
-      return { ...state, kbTopics: action.payload }
-
-    case 'SET_KB_RESULTS':
-      return { ...state, kbResults: action.payload, kbLoading: false }
-
-    case 'SET_KB_LOADING':
-      return { ...state, kbLoading: action.payload }
 
     case 'SET_OPERATING_HOURS':
       return { ...state, operatingHours: action.payload }

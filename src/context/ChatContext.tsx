@@ -65,10 +65,6 @@ function ContentFetcher() {
       .then((data) => dispatch({ type: 'SET_ROADMAP_ITEMS', payload: toArray(data) }))
       .catch(() => {})
 
-    api.getKBTopics()
-      .then((data) => dispatch({ type: 'SET_KB_TOPICS', payload: toArray(data) }))
-      .catch(() => {})
-
   }, [config.apiUrl, config.token, config.region, dispatch])
 
   return null

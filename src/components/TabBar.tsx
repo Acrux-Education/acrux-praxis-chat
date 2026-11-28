@@ -4,6 +4,7 @@ import { useChatContext } from '../context/ChatContext'
 import { ChatBubbleIcon, QuestionIcon, MegaphoneIcon } from '../icons'
 import { Badge } from './Badge'
 import { nextTabIndex } from '../utils/a11y'
+import { HELP_CENTRE_URL } from '../constants'
 
 interface TabBarProps {
   activeTab: TabId
@@ -18,7 +19,6 @@ type TabSpec = { id: TabId; label: string; Icon: React.ComponentType<{ className
 
 const MESSAGES_TAB: TabSpec = { id: 'messages', label: 'Messages', Icon: ChatBubbleIcon }
 const NEWS_TAB: TabSpec = { id: 'news', label: "What's new", Icon: MegaphoneIcon }
-const HELP_TAB: TabSpec = { id: 'help', label: 'Help', Icon: QuestionIcon }
 
 export function TabBar({ activeTab, onTabChange, idBase, panelId }: TabBarProps) {
   const { state, config } = useChatContext()
@@ -27,8 +27,8 @@ export function TabBar({ activeTab, onTabChange, idBase, panelId }: TabBarProps)
   // News is a teacher rendition: it shows only when the host passed entries,
   // which the marketing site never does (PLATDEV-914).
   const tabs = (config.whatsNew?.length ?? 0) > 0
-    ? [MESSAGES_TAB, NEWS_TAB, HELP_TAB]
-    : [MESSAGES_TAB, HELP_TAB]
+    ? [MESSAGES_TAB, NEWS_TAB]
+    : [MESSAGES_TAB]
 
   // Roving tabindex: one Tab stop for the whole bar. If the active tab is not
   // shown (defaultTab 'news' with no entries), the first tab takes the stop.
@@ -44,7 +44,10 @@ export function TabBar({ activeTab, onTabChange, idBase, panelId }: TabBarProps)
   }
 
   return (
-    <nav className="acx:flex acx:border-t acx:border-gray-200 acx:bg-white" role="tablist" aria-label="Chat sections" onKeyDown={handleKeyDown}>
+    <div className="acx:flex acx:border-t acx:border-gray-200 acx:bg-white">
+    {/* Tabs and the Help link share the bar equally: the tablist takes one
+        share per tab, the link one more. */}
+    <nav className="acx:flex" style={{ flex: tabs.length }} role="tablist" aria-label="Chat sections" onKeyDown={handleKeyDown}>
       {tabs.map(({ id, label, Icon }, index) => (
         <button
           key={id}
@@ -76,5 +79,18 @@ export function TabBar({ activeTab, onTabChange, idBase, panelId }: TabBarProps)
         </button>
       ))}
     </nav>
+    {/* PLATDEV-1685: Help is the help site, not a tab. It sits outside the
+        tablist, so arrow keys move between tabs only and it is its own Tab
+        stop. */}
+    <a
+      href={HELP_CENTRE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="acx:flex-1 acx:flex acx:flex-col acx:items-center acx:py-2 acx:gap-0.5 acx:transition-colors acx:border-b-2 acx:border-transparent acx:text-gray-500 acx:hover:text-primary-600"
+    >
+      <QuestionIcon className="acx:w-5 acx:h-5" />
+      <span className="acx:text-[10px] acx:font-medium">Help<span className="acx:sr-only"> (opens in a new tab)</span></span>
+    </a>
+    </div>
   )
 }
