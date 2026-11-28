@@ -51,7 +51,7 @@ export function TabBar({ activeTab, onTabChange }: TabBarProps) {
       ))}
     </nav>
     {/* PLATDEV-1685: Help is the help site, not a tab. It sits outside the
-        tablist, so arrow keys move between tabs only and it is its own Tab
+        tab bar and is its own Tab
         stop. */}
     <a
       href={HELP_CENTRE_URL}
