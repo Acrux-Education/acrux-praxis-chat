@@ -1,5 +1,5 @@
 export type WidgetMode = 'lead' | 'user';
-export type TabId = 'home' | 'messages' | 'news' | 'roadmap' | 'help';
+export type TabId = 'home' | 'messages' | 'news' | 'roadmap';
 export type WidgetPosition = 'bottom-right' | 'bottom-left';
 export type ChatRegion = 'default' | 'au' | 'uk' | 'sg';
 export interface ChatWidgetProps {
@@ -110,7 +110,7 @@ export interface WhatsNewEntry {
  * @deprecated 4 September 2026 (PLATDEV-914) — superseded by WhatsNewEntry.
  * Nothing renders announcements: the News tab reads What's new entries and the
  * marketing site shows none. Kept until 4 March 2027, then removed if still
- * unused. See also useAnnouncements, AnnouncementCard, HomeTab, RoadmapTab.
+ * unused. See also useAnnouncements, AnnouncementCard, RoadmapTab.
  */
 export interface Announcement {
     id: number;
@@ -129,28 +129,6 @@ export interface RoadmapItem {
     status: 'planned' | 'in_progress' | 'beta' | 'released';
     quarter: string;
     category: 'assessment' | 'marking' | 'reports' | 'integrations' | 'platform';
-}
-export interface KBArticle {
-    id: number;
-    slug: string;
-    title: string;
-    summary: string;
-    topic: string;
-    url: string;
-    relevance?: number;
-}
-export interface KBAnswer {
-    answer: string | null;
-    sources: KBArticle[];
-    results: KBArticle[];
-    fallback: boolean;
-}
-export interface KBTopic {
-    id: number;
-    name: string;
-    slug: string;
-    article_count: number;
-    icon?: string;
 }
 export interface OperatingHoursStatus {
     is_online: boolean;
