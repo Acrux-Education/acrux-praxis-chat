@@ -7,6 +7,7 @@ import { TabBar } from './components/TabBar'
 import { MessagesTab } from './tabs/MessagesTab'
 import { NewsTab } from './tabs/NewsTab'
 import { HelpTab } from './tabs/HelpTab'
+import { panelClasses, TABPANEL_CLASSES } from './components/panelLayout'
 import './styles/index.css'
 
 export function ChatWidget(props: ChatWidgetProps) {
@@ -45,15 +46,11 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
     }
   }
 
-  const positionClasses = position === 'bottom-right'
-    ? 'acx:right-4 acx:sm:right-6'
-    : 'acx:left-4 acx:sm:left-6'
-
   return (
     <div className="acrux-chat-widget">
       {isOpen && (
         <div
-          className={`acx:fixed acx:bottom-20 ${positionClasses} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up acx:outline-none`}
+          className={panelClasses(position)}
           role="dialog"
           aria-label="Chat widget"
           ref={panelRef}
@@ -80,7 +77,7 @@ function ChatWidgetInner({ position }: { position: 'bottom-right' | 'bottom-left
           </div>
 
           <div
-            className="acx:flex-1 acx:overflow-hidden"
+            className={TABPANEL_CLASSES}
             role="tabpanel"
             id={panelId}
             aria-labelledby={`${idBase}-tab-${state.activeTab}`}

@@ -12,6 +12,8 @@ import { MessageList } from './MessageList'
 import { LeadCaptureForm } from './LeadCaptureForm'
 import { SearchInput } from './SearchInput'
 import { LiveStatus } from './LiveStatus'
+import { panelClasses, TABPANEL_CLASSES } from './panelLayout'
+import panelLayoutSource from './panelLayout.ts?raw'
 
 // No DOM test environment is installed (see report), so these assert the
 // rendered accessibility markup; focus and key handling are covered by the
@@ -139,6 +141,74 @@ describe('MessageBubble', () => {
     const html = renderToStaticMarkup(<MessageBubble message={message} />)
 
     expect(tag(html, /<a [^>]*>/)).toContain('acx:leading-6')
+  })
+})
+
+describe('MessageBubble sender', () => {
+  const base: ChatMessage = {
+    id: 2, session: 1, sender_type: 'visitor', sender_name: '', content: 'Hello', content_type: 'text',
+    attachments: [], is_read: true, created_at: '2026-11-27T00:00:00Z',
+  }
+
+  it('test_MessageBubble_prefixes_sr_only_You_when_the_visitor_sent_it', () => {
+    // Arrange / Act
+    const html = renderToStaticMarkup(<MessageBubble message={{ ...base, sender_type: 'user' }} />)
+
+    // Assert
+    expect(html).toContain('<span class="acx:sr-only">You: </span><p class="acx:whitespace-pre-wrap">Hello</p>')
+    expect(html).not.toContain('Acrux: ')
+  })
+
+  it('test_MessageBubble_prefixes_sr_only_Acrux_when_an_unnamed_bot_sent_it', () => {
+    // Arrange / Act
+    const html = renderToStaticMarkup(<MessageBubble message={{ ...base, sender_type: 'bot' }} />)
+
+    // Assert
+    expect(html).toContain('<span class="acx:sr-only">Acrux: </span><p class="acx:whitespace-pre-wrap">Hello</p>')
+    expect(html).not.toContain('You: ')
+  })
+
+  it('test_MessageBubble_has_no_sr_only_prefix_when_a_named_agent_sent_it', () => {
+    // Arrange / Act
+    const html = renderToStaticMarkup(<MessageBubble message={{ ...base, sender_type: 'agent', sender_name: 'Sam' }} />)
+
+    // Assert: the visible name above the bubble already says who sent it
+    expect(html).toContain('>Sam</span>')
+    expect(html).not.toContain('acx:sr-only')
+  })
+})
+
+describe('Panel layout', () => {
+  // Rendering at 400% zoom / 320 x 256 needs a live check; this guards the classes.
+  it('test_panelClasses_fill_the_screen_and_scroll_when_the_viewport_is_short', () => {
+    // Arrange / Act
+    const classes = panelClasses('bottom-right').split(' ')
+
+    // Assert
+    for (const c of ['inset-0!', 'h-dvh!', 'max-h-none!', 'max-w-none!', 'w-auto!', 'overflow-y-auto!', 'rounded-none!']) {
+      expect(classes).toContain(`acx:[@media(max-height:500px)]:${c}`)
+    }
+    expect(classes).toContain('acx:h-[600px]')
+  })
+
+  it('test_panelLayout_writes_every_short_viewport_class_literally_when_tailwind_scans_it', () => {
+    // Arrange: Tailwind generates only class names it finds as literal text
+    const source = panelLayoutSource
+    const shortClasses = [...panelClasses('bottom-left').split(' '), ...TABPANEL_CLASSES.split(' ')]
+      .filter(c => c.includes('max-height:500px'))
+
+    // Act / Assert
+    expect(shortClasses).toHaveLength(9)
+    for (const c of shortClasses) expect(source).toContain(c)
+  })
+
+  it('test_TABPANEL_CLASSES_keep_room_for_the_tab_when_the_viewport_is_short', () => {
+    // Arrange / Act
+    const classes = TABPANEL_CLASSES.split(' ')
+
+    // Assert
+    expect(classes).toContain('acx:[@media(max-height:500px)]:flex-none!')
+    expect(classes).toContain('acx:[@media(max-height:500px)]:min-h-[16rem]!')
   })
 })
 
