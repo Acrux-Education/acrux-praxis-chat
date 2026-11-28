@@ -1168,12 +1168,15 @@ function Oe({ message: e }) {
 					className: "acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block",
 					children: e.sender_name
 				}),
-				/* @__PURE__ */ u("div", {
+				/* @__PURE__ */ d("div", {
 					className: "acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed acx:bg-amber-50 acx:text-gray-800 acx:rounded-bl-md acx:border acx:border-amber-200",
-					children: /* @__PURE__ */ u("p", {
+					children: [!e.sender_name && /* @__PURE__ */ u("span", {
+						className: "acx:sr-only",
+						children: "Acrux: "
+					}), /* @__PURE__ */ u("p", {
 						className: "acx:whitespace-pre-wrap",
 						children: e.content
-					})
+					})]
 				}),
 				/* @__PURE__ */ u("span", {
 					className: "acx:text-[10px] acx:text-gray-500 acx:mt-0.5 acx:block",
@@ -1196,15 +1199,21 @@ function Oe({ message: e }) {
 					className: "acx:text-xs acx:text-gray-500 acx:ml-1 acx:mb-0.5 acx:block",
 					children: e.sender_name
 				}),
-				/* @__PURE__ */ u("div", {
+				/* @__PURE__ */ d("div", {
 					className: `acx:px-3.5 acx:py-2.5 acx:rounded-2xl acx:text-sm acx:leading-relaxed ${t ? "acx:bg-primary-600 acx:text-white acx:rounded-br-md" : (e.sender_type, "acx:bg-gray-100 acx:text-gray-800 acx:rounded-bl-md")}`,
-					children: e.content_type === "markdown" ? /* @__PURE__ */ u("div", {
+					children: [t ? /* @__PURE__ */ u("span", {
+						className: "acx:sr-only",
+						children: "You: "
+					}) : !e.sender_name && /* @__PURE__ */ u("span", {
+						className: "acx:sr-only",
+						children: "Acrux: "
+					}), e.content_type === "markdown" ? /* @__PURE__ */ u("div", {
 						className: "acx:prose acx:prose-sm",
 						dangerouslySetInnerHTML: { __html: Ee(e.content) }
 					}) : /* @__PURE__ */ u("p", {
 						className: "acx:whitespace-pre-wrap",
 						children: e.content
-					})
+					})]
 				}),
 				e.attachments?.length > 0 && /* @__PURE__ */ u("div", {
 					className: "acx:mt-1 acx:space-y-1",
@@ -1983,14 +1992,20 @@ function He() {
 		})]
 	});
 }
+// src/components/panelLayout.ts
+var Ue = "acx:[@media(max-height:500px)]:inset-0! acx:[@media(max-height:500px)]:w-auto! acx:[@media(max-height:500px)]:max-w-none! acx:[@media(max-height:500px)]:h-dvh! acx:[@media(max-height:500px)]:max-h-none! acx:[@media(max-height:500px)]:rounded-none! acx:[@media(max-height:500px)]:overflow-y-auto!", We = "acx:[@media(max-height:500px)]:flex-none! acx:[@media(max-height:500px)]:min-h-[16rem]!";
+function Ge(e) {
+	return `acx:fixed acx:bottom-20 ${e === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up acx:outline-none ${Ue}`;
+}
+`${We}`;
 // src/ChatWidget.tsx
-function Ue(e) {
+function Ke(e) {
 	return /* @__PURE__ */ u(O, {
 		...e,
-		children: /* @__PURE__ */ u(We, { position: e.position ?? h.POSITION })
+		children: /* @__PURE__ */ u(qe, { position: e.position ?? h.POSITION })
 	});
 }
-function We({ position: e }) {
+function qe({ position: e }) {
 	let { state: t, dispatch: n } = j(), [a, o] = c(!1), l = s(null), f = s(null), p = i(), m = `${p}-panel`;
 	r(() => {
 		a && l.current?.focus({ preventScroll: !0 });
@@ -2001,7 +2016,7 @@ function We({ position: e }) {
 	return /* @__PURE__ */ d("div", {
 		className: "acrux-chat-widget",
 		children: [a && /* @__PURE__ */ d("div", {
-			className: `acx:fixed acx:bottom-20 ${e === "bottom-right" ? "acx:right-4 acx:sm:right-6" : "acx:left-4 acx:sm:left-6"} acx:z-[9999] acx:w-[380px] acx:max-w-[calc(100vw-2rem)] acx:h-[600px] acx:max-h-[calc(100vh-6rem)] acx:bg-white acx:rounded-2xl acx:shadow-2xl acx:flex acx:flex-col acx:overflow-hidden acx:animate-slide-up acx:outline-none`,
+			className: Ge(e),
 			role: "dialog",
 			"aria-label": "Chat widget",
 			ref: l,
@@ -2049,7 +2064,7 @@ function We({ position: e }) {
 					})]
 				}),
 				/* @__PURE__ */ d("div", {
-					className: "acx:flex-1 acx:overflow-hidden",
+					className: "acx:flex-1 acx:overflow-hidden acx:[@media(max-height:500px)]:flex-none! acx:[@media(max-height:500px)]:min-h-[16rem]!",
 					role: "tabpanel",
 					id: m,
 					"aria-labelledby": `${p}-tab-${t.activeTab}`,
@@ -2077,4 +2092,4 @@ function We({ position: e }) {
 		})]
 	});
 }
-export { Ue as ChatWidget };
+export { Ke as ChatWidget };
