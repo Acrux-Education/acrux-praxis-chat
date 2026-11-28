@@ -162,15 +162,25 @@ describe('MessageList', () => {
 })
 
 describe('form fields', () => {
-  it('test_LeadCaptureForm_fields_have_names_and_autocomplete_when_rendered', () => {
+  it('test_LeadCaptureForm_fields_are_named_by_visible_labels_when_rendered', () => {
+    // Arrange / Act
     const html = renderToStaticMarkup(<LeadCaptureForm onSubmit={() => {}} />)
 
+    // Assert: each field is tied to a visible <label>, not a placeholder or aria-label alone
     const name = tag(html, /<input[^>]*type="text"[^>]*>/)
-    expect(name).toContain('aria-label="Your name"')
+    const nameId = name.match(/id="([^"]+)"/)?.[1]
+    expect(nameId).toBeTruthy()
+    expect(html).toContain(`<label for="${nameId}" class="acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600">Your name</label>`)
     expect(name).toContain('autoComplete="name"')
+    expect(name).not.toContain('aria-label')
+    expect(name).not.toContain('placeholder')
     const email = tag(html, /<input[^>]*type="email"[^>]*>/)
-    expect(email).toContain('aria-label="Your email"')
+    const emailId = email.match(/id="([^"]+)"/)?.[1]
+    expect(emailId).toBeTruthy()
+    expect(emailId).not.toBe(nameId)
+    expect(html).toContain(`<label for="${emailId}" class="acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600">Your email (required)</label>`)
     expect(email).toContain('autoComplete="email"')
+    expect(email).not.toContain('aria-label')
   })
 
   it('test_SearchInput_is_named_by_its_visible_label_when_one_is_given', () => {

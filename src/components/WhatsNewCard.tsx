@@ -7,7 +7,7 @@ interface WhatsNewCardProps {
 }
 
 const categoryStyles: Record<string, string> = {
-  update: 'acx:bg-green-100 acx:text-green-700',
+  update: 'acx:bg-green-100 acx:text-green-800',
   notice: 'acx:bg-orange-100 acx:text-orange-700',
   digest: 'acx:bg-blue-100 acx:text-blue-700',
 }
