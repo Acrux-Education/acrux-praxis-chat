@@ -23,7 +23,7 @@ export function NewsTab() {
       <div className="acx:p-4 acx:space-y-3">
         {entries.length === 0 ? (
           <div className="acx:py-8 acx:text-center">
-            <p className="acx:text-sm acx:text-gray-500">Nothing new right now</p>
+            <p className="acx:text-sm acx:text-gray-400">Nothing new right now</p>
           </div>
         ) : (
           entries.map((entry) => <WhatsNewCard key={entry.id} entry={entry} />)

@@ -37,7 +37,7 @@ export function RoadmapTab() {
       <div className="acx:p-4 acx:space-y-5">
         {grouped.length === 0 ? (
           <div className="acx:py-8 acx:text-center">
-            <p className="acx:text-sm acx:text-gray-500">No roadmap items yet</p>
+            <p className="acx:text-sm acx:text-gray-400">No roadmap items yet</p>
           </div>
         ) : (
           grouped.map(({ status, items }) => (

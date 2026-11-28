@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useId } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import type { WidgetMode } from '../types'
 import { SendIcon, PaperclipIcon } from '../icons'
 import { LIMITS } from '../constants'
@@ -14,8 +14,6 @@ interface MessageInputProps {
 
 export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, placeholder }: MessageInputProps) {
   const [text, setText] = useState('')
-  const textareaId = useId()
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -25,9 +23,6 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
     onSend(trimmed)
     setText('')
     onTyping?.(false)
-    // Sending empties the box, which disables a focused Send button; keep
-    // focus in the message box for the next message (WCAG 2.4.3).
-    textareaRef.current?.focus()
   }, [text, disabled, onSend, onTyping])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -60,19 +55,12 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
 
   return (
     <div className="acx:border-t acx:border-gray-200 acx:bg-white acx:px-3 acx:py-2">
-      {/* Visible label for the message box (WCAG 3.3.2, approved by Paul). */}
-      <label htmlFor={textareaId} className="acx:block acx:text-xs acx:font-medium acx:text-gray-600">
-        Message
-      </label>
-      {/* The textarea draws no outline of its own, so the row carries the
-          focus ring while the textarea has keyboard focus (PLATDEV-1684,
-          approved by Paul). Buttons in the row keep their own focus cue. */}
-      <div className="acx:flex acx:items-end acx:gap-2 acx:rounded-lg acx:has-[textarea:focus-visible]:ring-2 acx:has-[textarea:focus-visible]:ring-[#006383] acx:has-[textarea:focus-visible]:ring-offset-2">
+      <div className="acx:flex acx:items-end acx:gap-2">
         {mode === 'user' && onFileUpload && (
           <>
             <button
               onClick={handleFileClick}
-              className="acx:p-1.5 acx:text-gray-500 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0"
+              className="acx:p-1.5 acx:text-gray-400 acx:hover:text-gray-600 acx:transition-colors acx:flex-shrink-0"
               aria-label="Attach file"
               type="button"
             >
@@ -89,19 +77,14 @@ export function MessageInput({ onSend, onTyping, onFileUpload, mode, disabled, p
           </>
         )}
 
-        {/* Read-only, not disabled, while a send is in flight: disabling the
-            focused box would drop focus to the page (WCAG 2.4.3). */}
         <textarea
-          ref={textareaRef}
           value={text}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          id={textareaId}
           placeholder={placeholder ?? 'Type a message...'}
-          readOnly={disabled}
-          aria-disabled={disabled || undefined}
+          disabled={disabled}
           rows={1}
-          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-500"
+          className="acx:flex-1 acx:resize-none acx:border-0 acx:outline-none acx:text-sm acx:py-2 acx:max-h-24 acx:bg-transparent acx:placeholder:text-gray-400"
           style={{ fieldSizing: 'content' } as React.CSSProperties}
         />
 

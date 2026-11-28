@@ -7,11 +7,9 @@ interface ChatLauncherProps {
   isOpen: boolean
   onClick: () => void
   position: WidgetPosition
-  /** Lets the widget return focus here when the panel closes. */
-  buttonRef?: React.Ref<HTMLButtonElement>
 }
 
-export function ChatLauncher({ isOpen, onClick, position, buttonRef }: ChatLauncherProps) {
+export function ChatLauncher({ isOpen, onClick, position }: ChatLauncherProps) {
   const { state } = useChatContext()
 
   const positionClasses = position === 'bottom-right'
@@ -21,12 +19,10 @@ export function ChatLauncher({ isOpen, onClick, position, buttonRef }: ChatLaunc
   return (
     <div className={`acx:fixed acx:bottom-4 acx:sm:bottom-6 ${positionClasses} acx:z-[9999]`}>
       <button
-        ref={buttonRef}
-        type="button"
         onClick={onClick}
         // PLATDEV-1685: 44px with a question mark, so it reads as help.
         className="acx-launcher-btn acx:relative acx:w-11 acx:h-11 acx:rounded-full acx:shadow-lg acx:transition-all acx:hover:scale-105 acx:flex acx:items-center acx:justify-center"
-        aria-label={isOpen ? 'Close help' : openLabel(state.unreadCount)}
+        aria-label={isOpen ? 'Close help' : 'Open help'}
       >
         {isOpen ? (
           <span className="acx-launcher-icon-stroke">
@@ -45,10 +41,4 @@ export function ChatLauncher({ isOpen, onClick, position, buttonRef }: ChatLaunc
       </button>
     </div>
   )
-}
-
-// The badge is inside an aria-labelled button, so its count has to be in the label.
-function openLabel(unreadCount: number): string {
-  if (unreadCount <= 0) return 'Open help'
-  return `Open help, ${unreadCount} unread ${unreadCount === 1 ? 'message' : 'messages'}`
 }

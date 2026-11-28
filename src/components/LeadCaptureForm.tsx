@@ -1,4 +1,4 @@
-import { useState, useId } from 'react'
+import { useState } from 'react'
 
 interface LeadCaptureFormProps {
   onSubmit: (data: { name: string; email: string }) => void
@@ -8,8 +8,6 @@ interface LeadCaptureFormProps {
 export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const nameId = useId()
-  const emailId = useId()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -23,37 +21,24 @@ export function LeadCaptureForm({ onSubmit, loading }: LeadCaptureFormProps) {
         Before we start, could you share your details?
       </p>
 
-      {/* Visible labels, not placeholders alone (WCAG 3.3.2). */}
-      <div>
-        <label htmlFor={nameId} className="acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600">
-          Your name
-        </label>
-        <input
-          id={nameId}
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          autoComplete="name"
-          className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
-        />
-      </div>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Your name"
+        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
+      />
 
-      <div>
-        <label htmlFor={emailId} className="acx:block acx:mb-1 acx:text-xs acx:font-medium acx:text-gray-600">
-          Your email (required)
-        </label>
-        <input
-          id={emailId}
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-          required
-          className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-[#6B8299] acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
-        />
-      </div>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Your email *"
+        required
+        className="acx:w-full acx:px-3 acx:py-2 acx:border acx:border-gray-200 acx:rounded-lg acx:text-sm acx:outline-none acx:focus:border-primary-500 acx:focus:ring-1 acx:focus:ring-primary-500"
+      />
 
-      <p className="acx:text-xs acx:text-gray-500 acx:leading-snug">
+      <p className="acx:text-xs acx:text-gray-400 acx:leading-snug">
         By starting a chat, your details, messages, and the page you&apos;re on are shared with
         Acrux to respond to your enquiry &mdash; see our{' '}
         <a

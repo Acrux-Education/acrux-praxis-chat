@@ -29,7 +29,7 @@ export function RoadmapCard({ item }: RoadmapCardProps) {
           {status.label}
         </span>
         {item.quarter && (
-          <span className="acx:text-[10px] acx:text-gray-500">{item.quarter}</span>
+          <span className="acx:text-[10px] acx:text-gray-400">{item.quarter}</span>
         )}
       </div>
 
@@ -41,7 +41,7 @@ export function RoadmapCard({ item }: RoadmapCardProps) {
         {item.description}
       </p>
 
-      <span className="acx:text-[10px] acx:text-gray-500">
+      <span className="acx:text-[10px] acx:text-gray-400">
         {categoryLabels[item.category] ?? item.category}
       </span>
     </div>

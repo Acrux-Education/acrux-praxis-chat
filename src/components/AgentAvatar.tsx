@@ -13,12 +13,12 @@ function getInitials(name: string): string {
 }
 
 const COLORS = [
-  'acx:bg-blue-600',
-  'acx:bg-green-700',
-  'acx:bg-purple-600',
-  'acx:bg-orange-700',
-  'acx:bg-pink-600',
-  'acx:bg-teal-700',
+  'acx:bg-blue-500',
+  'acx:bg-green-500',
+  'acx:bg-purple-500',
+  'acx:bg-orange-500',
+  'acx:bg-pink-500',
+  'acx:bg-teal-500',
 ]
 
 function getColor(name: string): string {
@@ -34,7 +34,7 @@ export function AgentAvatar({ name, avatarUrl }: AgentAvatarProps) {
     return (
       <img
         src={avatarUrl}
-        alt=""
+        alt={name}
         className="acx:w-8 acx:h-8 acx:rounded-full acx:object-cover acx:flex-shrink-0"
       />
     )
@@ -42,7 +42,6 @@ export function AgentAvatar({ name, avatarUrl }: AgentAvatarProps) {
 
   return (
     <div
-      aria-hidden="true"
       className={`acx:w-8 acx:h-8 acx:rounded-full acx:flex acx:items-center acx:justify-center acx:text-white acx:text-xs acx:font-semibold acx:flex-shrink-0 ${getColor(name)}`}
     >
       {getInitials(name)}
